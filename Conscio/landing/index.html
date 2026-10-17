@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conscio — あなたの集中を、Macが守る。</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Noto Sans JP", sans-serif;
+    background: #0a0a0f;
+    color: #f5f5f7;
+    overflow-x: hidden;
+  }
+  .gradient-bg {
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(90,140,255,0.25), transparent),
+      radial-gradient(ellipse 60% 50% at 80% 10%, rgba(180,90,255,0.18), transparent),
+      #0a0a0f;
+    z-index: -1;
+  }
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 0;
+  }
+  .logo { font-size: 22px; font-weight: 700; letter-spacing: 0.5px; }
+  .logo span { background: linear-gradient(135deg, #7aa2ff, #c58aff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  nav a.cta {
+    background: linear-gradient(135deg, #5a8cff, #b45aff);
+    color: white; padding: 10px 22px; border-radius: 999px;
+    text-decoration: none; font-size: 14px; font-weight: 600;
+    box-shadow: 0 4px 24px rgba(122,162,255,0.35);
+  }
+
+  .hero { text-align: center; padding: 90px 0 70px; }
+  .hero .tag {
+    display: inline-block; padding: 6px 16px; border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.05);
+    font-size: 13px; color: #b8c0d0; margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-size: clamp(38px, 6vw, 68px); font-weight: 800; line-height: 1.15;
+    letter-spacing: -1px;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(135deg, #7aa2ff 0%, #c58aff 60%, #ff8ad0 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero p.sub {
+    margin: 26px auto 40px; max-width: 640px;
+    font-size: 18px; line-height: 1.9; color: #aab3c5;
+  }
+  .download-btn {
+    display: inline-block; padding: 16px 44px; border-radius: 999px;
+    background: linear-gradient(135deg, #5a8cff, #b45aff);
+    color: white; font-size: 17px; font-weight: 700; text-decoration: none;
+    box-shadow: 0 8px 32px rgba(122,162,255,0.4);
+    transition: transform .2s;
+  }
+  .download-btn:hover { transform: translateY(-2px) scale(1.02); }
+  .note { margin-top: 14px; font-size: 12px; color: #6b7280; }
+
+  .features { padding: 80px 0; }
+  .features h2 { text-align: center; font-size: 34px; margin-bottom: 12px; }
+  .features p.lead { text-align: center; color: #8a93a8; margin-bottom: 56px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 30px;
+    transition: transform .25s, background .25s;
+  }
+  .card:hover { transform: translateY(-6px); background: rgba(255,255,255,0.07); }
+  .card .icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px; margin-bottom: 18px;
+    background: linear-gradient(135deg, rgba(90,140,255,0.2), rgba(180,90,255,0.2));
+    border: 1px solid rgba(122,162,255,0.3);
+  }
+  .card h3 { font-size: 19px; margin-bottom: 10px; }
+  .card p { font-size: 14.5px; line-height: 1.85; color: #9aa3b8; }
+
+  .philosophy {
+    text-align: center; padding: 100px 0;
+  }
+  .philosophy blockquote {
+    font-size: clamp(24px, 3.4vw, 38px); font-weight: 700; line-height: 1.7;
+    max-width: 760px; margin: 0 auto;
+  }
+  .philosophy blockquote .grad {
+    background: linear-gradient(135deg, #8ab4ff, #e08aff);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .philosophy p { margin-top: 24px; color: #8a93a8; font-size: 15px; }
+
+  footer {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 40px 0; text-align: center;
+    color: #565d6d; font-size: 13px;
+  }
+  footer b { color: #aab3c5; }
+</style>
+</head>
+<body>
+<div class="gradient-bg"></div>
+
+<div class="container">
+  <nav>
+    <div class="logo">🧠 <span>Conscio</span></div>
+    <a class="cta" href="#download">Download for Mac</a>
+  </nav>
+
+  <section class="hero">
+    <div class="tag">macOS 13+ 対応 ・ メニューバー常駐型</div>
+    <h1>あなたの集中を、<br>Macが<span class="grad">守る</span>。</h1>
+    <p class="sub">
+      Conscioは、いま見ている画面の「文脈」を理解し、必要な情報だけをそっと差し出すMacアプリ。
+      集中モード中は通知を自動で抑制し、あなたはただ、自分の仕事に没頭するだけ。
+    </p>
+    <a class="download-btn" id="download" href="#">無料でダウンロード</a>
+    <p class="note">※ 現在オープンβ版。Personal use only</p>
+  </section>
+
+  <section class="features">
+    <h2>4つの機能、1つの思想</h2>
+    <p class="lead">ツールが人に合わせて動く。それがConscioの哲学です。</p>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">👁️</div>
+        <h3>リアルタイム文脈認識</h3>
+        <p>最前面のアプリ、開いているドキュメント、その内容まで。2秒ごとにMacの「今」を捉え続けます。</p>
+      </div>
+      <div class="card">
+        <div class="icon">💡</div>
+        <h3>スマート提案</h3>
+        <p>検索しなくても、関連する資料・ドキュメント・リファレンスが自動で目の前に。「あの資料どこだっけ？」を撲滅します。</p>
+      </div>
+      <div class="card">
+        <div class="icon">🛡️</div>
+        <h3>インテリジェントノイズ抑制</h3>
+        <p>深く集中している間、通知は自動で静かに。離れたタイミングでだけ、抑制した内容のサマリーが届きます。</p>
+      </div>
+      <div class="card">
+        <div class="icon">📈</div>
+        <h3>デジタル習慣レポート</h3>
+        <p>集中時間や文脈の安定度を、叱らず、褒める形で可視化。無理なく「集中できる自分」に近づけます。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="philosophy">
+    <blockquote>
+      「情報は選ばせるものじゃない。<br><span class="grad">選ばれるべき情報だけが、そこにあればいい。</span>」
+    </blockquote>
+    <p>— Conscio 開発思想</p>
+  </section>
+</div>
+
+<footer>
+  <b>Conscio</b> — Context Navigator for Mac © 2026 · Built with Swift & SwiftUI
+</footer>
+</body>
+</html>
