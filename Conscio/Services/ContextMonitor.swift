@@ -2,6 +2,7 @@
 import Foundation
 import Cocoa
 import Combine
+import NaturalLanguage
 
 class ContextMonitor: ObservableObject {
     @Published var currentContext: Context = Context(activeApplication: "Unknown", keywords: [])
@@ -59,10 +60,27 @@ class ContextMonitor: ObservableObject {
                 }
             }
             
-            // Basic keyword extraction (can be improved with NLP)
-            keywords.append(appName)
-            if let doc = activeDocument {
-                keywords.append(contentsOf: doc.components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty })
+            // 🤖 オンデバイス NLP キーワード抽出 (Apple NaturalLanguage framework)
+            var aiKeywords: [String] = []
+            let nlpText = [appName, activeDocument ?? ""].joined(separator: " ")
+            if !nlpText.trimmingCharacters(in: .whitespaces).isEmpty {
+                let tagger = NLTagger(tagSchemes: [.lexicalClass])
+                tagger.string = nlpText
+                let options: NLTagger.Options = [.omitPunctuation, .omitWhitespace, .omitOther]
+                // 英語・日本語両対応の品詞タグ付け
+                tagger.enumerateTags(in: nlpText.startIndex..<nlpText.endIndex, unit: .word, scheme: .lexicalClass, options: options) { tag, range in
+                    if tag == .noun || tag == .verb {
+                        let word = String(nlpText[range])
+                        if word.count > 2 {
+                            aiKeywords.append(word)
+                        }
+                    }
+                    return true
+                }
+            }
+            // NLPが空のときのフォールバック: 単純分割
+            if aiKeywords.isEmpty, let doc = activeDocument {
+                aiKeywords = doc.components(separatedBy: CharacterSet.alphanumerics.inverted).filter { $0.count > 2 }
             }
             // For browser, we'd need browser-specific extensions or more complex Accessibility parsing
             // For now, let's manually add a placeholder for activeURL if app is a browser
@@ -74,7 +92,7 @@ class ContextMonitor: ObservableObject {
             self.currentContext = Context(activeApplication: appName,
                                           activeDocument: activeDocument,
                                           activeURL: activeURL,
-                                          keywords: Array(Set(keywords)),
+                                          keywords: Array(Set(aiKeywords).prefix(8)),
                                           calendarEvents: []) // Remove duplicates
             
             print("Context Updated: App='\(appName)', Doc='\(activeDocument ?? "N/A")', URL='\(activeURL ?? "N/A")', Keywords=\(self.currentContext.keywords.joined(separator: ", ")))")

@@ -51,6 +51,17 @@ class MainViewModel: ObservableObject {
             newSuggestions.append(Suggestion(type: .knowledge, title: "デジタルウェルビーイングの重要性", url: nil, contentPreview: "デジタル環境での健康的な生活について。"))
         }
 
+        // 🤖 AI (on-device NLP) による文脈検索サジェスト
+        let appNameLower = context.activeApplication.lowercased()
+        if let kw = context.keywords.first(where: { $0.count >= 3 && $0.lowercased() != appNameLower }) {
+            if let q = kw.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+                newSuggestions.append(Suggestion(type: .knowledge,
+                                                 title: "「\(kw)」を検索",
+                                                 url: URL(string: "https://duckduckgo.com/?q=\(q)"),
+                                                 contentPreview: "AIが文脈から選んだキーワード"))
+            }
+        }
+
         self.suggestions = newSuggestions
     }
 

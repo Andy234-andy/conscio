@@ -16,6 +16,7 @@ let package = Package(
         .executableTarget(
             name: "Conscio",
             path: "Conscio",
+            exclude: ["tools", "GROWTH", "landing"],
             resources: []
         )
     ]
