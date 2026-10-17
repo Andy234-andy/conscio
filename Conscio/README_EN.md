@@ -10,6 +10,9 @@ It understands the app and document on your screen in real time and quietly surf
 ### 1. Real-time Context Engine
 Monitors your frontmost app and open document every 2 seconds to understand what you're doing right now.
 
+### 1.5 🤖 On-device AI Keyword Extraction (new in v1.1)
+Apple's NaturalLanguage framework pulls the meaningful keywords out of your current context and suggests "the search you want right now." **Everything stays on your Mac — zero data leaves the device.**
+
 ### 2. Smart Suggestion
 Context-relevant references, documents, and tasks appear automatically. "Where was that file?" disappears.
 

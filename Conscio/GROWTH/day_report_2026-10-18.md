@@ -8,3 +8,6 @@
 - 📝 **v1.1.0リリース ドラフト作成済み** → `Conscio/GROWTH/DRAFT_release_v1.1.0.md` (承認待ち)
   - ⛔️ GitHubへの公開はしてません (RULES.md第3条・あなたの承認待ち)
 - 📊 メトリクス: Stars 0 / Forks 0 / DL 0 / Uniques 0 / Issues 0 (月曜由来の流入は通常数日後)
+[07:54] 📊 Stars:0 | DL:0 | Uniques:0 | Issues:0
+[08:14] 📊 Stars:0 | DL:0 | Uniques:0 | Issues:0 (手動ティック)
+[08:19] 📊 Stars:0 Forks:0 | DL:0 | Uniques:0 | Issues:0 (夕方ティック)
