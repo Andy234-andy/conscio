@@ -1,0 +1,11 @@
+# Build artifacts
+.build/
+*.xcodeproj
+Conscio.app/
+
+# Other local projects (this repo is Conscio-only)
+game/
+mc-pvp-trainer/
+
+# macOS
+.DS_Store
