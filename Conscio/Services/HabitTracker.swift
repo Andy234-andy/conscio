@@ -14,8 +14,15 @@ class HabitTracker: ObservableObject {
     @Published var appUsageList: [AppUsageStats] = []
     // 🧬 進化#5: 日ごとの集中時間 (キー: yyyy-MM-dd)
     @Published var dailyFocusMap: [String: TimeInterval] = [:]
-    // 🧬 進化#9: 最近のアプリ履歴 (直近 Lionly=MAX_BUFFER nexus件・新着順)
+    // 🧬 進化#9: 直近アプリ履歴 (直近=MAX_BUFFER nexus件・新着順)
     @Published var recentAppBuffer: [String] = []
+
+    // 🧬 進化#10: 実データベースの集中達成スコア (偽値88/100を置換)
+    struct FocusScoreResult {
+        let score: Int                      // 0-100 (目標60分/日の達成率)
+        let todaySeconds: TimeInterval
+        let yesterdaySeconds: TimeInterval? // nil = 昨日データなし
+    }
     
     private var lastAppName: String?
     private var lastAppStartTime: Date?
@@ -74,6 +81,22 @@ class HabitTracker: ObservableObject {
             if focusSet.contains(app) { return app }
         }
         return recentAppBuffer.first { $0 != currentApp }
+    }
+
+    // 🧬 進化#10: スコア計算 (誠実な指標のみ・捏造なし)
+    private static let dailyGoalSeconds: TimeInterval = 3600 // 目標60分/日
+
+    var focusScore: FocusScoreResult {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        fmt.locale = Locale(identifier: "en_US_POSIX")
+        let todayS = dailyFocusMap[fmt.string(from: Date())] ?? 0
+        let yDate = Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date()
+        let yRaw = dailyFocusMap[fmt.string(from: yDate)] ?? -1
+        let base = min(100.0, todayS / HabitTracker.dailyGoalSeconds * 100.0)
+        return FocusScoreResult(score: Int(base.rounded()),
+                                todaySeconds: todayS,
+                                yesterdaySeconds: yRaw < 0 ? nil : yRaw)
     }
 
     /// 進化#5 レポートチャート用: 直近7日分 (ラベルは "M/d" 相当の短縮)

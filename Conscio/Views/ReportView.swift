@@ -66,6 +66,9 @@ struct ReportView: View {
                 .background(Color(NSColor.controlBackgroundColor))
                 .cornerRadius(12)
 
+                // 🧬 進化#10: スコアを実データから算出 (直近て勝拙計算に一回のみ呼び出し)
+                let score = habitTracker.focusScore
+
                 // Stats Grid
                 HStack(spacing: 12) {
                     // Context Switch Count
@@ -85,16 +88,25 @@ struct ReportView: View {
                     .background(Color(NSColor.controlBackgroundColor))
                     .cornerRadius(10)
 
-                    // Focus Score
+                    // Focus Score (🧬 進化#10: 実データ計算 — 偽値廃止)
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("集中達成スコア")
+                        Text(L10n.t("report.score"))
                             .font(.caption)
                             .foregroundColor(.secondary)
-                        Text("88 / 100")
+                        Text("\(score.score) / 100")
                             .font(.title3)
                             .bold()
-                            .foregroundColor(.green)
-                        Text("先週比 +12%")
+                            .foregroundColor(score.score >= 70 ? .green : (score.score >= 30 ? .orange : .red))
+                        if let yesterday = score.yesterdaySeconds {
+                            Text(String.localizedStringWithFormat(L10n.t("report.vsYesterday"), Int(yesterday / 60)))
+                                .font(.caption2)
+                                .foregroundColor(.gray)
+                        } else {
+                            Text(L10n.t("report.firstDay"))
+                                .font(.caption2)
+                                .foregroundColor(.gray)
+                        }
+                        Text(L10n.t("report.target"))
                             .font(.caption2)
                             .foregroundColor(.gray)
                     }
