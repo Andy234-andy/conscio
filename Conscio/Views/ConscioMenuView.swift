@@ -54,6 +54,12 @@ struct ConscioMenuView: View {
                 HStack {
                     Text(L10n.t("ctx.app"))
                         .foregroundColor(.secondary)
+                    // 🧬 進化#15: 現在アプリの実アイコン
+                    if let icon = viewModel.currentAppIcon {
+                        Image(nsImage: icon)
+                            .resizable()
+                            .frame(width: 18, height: 18)
+                    }
                     Text(viewModel.currentContext.activeApplication)
                         .bold()
                 }

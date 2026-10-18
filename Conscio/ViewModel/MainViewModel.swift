@@ -1,5 +1,6 @@
 
 import Foundation
+import AppKit
 import Combine
 
 class MainViewModel: ObservableObject {
@@ -8,6 +9,8 @@ class MainViewModel: ObservableObject {
     @Published var isSuppressingNotifications: Bool = false
 
     @Published var habitTracker = HabitTracker.shared // 進化#11: 共有インスタンス
+    // 🧬 進化#15: 現在アプリの実アイコン (popoverの文脈欄に表示)
+    @Published var currentAppIcon: NSImage?
 
     private var contextMonitor = ContextMonitor()
     private var notificationManager = NotificationManager()
@@ -16,6 +19,7 @@ class MainViewModel: ObservableObject {
     init() {
         _currentContext = Published(initialValue: Context(activeApplication: "Loading...", keywords: []))
         _suggestions = Published(initialValue: [])
+        currentAppIcon = NSWorkspace.shared.icon(for: .application)
 
         notificationManager.setFocusApps(["Xcode", "Safari", "Pages", "TextEdit", "Code"])
 
@@ -23,6 +27,7 @@ class MainViewModel: ObservableObject {
             .sink { [weak self] context in
                 guard let self = self else { return }
                 self.currentContext = context
+                self.updateAppIcon(for: context.activeApplication) // 🧬 進化#15
                 self.generateSuggestions(for: context)
                 self.handleNotificationSuppression(for: context)
                 self.habitTracker.recordContextChange(to: context) // Record stats for HabitTracker
@@ -32,6 +37,16 @@ class MainViewModel: ObservableObject {
         notificationManager.$isSuppressing
             .assign(to: \.isSuppressingNotifications, on: self)
             .store(in: &cancellables)
+    }
+
+    /// 🧬 進化#15: 最前面アプリの実アイコンを取得 (実行中から探し、無ければ汎用アイコン)
+    private func updateAppIcon(for appName: String) {
+        if let running = NSWorkspace.shared.runningApplications.first(where: { $0.localizedName == appName }),
+           let icon = running.icon {
+            currentAppIcon = icon
+        } else {
+            currentAppIcon = NSWorkspace.shared.icon(for: .application)
+        }
     }
 
     private func generateSuggestions(for context: Context) {
