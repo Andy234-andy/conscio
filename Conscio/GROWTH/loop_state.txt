@@ -1,5 +1,5 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: STOPPED (ユーザー要請でおやすみ停止・指名メッセージ1通で再開可能)
+heartbeat: 2026-10-19T07:57 JST (morning tick: v1.4.0 released + evo#27 safety/SECURITY.md + article3 published)
 mode: user-away autonomous evolution
 pending:
   - main      : (なし — 全タイマーSIGTERMで停止済み)

@@ -41,6 +41,10 @@ struct SettingsView: View {
                 Text(L10n.t("settings.privacyNote"))
                     .font(.caption)
                     .foregroundColor(.secondary)
+                // 🧬 進化#27: 収集データの明細を本体UIで可視化 (実データの範囲のみ・誇張なし)
+                Text(L10n.t("settings.collectedDetail"))
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
             }
 
             Section(header: Text(L10n.t("settings.habits"))) {

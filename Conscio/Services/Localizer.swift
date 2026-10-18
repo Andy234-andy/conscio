@@ -33,6 +33,7 @@ enum L10n {
         "settings.permissions": ("パーミッションを管理（システム設定を開く）", "Manage permissions (opens System Settings)"),
         "settings.openDataFolder": ("データ保存フォルダをFinderで開く", "Open data folder in Finder"),
         "settings.privacyNote": ("統計はこのフォルダの1ファイルにだけ保存され、外部送信は行いません。", "Stats live in a single file here — nothing is ever sent."),
+        "settings.collectedDetail":  ("保存内容: アプリ名・利用秒数・セッション回数のみ。文書タイトル・URL・個人情報は保存せず、通信コードは含みません（ソース監査済み）。", "Stored: app names, usage seconds and session counts only. No document titles, URLs or personal data; no networking code at all (source-audited)."),
         "settings.habits":   ("デジタル習慣", "Digital habits"),
         "settings.reset":    ("習慣データをリセット", "Reset habit data"),
         "settings.resetConfirmTitle": ("本当にリセットしますか？", "Really reset?"),
