@@ -9,6 +9,9 @@ class ContextMonitor: ObservableObject {
 
     private var timer: Timer?
     private var cancellables = Set<AnyCancellable>()
+    // 🌐 進化#4: ブラウザURL取得用の状態
+    private var urlFetchTick = 0
+    private var lastFetchedURL: String?
 
     init() {
         // Start monitoring when the object is initialized
@@ -93,10 +96,15 @@ class ContextMonitor: ObservableObject {
             if aiKeywords.isEmpty, let doc = activeDocument {
                 aiKeywords = doc.components(separatedBy: CharacterSet.alphanumerics.inverted).filter { $0.count > 2 }
             }
-            // For browser, we'd need browser-specific extensions or more complex Accessibility parsing
-            // For now, let's manually add a placeholder for activeURL if app is a browser
+            // 🌐 進化#4: ブラウザの実URLを取得する
+            // Safari/ChromeはAppleScriptに公開させており、最前面タブのURLを正確に取得できる。
+            // (以前の example.com プレースホルダーを置換)
             if appName.contains("Safari") || appName.contains("Chrome") {
-                activeURL = "https://example.com/current-webpage" // Placeholder, actual implementation is complex
+                if self.urlFetchTick % 3 == 0 { // 負荷軽減: 2秒×3=6秒ごとに取得
+                    self.lastFetchedURL = self.fetchBrowserURL(for: appName)
+                }
+                self.urlFetchTick += 1
+                activeURL = self.lastFetchedURL
             }
 
 
@@ -108,6 +116,28 @@ class ContextMonitor: ObservableObject {
             
             print("Context Updated: App='\(appName)', Doc='\(activeDocument ?? "N/A")', URL='\(activeURL ?? "N/A")', Keywords=\(self.currentContext.keywords.joined(separator: ", ")))")
         }
+    }
+
+    /// 🌐 進化#4: AppleScript経由で最前面タブのURLを取得 (Safari/Chrome対応)
+    /// 初回実行時に「ConscioがSafari/Chromeを制御しようとしています」の権限ダイアログが出る(1度だけ)
+    private func fetchBrowserURL(for appName: String) -> String? {
+        let source: String
+        if appName.contains("Safari") {
+            source = "tell application \"Safari\" to get URL of front document"
+        } else {
+            source = "tell application \"Google Chrome\" to get URL of active tab of front window"
+        }
+        guard let script = NSAppleScript(source: source) else { return nil }
+        var errorInfo: NSDictionary? = nil
+        let result = script.executeAndReturnError(&errorInfo)
+        if let url = result.stringValue, !url.isEmpty {
+            return url
+        }
+        if let err = errorInfo {
+            // 権限が未許可(-1743)の場合は静かにフォールバック: URLはnilのまま動作継続
+            print("🌐 URL取得エラー: \(err[NSAppleScript.errorMessage] ?? "unknown")")
+        }
+        return nil
     }
 
     // Function to request Accessibility permissions

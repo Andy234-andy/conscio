@@ -52,6 +52,16 @@ struct ConscioMenuView: View {
                             .lineLimit(1)
                     }
                 }
+                if let url = viewModel.currentContext.activeURL {
+                    HStack {
+                        Text("URL:")
+                            .foregroundColor(.secondary)
+                        Text(url)
+                            .lineLimit(1)
+                            .textSelection(.enabled)
+                            .truncationMode(.middle)
+                    }
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.vertical, 4)
