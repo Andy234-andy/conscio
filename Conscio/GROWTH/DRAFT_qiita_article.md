@@ -10,7 +10,7 @@ macOS, Swift, SwiftUI, 個人開発
 
 ---
 
-**※本記事はAIアシストで執筆し、内容を人間が確認して公開しています。またこのプロジェクト本来のライセンスはMIT、無料で利用できます。**
+**※本記事はAIアシストで執筆し、人間が内容を確認して公開しています。プロジェクトのライセンスはMIT、無料でご利用いただけます。**
 
 Macで作業していると、こんな瞬間がありませんか。
 
@@ -53,7 +53,7 @@ Conscio.app/
 
 ### 3. NLTaggerの日本語精度は「言語を明示する」だけで改善する
 
-v1.1で入れたオンデバイスNLPは散発的に再現する改良です。
+v1.1から実装したオンデバイスNLPは、この一手で確実に安定しました。
 
 ```swift
 let recognizer = NLLanguageRecognizer()
@@ -75,11 +75,11 @@ Accessibilityだけでもtitle属性は取れるのですが、URL取得はSafar
 tell application "Safari" to get URL of front document
 ```
 
-初回のみmacOSから「Conscio が Safari を制御しようとしています」のconfirmシートが出ます。まだ一度もユーザーの操作を経ないAPIではない点に注意します。
+初回のみmacOSから「ConscioがSafariを制御しようとしています」という確認ダイアログが出ます。この操作にはユーザーの明示的な許可が必要な点に注意が必要です。
 
 ## 進化の足跡
 
-公開後1日でこのありました:
+公開後の1日間で、このように進化しました:
 
 - v1.0.0 — 初公開（文脈認識/スマート提案/通知抑制/習慣レポート）
 - v1.1.0 — オンデバイスNLP＋AI検索サジェスト
@@ -91,4 +91,4 @@ tell application "Safari" to get URL of front document
 - ダウンロード: https://github.com/Andy234-andy/conscio/releases/latest
 - 公式サイト: https://andy234-andy.github.io/conscio/
 
-要件はmacOS 13+ / Apple Siliconです。未署名ビルドのため初回起動は右クリック→「開く」をお願iseます。改善案・バグはIssueでぜひ教えてください🙏
+必要環境はmacOS 13+ / Apple Siliconです。未署名ビルドのため初回起動は右クリック→「開く」をお願いします。改善案・バグはIssueでぜひ教えてください🙏
