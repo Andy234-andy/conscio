@@ -1,0 +1,38 @@
+import Foundation
+
+/// 🧬 進化#6: 多言語化の下地 — UI文言の一元管理 (ja / その他はen)
+/// Xcodeプロジェクトなし(SPM+手作り.app)ではString Catalogが扱いにくいため、
+/// まずコード内辞書で言語切替できる「下地」を用意する。将来 .xcstrings への移行も容易。
+enum L10n {
+    static let isJapanese = Locale.current.language.languageCode?.identifier == "ja"
+
+    private static let table: [String: (ja: String, en: String)] = [
+        "menu.title":        ("Conscio Context Navigator", "Conscio Context Navigator"),
+        "ctx.header":        ("現在の文脈:", "Current context:"),
+        "ctx.app":           ("アプリ:", "App:"),
+        "ctx.doc":           ("ドキュメント:", "Document:"),
+        "ctx.url":           ("URL:", "URL:"),
+        "ui.suggestions":    ("提案されたアクティビティ:", "Suggested activities:"),
+        "ui.noSuggestions":  ("関連する提案はありません。", "No related suggestions yet."),
+        "ui.reportHelp":     ("デジタル習慣レポートを表示", "Show digital habit report"),
+        "ui.quitHelp":       ("Conscioを終了", "Quit Conscio"),
+        "ui.focusMode":      ("集中モード (通知抑制中)", "Focus mode (notifications muted)"),
+        "ui.normalMode":     ("通常モード", "Normal mode"),
+        "report.title":      ("Conscio デジタル習慣レポート", "Conscio Digital Habit Report"),
+        "report.subtitle":   ("今週の作業リズムとディープワークの分析", "Your weekly rhythm & deep-work analysis"),
+        "report.totalFocus": ("総ディープワーク時間", "Total deep-work time"),
+        "report.praise":     ("素晴らしい集中力です！", "Wonderful focus!"),
+        "report.chart7":     ("直近7日の集中時間 (分)", "Focus time, last 7 days (min)"),
+        "report.switches":   ("文脈切り替え回数", "Context switches"),
+        "report.steady":     ("非常に安定しています", "Very steady"),
+        "report.scattered":  ("少し散漫かもしれません", "A bit scattered"),
+        "report.topApps":    ("最も活用したアプリケーション", "Most used applications"),
+        "report.noData":     ("まだ利用データが集計されていません。作業を継続すると表示されます。", "No data yet — keep working and this will fill in."),
+    ]
+
+    /// キーに対応する現在言語の文言を返す (未登録キーはキーそのもの返し=壊れない)
+    static func t(_ key: String) -> String {
+        guard let entry = table[key] else { return key }
+        return isJapanese ? entry.ja : entry.en
+    }
+}

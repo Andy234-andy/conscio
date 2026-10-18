@@ -8,7 +8,7 @@ struct ConscioMenuView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("Conscio Context Navigator")
+                Text(L10n.t("menu.title"))
                     .font(.caption)
                     .bold()
                     .foregroundColor(.secondary)
@@ -20,7 +20,7 @@ struct ConscioMenuView: View {
                         .font(.body)
                 }
                 .buttonStyle(.plain)
-                .help("デジタル習慣レポートを表示")
+                .help(L10n.t("ui.reportHelp"))
 
                 Button(action: {
                     NSApp.terminate(nil)
@@ -29,24 +29,24 @@ struct ConscioMenuView: View {
                         .font(.body)
                 }
                 .buttonStyle(.plain)
-                .help("Conscioを終了")
+                .help(L10n.t("ui.quitHelp"))
             }
             .padding(.bottom, 2)
 
             Divider()
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("現在の文脈:")
+                Text(L10n.t("ctx.header"))
                     .font(.headline)
                 HStack {
-                    Text("アプリ:")
+                    Text(L10n.t("ctx.app"))
                         .foregroundColor(.secondary)
                     Text(viewModel.currentContext.activeApplication)
                         .bold()
                 }
                 if let doc = viewModel.currentContext.activeDocument {
                     HStack {
-                        Text("ドキュメント:")
+                        Text(L10n.t("ctx.doc"))
                             .foregroundColor(.secondary)
                         Text(doc)
                             .lineLimit(1)
@@ -54,7 +54,7 @@ struct ConscioMenuView: View {
                 }
                 if let url = viewModel.currentContext.activeURL {
                     HStack {
-                        Text("URL:")
+                        Text(L10n.t("ctx.url"))
                             .foregroundColor(.secondary)
                         Text(url)
                             .lineLimit(1)
@@ -68,13 +68,13 @@ struct ConscioMenuView: View {
 
             Divider()
 
-            Text("提案されたアクティビティ:")
+            Text(L10n.t("ui.suggestions"))
                 .font(.headline)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             VStack(alignment: .leading, spacing: 6) {
                 if viewModel.suggestions.isEmpty {
-                    Text("関連する提案はありません。")
+                    Text(L10n.t("ui.noSuggestions"))
                         .foregroundColor(.gray)
                 } else {
                     ForEach(viewModel.suggestions) { suggestion in
@@ -104,7 +104,7 @@ struct ConscioMenuView: View {
                     Circle()
                         .fill(viewModel.isSuppressingNotifications ? Color.green : Color.gray)
                         .frame(width: 8, height: 8)
-                    Text(viewModel.isSuppressingNotifications ? "集中モード (通知抑制中)" : "通常モード")
+                    Text(viewModel.isSuppressingNotifications ? L10n.t("ui.focusMode") : L10n.t("ui.normalMode"))
                         .font(.caption)
                 }
                 Spacer()

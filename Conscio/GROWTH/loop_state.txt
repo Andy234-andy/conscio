@@ -1,9 +1,14 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-18T10:40 JST
+heartbeat: 2026-10-18T10:56 JST
 mode: user-away autonomous evolution
-pending: main(sh_14c9b3466001RAlTb2nlSN1KmM, ~10:53発火 → 進化#6 多言語化)
+pending:
+  - main      : sh_tba_1830s (発火 ~11:25 → 進化#7 v1.2.0リリース)
+  - backup    : sh_tba_2820s (発火 ~11:42, heartbeat新鮮なら無言退場)
+  - emergency : sh_tba_10800s (発火 ~13:25, 最終保険)
 protocol:
-  - MAIN wake: ①即リアーム(main 30m + backup 47m) ②tick作業 ③heartbeat更新
-  - BACKUP wake: heartbeat寿命>32分ならMAINとして復活(リアーム+tick)。freshなら何もせず消える
-  - 毎tick: メトリクス → day_report追記。RULES.md厳守(課金/個人情報/炎上 なし)
-  - 公開物: GitHub操作は既承認。v1.2.0 Releaseは進化#6完了後、v1.1.0と同じ手順(AI表明入りnotes)で実施可
+  - MAIN wake: ①先にリアーム(main 30m + backup 47m + emergency 3h) ②tick作業 ③heartbeat更新
+  - BACKUP/EMERGENCY wake: heartbeat≤32分なら何もせず消える / 死んでいたら復旧モード(RECOVERY_PROTOCOL.md準拠)
+  - 孤児wake (pendingにないID): heartbeat新鮮なら無言退場
+  - 毎tick: メトリクス → day_report追記。RULES.md厳守
+  - 公開物: GitHub ops既承認。v1.2.0リリースはAI表明notesで実施可
+  - Qiitaトークン2nd (fa735df...) は ~/.conscio_qiita_token2 に保存済み・用途はユーザー回答待ち

@@ -14,10 +14,10 @@ struct ReportView: View {
                         .font(.title)
                         .foregroundColor(.yellow)
                     VStack(alignment: .leading) {
-                        Text("Conscio デジタル習慣レポート")
+                        Text(L10n.t("report.title"))
                             .font(.title2)
                             .bold()
-                        Text("今週の作業リズムとディープワークの分析")
+                        Text(L10n.t("report.subtitle"))
                             .font(.caption)
                             .foregroundColor(.gray)
                     }
@@ -28,7 +28,7 @@ struct ReportView: View {
 
                 // Total Focus Time Card
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("総ディープワーク時間")
+                    Text(L10n.t("report.totalFocus"))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                     HStack(alignment: .firstTextBaseline) {
@@ -36,7 +36,7 @@ struct ReportView: View {
                             .font(.system(size: 32, weight: .bold, design: .rounded))
                             .foregroundColor(.accentColor)
                         Spacer()
-                        Text("素晴らしい集中力です！")
+                        Text(L10n.t("report.praise"))
                             .font(.caption)
                             .padding(6)
                             .background(Color.green.opacity(0.2))
@@ -49,7 +49,7 @@ struct ReportView: View {
 
                 // 🧬 進化#5: 直近7日の集中時間チャート (Swift Charts)
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("直近7日の集中時間 (分)")
+                    Text(L10n.t("report.chart7"))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                     Chart(habitTracker.last7DaysFocus) { entry in
@@ -70,13 +70,13 @@ struct ReportView: View {
                 HStack(spacing: 12) {
                     // Context Switch Count
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("文脈切り替え回数")
+                        Text(L10n.t("report.switches"))
                             .font(.caption)
                             .foregroundColor(.secondary)
                         Text("\(habitTracker.contextSwitchCount) 回")
                             .font(.title3)
                             .bold()
-                        Text(habitTracker.contextSwitchCount < 15 ? "非常に安定しています" : "少し散漫かもしれません")
+                        Text(habitTracker.contextSwitchCount < 15 ? L10n.t("report.steady") : L10n.t("report.scattered"))
                             .font(.caption2)
                             .foregroundColor(.gray)
                     }
@@ -106,12 +106,12 @@ struct ReportView: View {
 
                 // Top Apps Usage
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("最も活用したアプリケーション")
+                    Text(L10n.t("report.topApps"))
                         .font(.headline)
                         .padding(.bottom, 4)
 
                     if habitTracker.topApps.isEmpty {
-                        Text("まだ利用データが集計されていません。作業を継続すると表示されます。")
+                        Text(L10n.t("report.noData"))
                             .font(.caption)
                             .foregroundColor(.gray)
                     } else {
