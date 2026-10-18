@@ -35,6 +35,10 @@ struct ConscioMenuView: View {
 
             Divider()
 
+            // 🧬 進化#8: 今日の集中ビッグ数字 (モチベーション・プラス)
+            TodayFocusCard(tracker: viewModel.habitTracker)
+                .padding(.vertical, 4)
+
             VStack(alignment: .leading, spacing: 4) {
                 Text(L10n.t("ctx.header"))
                     .font(.headline)
@@ -143,5 +147,25 @@ struct ConscioMenuView: View {
 struct ConscioMenuView_Previews: PreviewProvider {
     static var previews: some View {
         ConscioMenuView()
+    }
+}
+
+// 🧬 進化#8: 今日の集中ビッグ数字カード
+// habitTracker自身を監視する子Viewに分離 (変更が即UIに反映されるように)
+struct TodayFocusCard: View {
+    @ObservedObject var tracker: HabitTracker
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(L10n.t("ui.todayFocus"))
+                .font(.caption)
+                .foregroundColor(.secondary)
+            Text(tracker.formattedTodayFocus)
+                .font(.system(size: 34, weight: .bold, design: .rounded))
+                .foregroundColor(.purple)
+                .contentTransition(.numericText())
+                .animation(.snappy, value: tracker.formattedTodayFocus)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

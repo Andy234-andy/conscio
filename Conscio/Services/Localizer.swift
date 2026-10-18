@@ -18,6 +18,7 @@ enum L10n {
         "ui.quitHelp":       ("Conscioを終了", "Quit Conscio"),
         "ui.focusMode":      ("集中モード (通知抑制中)", "Focus mode (notifications muted)"),
         "ui.normalMode":     ("通常モード", "Normal mode"),
+        "ui.todayFocus":     ("今日の集中", "Focus today"),
         "report.title":      ("Conscio デジタル習慣レポート", "Conscio Digital Habit Report"),
         "report.subtitle":   ("今週の作業リズムとディープワークの分析", "Your weekly rhythm & deep-work analysis"),
         "report.totalFocus": ("総ディープワーク時間", "Total deep-work time"),

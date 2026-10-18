@@ -60,7 +60,7 @@ class HabitTracker: ObservableObject {
         }
     }
 
-    /// 進化#5 レポートチャート用: 直近7日分 (ラベルは "M/d" 相当の短縮)
+    /// 🧬 進化#5 レポートチャート用: 直近7日分 (ラベルは "M/d" 相当の短縮)
     struct DailyFocusEntry: Identifiable {
         var id: String { day }
         var day: String
@@ -80,6 +80,21 @@ class HabitTracker: ObservableObject {
             result.append(DailyFocusEntry(day: label, minutes: (dailyFocusMap[key] ?? 0) / 60))
         }
         return result
+    }
+
+    // 🧬 進化#8: 今日の集中時間 (ポップオーバーのビッグ数字表示用)
+    var todayFocusSeconds: TimeInterval {
+        dailyFocusMap[dayKey(for: Date())] ?? 0
+    }
+
+    var formattedTodayFocus: String {
+        let s = Int(todayFocusSeconds)
+        if s >= 3600 {
+            let h = s / 3600
+            let m = (s % 3600) / 60
+            return "\(h)時間\(m)分"
+        }
+        return "\(s / 60)分"
     }
 
     init() {
