@@ -55,6 +55,8 @@ enum L10n {
         "report.minutesShort": ("%d分", "%d min"),
         "time.hLong":        ("%d時間%d分", "%dh %dm"),
         "time.mLong":        ("%d分", "%d min"),
+        "report.streak":     ("%d日連続集中", "%d-day focus streak"),
+        "report.streakNone": ("連続記録スタート！", "Start your streak!"),
         "ui.iconFocused":    ("Conscio (集中モード中)", "Conscio (focus mode)"),
         "report.title":      ("Conscio デジタル習慣レポート", "Conscio Digital Habit Report"),
         "report.subtitle":   ("今週の作業リズムとディープワークの分析", "Your weekly rhythm & deep-work analysis"),

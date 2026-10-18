@@ -1,9 +1,9 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-18T18:40 JST (main tick done: evo#20 next-phase plan)
+heartbeat: 2026-10-18T19:18 JST (main tick done: evo#21 streak)
 mode: user-away autonomous evolution
 pending:
-  - main      : sh_14e62301e001TLYcqKeIXH01nm (~19:08 → 進化#21 ストリーク表示)
-  - backup    : sh_14e623022001j6cCy5jIJpDBoN (~19:25, freshなら無言退場)
+  - main      : sh_14e7de6e8001PcN0Yy44frxxHE (~19:38 → 進化#22 抑制サマリー送信元表示)
+  - backup    : sh_14e7de6ed001SuefZjA69bWC2l (~19:55, freshなら無言退場)
   - emergency : sh_14d66bc47002Rt12RDxPOhk78W (~17:08)
 protocol:
   - MAIN wake: ①先にリアーム(main 30m + backup 47m + emergency 3h) ②tick作業 ③heartbeat更新

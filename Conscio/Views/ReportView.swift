@@ -57,6 +57,17 @@ struct ReportView: View {
                             .font(.system(size: 28, weight: .bold, design: .rounded))
                             .foregroundColor(.purple)
                         Spacer()
+                        // 🧬 進化#21: 連続集中日数 (ストリーク)
+                        if habitTracker.focusStreakDays >= 2 {
+                            Label(String.localizedStringWithFormat(L10n.t("report.streak"), habitTracker.focusStreakDays),
+                                  systemImage: "flame.fill")
+                                .font(.caption)
+                                .foregroundColor(.orange)
+                        } else {
+                            Text(L10n.t("report.streakNone"))
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
                         Text(String.localizedStringWithFormat(L10n.t("report.weekPerAvg"), habitTracker.last7DaysAverageMinutes))
                             .font(.caption)
                             .foregroundColor(.secondary)

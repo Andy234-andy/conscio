@@ -177,6 +177,24 @@ class HabitTracker: ObservableObject {
         Int(last7DaysTotalSeconds / 7 / 60)
     }
 
+    // 🧬 進化#21: 連続集中日数 (1分以上集中した日が何日連続か・今日or昨日から遡る)
+    // 今日がまだ1分未満なら昨日起点で数える (日中作業中にストリークを殺さない配慮)
+    var focusStreakDays: Int {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        fmt.locale = Locale(identifier: "en_US_POSIX")
+        let cal = Calendar.current
+        var streak = 0
+        var day = (dailyFocusMap[fmt.string(from: Date())] ?? 0) >= 60
+            ? Date()
+            : (cal.date(byAdding: .day, value: -1, to: Date()) ?? Date())
+        while (dailyFocusMap[fmt.string(from: day)] ?? 0) >= 60 {
+            streak += 1
+            day = cal.date(byAdding: .day, value: -1, to: day) ?? Date()
+        }
+        return streak
+    }
+
     init() {
         loadStats()
     }
