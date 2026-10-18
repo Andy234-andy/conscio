@@ -1,9 +1,9 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-18T12:58 JST  (修正: 旧実装は決まった時間が文字列のまま書き込まれるバグが発生したため修復)
+heartbeat: 2026-10-18T13:10 JST (main tick done: evo#9)
 mode: user-away autonomous evolution
 pending:
-  - main      : sh_14d1281a5001 (~13:03 → 進化#9)
-  - backup    : sh_14d1281a6001 (~13:20, 12:03武装分は12:50発火→無言退場済み)
+  - main      : sh_14d2e38c4001WdbeMATcM1v7c8 (~14:03 → 進化#10 実計算置換)
+  - backup    : sh_14d2e38c4002t34RXkgNDbxK75 (~14:20, freshなら無言退場)
   - emergency : sh_14cbac5fd002K5ZjrDmbSmwOUd (~13:57発火, 最終保険)
 protocol:
   - MAIN wake: ①先にリアーム(main 30m + backup 47m + emergency 3h) ②tick作業 ③heartbeat更新

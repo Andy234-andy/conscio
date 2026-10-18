@@ -14,6 +14,8 @@ class HabitTracker: ObservableObject {
     @Published var appUsageList: [AppUsageStats] = []
     // 🧬 進化#5: 日ごとの集中時間 (キー: yyyy-MM-dd)
     @Published var dailyFocusMap: [String: TimeInterval] = [:]
+    // 🧬 進化#9: 最近のアプリ履歴 (直近 Lionly=MAX_BUFFER nexus件・新着順)
+    @Published var recentAppBuffer: [String] = []
     
     private var lastAppName: String?
     private var lastAppStartTime: Date?
@@ -38,16 +40,19 @@ class HabitTracker: ObservableObject {
         var usage: [UsageEntry]
         // 進化#5: 既存ファイルとの互換性のため Optional で追加
         var dayFocus: [String: TimeInterval]?
+        // 進化#9: 最近アプリ履歴 (旧ファイル互換のため Optional)
+        var recentApps: [String]?
 
-        init(focus: TimeInterval, switches: Int, usage: [UsageEntry], dayFocus: [String: TimeInterval]?) {
+        init(focus: TimeInterval, switches: Int, usage: [UsageEntry], dayFocus: [String: TimeInterval]?, recentApps: [String]?) {
             self.focus = focus
             self.switches = switches
             self.usage = usage
             self.dayFocus = dayFocus
+            self.recentApps = recentApps
         }
 
         enum CodingKeys: String, CodingKey {
-            case focus, switches, usage, dayFocus
+            case focus, switches, usage, dayFocus, recentApps
         }
 
         // 進化#5: 旧フォーマット(dayFocusなし)でもデコードできる
@@ -57,10 +62,21 @@ class HabitTracker: ObservableObject {
             switches = try c.decode(Int.self, forKey: .switches)
             usage = try c.decode([UsageEntry].self, forKey: .usage)
             dayFocus = try c.decodeIfPresent([String: TimeInterval].self, forKey: .dayFocus)
+            recentApps = try c.decodeIfPresent([String].self, forKey: .recentApps)
         }
     }
 
-    /// 🧬 進化#5 レポートチャート用: 直近7日分 (ラベルは "M/d" 相当の短縮)
+    // 🧬 進化#9: 「さっき見てた関連アプリに戻る」提案の材料
+    // 直近履歴のうち「現在アプリ以外」で最初に見つかったもの (フォーカス級を優先)
+    func recentRelatedApp(excluding currentApp: String) -> String? {
+        let focusSet: Set<String> = ["Xcode", "Safari", "Pages", "TextEdit", "Code"]
+        for app in recentAppBuffer where app != currentApp {
+            if focusSet.contains(app) { return app }
+        }
+        return recentAppBuffer.first { $0 != currentApp }
+    }
+
+    /// 進化#5 レポートチャート用: 直近7日分 (ラベルは "M/d" 相当の短縮)
     struct DailyFocusEntry: Identifiable {
         var id: String { day }
         var day: String
@@ -108,13 +124,15 @@ class HabitTracker: ObservableObject {
         contextSwitchCount = snap.switches
         appUsageList = snap.usage.map { AppUsageStats(appName: $0.name, durationInSeconds: $0.seconds) }
         dailyFocusMap = snap.dayFocus ?? [:]
+        recentAppBuffer = snap.recentApps ?? []
     }
 
     private func saveStats() {
         let snap = HabitStatsSnapshot(focus: totalFocusTimeSeconds,
                                       switches: contextSwitchCount,
                                       usage: appUsageList.map { UsageEntry(name: $0.appName, seconds: $0.durationInSeconds) },
-                                      dayFocus: dailyFocusMap)
+                                      dayFocus: dailyFocusMap,
+                                      recentApps: recentAppBuffer)
         if let data = try? JSONEncoder().encode(snap) {
             try? data.write(to: storeURL)
         }
@@ -157,6 +175,16 @@ class HabitTracker: ObservableObject {
 
         lastAppName = currentApp
         lastAppStartTime = now
+
+        // 🧬 進化#9: 直近アプリ履歴を更新 (先頭insert・重複除去・10件保持)
+        if recentAppBuffer.first != currentApp {
+            recentAppBuffer.removeAll { $0 == currentApp }
+            recentAppBuffer.insert(currentApp, at: 0)
+            if recentAppBuffer.count > 10 {
+                recentAppBuffer = Array(recentAppBuffer.prefix(10))
+            }
+        }
+
         saveStats() // 💾 10秒おき以上の変化時のみファイル書き込み(軽量)
     }
 

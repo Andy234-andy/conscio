@@ -51,6 +51,14 @@ class MainViewModel: ObservableObject {
             newSuggestions.append(Suggestion(type: .knowledge, title: "デジタルウェルビーイングの重要性", url: nil, contentPreview: "デジタル環境での健康的な生活について。"))
         }
 
+        // 🧬 進化#9: 直近履歴から「戻る先」アプリを提案 (ランチョンレート)
+        if let returnApp = habitTracker.recentRelatedApp(excluding: context.activeApplication) {
+            newSuggestions.append(Suggestion(type: .knowledge,
+                                             title: "「\(returnApp)」に戻る",
+                                             url: nil,
+                                             contentPreview: "直近の関連アプリ (履歴バッファから)"))
+        }
+
         // 🤖 AI (on-device NLP) による文脈検索サジェスト
         let appNameLower = context.activeApplication.lowercased()
         if let kw = context.keywords.first(where: { $0.count >= 3 && $0.lowercased() != appNameLower }) {
