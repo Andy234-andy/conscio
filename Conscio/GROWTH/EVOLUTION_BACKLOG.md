@@ -8,7 +8,7 @@
 1. ✅ **習慣データの永続化 + 終了ボタン** (v1.1.1)
    - HabitTrackerをJSONでApplication Supportに保存し、再起動しても集中時間が消えないように
    - メニューバーポップオーバーに「終了」ボタンがない=メニューバー常駐アプリとして致命的なUX → 追加
-2. ⬜ **日本語NLP精度向上** (NLTaggerに言語自動判定 NLLanguageRecognizer を組み込む)
+2. ✅ **日本語NLP精度向上** (NLLanguageRecognizerで言語自動判定→NLTaggerに明示設定。日本語の2文字名詞もキーワード化)
 3. ⬜ **集中モード時のメニューバーアイコン色替え** (通知抑制中だという視覚サイン)
 4. ⬜ **Safari連携の実URL取得** (要オートメーション権限: AppleScript。権限フロー設計込み)
 5. ⬜ **習慣レポートに日次推移チャート** (Swift Charts利用)

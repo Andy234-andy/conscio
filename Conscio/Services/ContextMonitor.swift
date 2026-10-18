@@ -64,14 +64,25 @@ class ContextMonitor: ObservableObject {
             var aiKeywords: [String] = []
             let nlpText = [appName, activeDocument ?? ""].joined(separator: " ")
             if !nlpText.trimmingCharacters(in: .whitespaces).isEmpty {
+                // 進化#2: NLLanguageRecognizerで言語を自動判定し、タガーに明示設定する
+                // (日本語など短いテキストで品詞タグ付けの精度が大きく上がる)
+                let recognizer = NLLanguageRecognizer()
+                recognizer.processString(nlpText)
+                let detected = recognizer.dominantLanguage
+                let isJapanese = (detected == .japanese)
+
                 let tagger = NLTagger(tagSchemes: [.lexicalClass])
                 tagger.string = nlpText
+                if let lang = detected {
+                    tagger.setLanguage(lang, range: nlpText.startIndex..<nlpText.endIndex)
+                }
                 let options: NLTagger.Options = [.omitPunctuation, .omitWhitespace, .omitOther]
-                // 英語・日本語両対応の品詞タグ付け
                 tagger.enumerateTags(in: nlpText.startIndex..<nlpText.endIndex, unit: .word, scheme: .lexicalClass, options: options) { tag, range in
                     if tag == .noun || tag == .verb {
                         let word = String(nlpText[range])
-                        if word.count > 2 {
+                        // 日本語は2文字で意味を持つ名詞が多い。欧米系は3文字以上
+                        let minLen = isJapanese ? 2 : 3
+                        if word.count >= minLen {
                             aiKeywords.append(word)
                         }
                     }
