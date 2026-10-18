@@ -1,9 +1,9 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-19T07:57 JST (morning tick: v1.4.0 released + evo#27 safety/SECURITY.md + article3 published)
+heartbeat: 2026-10-19T08:34 JST (main tick done: evo#28 report data-transparency footer)
 mode: user-away autonomous evolution
 pending:
-  - main      : (なし — 全タイマーSIGTERMで停止済み)
-  - backup    : (なし)
+  - main      : sh_1514f41ef001x3AMC7N14ApC3u (~09:0x → 進化#29 README_EN security links)
+  - backup    : sh_1514f41f00015k3KUKjipbL91f (~09:31, freshなら無言退場)
   - emergency : (なし)
 protocol:
   - MAIN wake: ①先にリアーム(main 30m + backup 47m + emergency 3h) ②tick作業 ③heartbeat更新

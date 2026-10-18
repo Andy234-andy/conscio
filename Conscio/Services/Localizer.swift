@@ -73,6 +73,11 @@ enum L10n {
         "report.steady":     ("非常に安定しています", "Very steady"),
         "report.scattered":  ("少し散漫かもしれません", "A bit scattered"),
         "report.topApps":    ("最も活用したアプリケーション", "Most used applications"),
+        "report.dataFolder": ("データの保存場所", "Where your data lives"),
+        "report.dataPath":   ("~/Library/Application Support/Conscio/ の1ファイルのみ", "A single file under ~/Library/Application Support/Conscio/"),
+        "report.dataSize":   ("データファイルの実サイズ: %.1f KB", "Data file size: %.1f KB"),
+        "report.dataPrivacyHint": ("外部送信なし・文書タイトルは保存されません。検証コマンドはリポジトリの SECURITY.md に掲載。", "No outbound data; document titles are never stored. Verification commands live in SECURITY.md."),
+        "report.openFolder": ("フォルダを開く", "Open folder"),
         "report.noData":     ("まだ利用データが集計されていません。作業を継続すると表示されます。", "No data yet — keep working and this will fill in."),
     ]
 

@@ -289,4 +289,11 @@ class HabitTracker: ObservableObject {
             return a.appName < b.appName
         }.prefix(3).map { $0 }
     }
+
+    /// 🧬 進化#28: データの透明性 — 保存中の統計ファイルの実サイズをKBで返す (実測値・飾りなし)
+    var dataFileSizeKB: Double {
+        let attrs = try? FileManager.default.attributesOfItem(atPath: storeURL.path)
+        let bytes = (attrs?[FileAttributeKey.size] as? NSNumber)?.doubleValue ?? 0
+        return bytes / 1024.0
+    }
 }

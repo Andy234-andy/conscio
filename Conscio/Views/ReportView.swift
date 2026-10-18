@@ -176,6 +176,31 @@ struct ReportView: View {
                 .background(Color(NSColor.controlBackgroundColor))
                 .cornerRadius(12)
 
+                // 🧬 進化#28: データ保存の透明性フッター (実サイズ・実場所・検証ドキュメント誘導 — 誇張なし)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(L10n.t("report.dataFolder"))
+                        .font(.headline)
+                        .padding(.bottom, 2)
+                    Text(L10n.t("report.dataPath"))
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                    Text(String.localizedStringWithFormat(L10n.t("report.dataSize"), habitTracker.dataFileSizeKB))
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                    Text(L10n.t("report.dataPrivacyHint"))
+                        .font(.caption2)
+                        .foregroundColor(.gray)
+                    Button(L10n.t("report.openFolder")) {
+                        let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+                        NSWorkspace.shared.open(dir.appendingPathComponent("Conscio"))
+                    }
+                    .buttonStyle(.link)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+                .background(Color(NSColor.controlBackgroundColor))
+                .cornerRadius(12)
+
                 Spacer()
             }
             .padding()
