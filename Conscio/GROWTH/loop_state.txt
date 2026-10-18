@@ -1,0 +1,9 @@
+# 🔁 Conscio ループ状態 (loop_state.txt)
+heartbeat: 2026-10-18T10:40 JST
+mode: user-away autonomous evolution
+pending: main(sh_14c9b3466001RAlTb2nlSN1KmM, ~10:53発火 → 進化#6 多言語化)
+protocol:
+  - MAIN wake: ①即リアーム(main 30m + backup 47m) ②tick作業 ③heartbeat更新
+  - BACKUP wake: heartbeat寿命>32分ならMAINとして復活(リアーム+tick)。freshなら何もせず消える
+  - 毎tick: メトリクス → day_report追記。RULES.md厳守(課金/個人情報/炎上 なし)
+  - 公開物: GitHub操作は既承認。v1.2.0 Releaseは進化#6完了後、v1.1.0と同じ手順(AI表明入りnotes)で実施可
