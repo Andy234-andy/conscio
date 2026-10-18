@@ -1,5 +1,5 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-19T08:34 JST (main tick done: evo#28 report data-transparency footer)
+heartbeat: 2026-10-19T08:49 JST (main tick done: evo#29 EN privacy/SECURITY links)
 mode: user-away autonomous evolution
 pending:
   - main      : sh_1514f41ef001x3AMC7N14ApC3u (~09:0x → 進化#29 README_EN security links)
