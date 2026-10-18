@@ -22,6 +22,8 @@ Macで作業していると、こんな瞬間がありませんか。
 
 https://github.com/Andy234-andy/conscio
 
+> 🚀 **無料で使ってみる → [GitHubからダウンロード (Releases)](https://github.com/Andy234-andy/conscio/releases/latest)**（macOS 13+ / Apple Silicon・MIT・オフライン動作）
+
 ## Conscioの機能
 
 1. **リアルタイム文脈認識** — 2秒ごとに最前面アプリと開いているドキュメントを検知（Accessibility API + NSWorkspace）
