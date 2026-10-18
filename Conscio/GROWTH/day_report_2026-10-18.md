@@ -18,3 +18,4 @@
 [10:01] 🧬 進化#3公開 : メニューバーアイコン色替え(集中モード可視化) — push済み / 📊 Stars:0 | DL:0 | Uniques:0 | Issues:0
 [10:15] 🌐 進化#4公開 : ブラウザ実URL取得(Safari/Chrome・AppleScript) — push済み(e5271e0) / 📊 Stars:0 | DL:0 | Uniques:0 | Issues:0
 [10:23] 📈 進化#5公開 : 習慣レポートに7日間集中チャート(Swift Charts) — push済み / 📊 Stars:0 | DL:0 | Uniques:0 | Issues:0
+[10:26] 🔍 可視性強化: repo description/topics設定(12件)、OG meta、robots/sitemap追加・push
