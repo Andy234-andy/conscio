@@ -1,11 +1,13 @@
 
 import Cocoa
 import SwiftUI
+import Combine
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem!
     var popover: NSPopover!
     var notificationManager: NotificationManager! // Keep a reference to NotificationManager
+    private var cancellables = Set<AnyCancellable>()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Initialize NotificationManager here to ensure its delegate is set early
@@ -33,6 +35,30 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         // Request necessary permissions (example, actual implementation needs more detail)
         requestPermissions()
+
+        // 🧬 進化#3: 集中モード(通知抑制中)はメニューバーアイコンが色替えされる視覚サイン
+        notificationManager.$isSuppressing
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] suppressing in
+                self?.updateStatusBarIcon(suppressing: suppressing)
+            }
+            .store(in: &cancellables)
+    }
+
+    /// 進化#3: 集中モード中はアイコンが紫色の非テンプレートになり、「今、Conscioがあなたを守っている」を一目で伝える
+    func updateStatusBarIcon(suppressing: Bool) {
+        guard let button = statusItem?.button else { return }
+        if suppressing {
+            let image = NSImage(systemSymbolName: "brain.head.profile", accessibilityDescription: "Conscio (集中モード中)")
+            image?.isTemplate = false
+            button.image = image
+            button.contentTintColor = .systemPurple
+        } else {
+            let image = NSImage(systemSymbolName: "brain.head.profile", accessibilityDescription: "Conscio")
+            image?.isTemplate = true
+            button.image = image
+            button.contentTintColor = nil
+        }
     }
 
     @objc func togglePopover(_ sender: AnyObject?) {
