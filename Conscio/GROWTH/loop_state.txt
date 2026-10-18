@@ -1,5 +1,5 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-18T12:06 JST
+heartbeat: $(date +%Y-%m-%dT%H:%M) JST
 mode: user-away autonomous evolution
 pending:
   - main      : sh_14cf68c66001VWa7CPeZgqzoHf (~12:32発火 → 進化#8 今日の集中ビッグ数字)
