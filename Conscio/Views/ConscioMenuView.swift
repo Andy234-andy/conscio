@@ -103,6 +103,16 @@ struct ConscioMenuView: View {
                                     Image(systemName: "arrow.up.right.circle.fill")
                                         .foregroundColor(.accentColor)
                                 }
+                            } else if suggestion.type == .appSwitch, let appName = suggestion.targetAppName {
+                                // 🧬 進化#12: 戻る提案は実際にそのアプリへ切り替えるアクション
+                                Button {
+                                    activateApp(named: appName)
+                                } label: {
+                                    Image(systemName: "return")
+                                        .foregroundColor(.accentColor)
+                                }
+                                .buttonStyle(.plain)
+                                .help(String(format: L10n.t("ui.returnToHelp"), appName))
                             }
                         }
                     }
@@ -138,6 +148,16 @@ struct ConscioMenuView: View {
         case .communication: return "bubble.left.and.bubble.right"
         case .task: return "checkmark.circle"
         case .knowledge: return "lightbulb"
+        case .appSwitch: return "arrowshape.turn.up.left"
+        }
+    }
+
+    /// 🧬 進化#12: アプリを実際に切り替える (実行中ならアクティベート、無ければ起動)
+    private func activateApp(named name: String) {
+        if let running = NSWorkspace.shared.runningApplications.first(where: { $0.localizedName == name }) {
+            running.activate(options: [.activateAllWindows])
+        } else {
+            NSWorkspace.shared.launchApplication(name)
         }
     }
 
