@@ -33,3 +33,5 @@
 [13:51] 🫀 backup(13:09武装分)発火: heartbeat 14分=新鮮 → 無言退場 (規約どおり・増殖なし) 待機: main ~14:08 / emergency ~13:57発火処理待ち
 [13:58] 🛟 EMERGENCY(10:57武装の最終保険)発火: heartbeat新鮮(~20分) → 何もせず静かに退場 (days 3連体制はすべて規約どおり運用中)
 [14:22] 🧬 進化#11公開 : 設定を本物化(⚙/リセット確認/データフォルダ/偽トグル廃止) / 📊 Stars:0 | DL:0 | Uniques:0 | Issues:0 | Qiita pv=116 stocks=0
+[14:44] 🧬 進化#12公開 : 戻る提案→本物のアプリ切替 / 📊 Stars:0 | DL:0 | Uniques:0 | Issues:0 | Qiita pv=116 stocks=1
+[14:52] 🫀 backup(14:08武装分)発火: heartbeat 9分=新鮮 → 無言退場 (規約どおり) 待機: main ~15:08(進化#13)/backup ~15:25

@@ -151,6 +151,32 @@ class HabitTracker: ObservableObject {
         return "\(s / 60)分"
     }
 
+    // 🧬 進化#13: 直近7日の合計集中秒数 (チャートと同一の集計期間)
+    var last7DaysTotalSeconds: TimeInterval {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        fmt.locale = Locale(identifier: "en_US_POSIX")
+        let cal = Calendar.current
+        var total: TimeInterval = 0
+        for offset in stride(from: -6, through: 0, by: 1) {
+            let d = cal.date(byAdding: .day, value: offset, to: Date()) ?? Date()
+            total += dailyFocusMap[fmt.string(from: d)] ?? 0
+        }
+        return total
+    }
+
+    var formattedLast7DaysTotal: String {
+        let s = Int(last7DaysTotalSeconds)
+        let h = s / 3600
+        let m = (s % 3600) / 60
+        if h > 0 { return "\(h)時間\(m)分" }
+        return "\(m)分"
+    }
+
+    var last7DaysAverageMinutes: Int {
+        Int(last7DaysTotalSeconds / 7 / 60)
+    }
+
     init() {
         loadStats()
     }

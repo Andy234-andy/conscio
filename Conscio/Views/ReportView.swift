@@ -47,6 +47,25 @@ struct ReportView: View {
                 .background(Color(NSColor.controlBackgroundColor))
                 .cornerRadius(12)
 
+                // 🧬 進化#13: 直近7日合計カード
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(L10n.t("report.weekTotal"))
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    HStack(alignment: .firstTextBaseline) {
+                        Text(habitTracker.formattedLast7DaysTotal)
+                            .font(.system(size: 28, weight: .bold, design: .rounded))
+                            .foregroundColor(.purple)
+                        Spacer()
+                        Text(String.localizedStringWithFormat(L10n.t("report.weekPerAvg"), habitTracker.last7DaysAverageMinutes))
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                .padding()
+                .background(Color(NSColor.controlBackgroundColor))
+                .cornerRadius(12)
+
                 // 🧬 進化#5: 直近7日の集中時間チャート (Swift Charts)
                 VStack(alignment: .leading, spacing: 8) {
                     Text(L10n.t("report.chart7"))
