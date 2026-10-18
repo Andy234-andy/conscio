@@ -73,8 +73,8 @@ struct ReportView: View {
                         .foregroundColor(.secondary)
                     Chart(habitTracker.last7DaysFocus) { entry in
                         BarMark(
-                            x: .value("日付", entry.day),
-                            y: .value("集中", entry.minutes)
+                            x: .value(L10n.t("report.chartDate"), entry.day),
+                            y: .value(L10n.t("report.chartFocus"), entry.minutes)
                         )
                         .foregroundStyle(.purple.gradient)
                         .cornerRadius(3)
@@ -95,7 +95,7 @@ struct ReportView: View {
                         Text(L10n.t("report.switches"))
                             .font(.caption)
                             .foregroundColor(.secondary)
-                        Text("\(habitTracker.contextSwitchCount) 回")
+                        Text(String.localizedStringWithFormat(L10n.t("report.countTimes"), habitTracker.contextSwitchCount))
                             .font(.title3)
                             .bold()
                         Text(habitTracker.contextSwitchCount < 15 ? L10n.t("report.steady") : L10n.t("report.scattered"))
@@ -153,7 +153,7 @@ struct ReportView: View {
                                 Text(stat.appName)
                                     .font(.body)
                                 Spacer()
-                                Text("\(Int(stat.durationInSeconds / 60)) 分")
+                                Text(String.localizedStringWithFormat(L10n.t("report.minutesShort"), Int(stat.durationInSeconds / 60)))
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
                             }

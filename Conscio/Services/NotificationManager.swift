@@ -68,8 +68,8 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
 
     func showNotificationSummary(suppressedCount: Int) {
         let content = UNMutableNotificationContent()
-        content.title = "Conscio: 集中モードを解除しました"
-        content.body = "集中モード中に\(suppressedCount)件の通知が抑制されました。"
+        content.title = L10n.t("notif.focusOffTitle")
+        content.body = String.localizedStringWithFormat(L10n.t("notif.focusOffBody"), suppressedCount)
         content.sound = UNNotificationSound.default
 
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)

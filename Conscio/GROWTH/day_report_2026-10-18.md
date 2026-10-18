@@ -41,3 +41,6 @@
 [15:55] 🫀 backup(15:09武装分)発火: heartbeat 15分=新鮮 → 無言退場 (規約どおり) 待機: main ~16:08(進化#15)/emergency ~17:08
 [16:15] 🧬 進化#15公開 : 現在アプリの実アイコン表示 / 📊 Stars:0 | DL:0 | Uniques:0 | Issues:0 | Qiita pv=122 stocks=1
 [16:26] 🫀 backup(15:38武装分)発火: heartbeat 13分=新鮮 → 無言退場 (規約どおり) 待機: main ~16:38(進化#16)/emergency ~17:08
+[16:44] 🧬 進化#16公開 : 集中カード→レポート導線 / 📊 Stars:0 | DL:0 | Uniques:0 | Issues:0 | Qiita pv=123 stocks=1
+[16:56] 🫀 backup(16:13武装分)発火: heartbeat 12分=新鮮 → 無言退場 (規約どおり) 待機: main ~17:08(進化#17)/emergency ~17:08
+[17:06] 🛟 EMERGENCY(14:08武装分)発火: heartbeat 22分=新鮮 → 何もせず静かに退場 (規約どおり) 待機: main ~17:08(進化#17)/backup ~17:25 ※17:08にmainとほぼ同時発火だがmain優先で消化

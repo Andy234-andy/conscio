@@ -142,7 +142,7 @@ struct ConscioMenuView: View {
                         .font(.caption)
                 }
                 Spacer()
-                Text("集中時間: \(viewModel.habitTracker.formattedTotalFocusTime)")
+                Text(String(format: L10n.t("ui.focusTime"), viewModel.habitTracker.formattedTotalFocusTime))
                     .font(.caption)
                     .foregroundColor(.secondary)
             }

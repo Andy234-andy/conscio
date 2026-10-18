@@ -49,7 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func updateStatusBarIcon(suppressing: Bool) {
         guard let button = statusItem?.button else { return }
         if suppressing {
-            let image = NSImage(systemSymbolName: "brain.head.profile", accessibilityDescription: "Conscio (集中モード中)")
+            let image = NSImage(systemSymbolName: "brain.head.profile", accessibilityDescription: L10n.t("ui.iconFocused"))
             image?.isTemplate = false
             button.image = image
             button.contentTintColor = .systemPurple

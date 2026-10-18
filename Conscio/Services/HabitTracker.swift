@@ -146,9 +146,9 @@ class HabitTracker: ObservableObject {
         if s >= 3600 {
             let h = s / 3600
             let m = (s % 3600) / 60
-            return "\(h)時間\(m)分"
+            return String(format: L10n.t("time.hLong"), h, m)
         }
-        return "\(s / 60)分"
+        return String(format: L10n.t("time.mLong"), s / 60)
     }
 
     // 🧬 進化#13: 直近7日の合計集中秒数 (チャートと同一の集計期間)
@@ -169,8 +169,8 @@ class HabitTracker: ObservableObject {
         let s = Int(last7DaysTotalSeconds)
         let h = s / 3600
         let m = (s % 3600) / 60
-        if h > 0 { return "\(h)時間\(m)分" }
-        return "\(m)分"
+        if h > 0 { return String(format: L10n.t("time.hLong"), h, m) }
+        return String(format: L10n.t("time.mLong"), m)
     }
 
     var last7DaysAverageMinutes: Int {
@@ -256,9 +256,9 @@ class HabitTracker: ObservableObject {
         let hours = Int(totalFocusTimeSeconds) / 3600
         let minutes = (Int(totalFocusTimeSeconds) % 3600) / 60
         if hours > 0 {
-            return "\(hours)時間 \(minutes)分"
+            return String(format: L10n.t("time.hLong"), hours, minutes)
         } else {
-            return "\(minutes)分"
+            return String(format: L10n.t("time.mLong"), minutes)
         }
     }
 
