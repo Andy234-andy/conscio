@@ -47,6 +47,11 @@ struct ConscioMenuView: View {
             // 🧬 進化#8: 今日の集中ビッグ数字 (モチベーション・プラス)
             TodayFocusCard(tracker: viewModel.habitTracker)
                 .padding(.vertical, 4)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    openReportWindow() // 🧬 進化#16: カードタップでレポートを開く
+                }
+                .help(L10n.t("ui.todayFocusHelp"))
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(L10n.t("ctx.header"))

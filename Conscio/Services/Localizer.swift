@@ -43,6 +43,7 @@ enum L10n {
         "ui.returnTo":       ("「%@」に戻る", "Return to \"%@\""),
         "ui.returnToNote":   ("クリックでアプリを切り替えます", "Click to switch apps"),
         "ui.returnToHelp":   ("%@ に切り替える", "Switch to %@"),
+        "ui.todayFocusHelp": ("クリックで習慣レポートを開く", "Click to open the habit report"),
         "report.title":      ("Conscio デジタル習慣レポート", "Conscio Digital Habit Report"),
         "report.subtitle":   ("今週の作業リズムとディープワークの分析", "Your weekly rhythm & deep-work analysis"),
         "report.totalFocus": ("総ディープワーク時間", "Total deep-work time"),

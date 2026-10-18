@@ -22,7 +22,7 @@
 13. ✅ **ReportViewに「週合計」カード** (直近7日の合計28pt紫+1日平均分付記)
 14. ✅ **バックログ補充** (**v1.3.0リリース実施**: 進化#8-#13統合ZIP・AI表明notes・GitHub Pages/iCloud表示版あり)
 15. ✅ **現在アプリのアイコン表示** (NSRunningApplication.icon・18pt popover表示・未検知時は汎用)
-16. ⬜ **「今日の集中」カードをクリックでレポートを開く** (popover→Reportの導線)
+16. ✅ **「今日の集中」カードをクリックでレポートを開く** (全カード面タップ・hover説明・en/ja)
 17. ⬜ **L10n残骸掃除** (ContentView・通知文面など残りハードコード文字列のL10n化)
 18. ⬜ **README_EN.md更新** (進化#8-#13を英語版READMEにも反映)
 19. ⬜ **Wiki更新** (Usage/How-It-Worksに進化#8-#13の新機能を反映)
