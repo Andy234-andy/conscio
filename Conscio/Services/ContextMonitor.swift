@@ -62,6 +62,23 @@ class ContextMonitor: ObservableObject {
                     }
                 }
             }
+
+            // 🧬 進化#24: 無意味なタイトルはドキュメント扱いしない
+            // (空文字 / Untitled系 / アプリ名と同一 / 汎用プレースホルダ)
+            if let doc = activeDocument {
+                let trimmed = doc.trimmingCharacters(in: .whitespacesAndNewlines)
+                let lower = trimmed.lowercased()
+                let meaningless = trimmed.isEmpty
+                    || lower == "untitled"
+                    || lower == "無題"
+                    || trimmed == appName
+                    || lower == "page 1"
+                    || lower == "starting page"
+                    || lower == "start page"
+                    || lower == "loading…"
+                    || lower == "loading"
+                if meaningless { activeDocument = nil }
+            }
             
             // 🤖 オンデバイス NLP キーワード抽出 (Apple NaturalLanguage framework)
             var aiKeywords: [String] = []

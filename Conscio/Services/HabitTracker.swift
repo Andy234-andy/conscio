@@ -281,6 +281,12 @@ class HabitTracker: ObservableObject {
     }
 
     var topApps: [AppUsageStats] {
-        return appUsageList.sorted(by: { $0.durationInSeconds > $1.durationInSeconds }).prefix(3).map { $0 }
+        return appUsageList.sorted { a, b in
+            if a.durationInSeconds != b.durationInSeconds {
+                return a.durationInSeconds > b.durationInSeconds
+            }
+            // 🧬 進化#24: 同秒数は名前順に安定させる (更新のたびに順位がちらつかないように)
+            return a.appName < b.appName
+        }.prefix(3).map { $0 }
     }
 }
