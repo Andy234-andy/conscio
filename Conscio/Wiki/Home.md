@@ -3,7 +3,7 @@
 **文脈を認識するメニューバー常駐アプリ** の公式ドキュメントです。
 Macが「いま何をしているのか」を理解し、必要なものだけを差し出し、集中の邪魔を静かに守ります。
 
-> 🚀 最新版: **v1.2.0** ([ダウンロード](https://github.com/Andy234-andy/conscio/releases/latest)) · 公式サイト: https://andy234-andy.github.io/conscio/
+> 🚀 最新版: **v1.3.0** ([ダウンロード](https://github.com/Andy234-andy/conscio/releases/latest)) · 公式サイト: https://andy234-andy.github.io/conscio/ · 2日で**17進化**
 
 ## 📚 ページ一覧
 

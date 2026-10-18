@@ -46,3 +46,5 @@
 [17:06] 🛟 EMERGENCY(14:08武装分)発火: heartbeat 22分=新鮮 → 何もせず静かに退場 (規約どおり) 待機: main ~17:08(進化#17)/backup ~17:25 ※17:08にmainとほぼ同時発火だがmain優先で消化
 [17:16] 🧬 進化#17公開 : フェイク提案撤去+L10n完全化 / 📊 Stars:0 | DL:0 | Uniques:0 | Issues:0 | Qiita pv=127 stocks=1
 [17:26] 🫀 backup(16:42武装分)発火: heartbeat 10分=新鮮 → 無言退場 (規約どおり) 待機: main ~17:38(進化#18 README_EN)/emergency ~20:08
+[17:40] 🧬 進化#18公開 : README_EN全面刷新 / 📊 Stars:0 | DL:0 | Uniques:0 | Issues:0 | Qiita pv=130 stocks=1
+[17:56] 🫀 backup(17:08武装分)発火: heartbeat 17分=新鮮 → 無言退場 (規約どおり) 待機: main ~18:08(進化#19 Wiki更新)/emergency ~20:08
