@@ -1,37 +1,74 @@
-
 import SwiftUI
+import Cocoa
 
+/// 🧬 進化#11: 本当に効く設定ウィンドウ
+/// (旧実装の .constant(true) フェイストグル2個を廃止し、実行可能な操作のみを実装)
 struct SettingsView: View {
+    @ObservedObject var habitTracker: HabitTracker
+    @State private var showResetConfirm = false
+
+    private var dataDirectoryURL: URL {
+        FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+            .appendingPathComponent("Conscio", isDirectory: true)
+    }
+
     var body: some View {
         Form {
-            Text("Conscioの設定")
+            Text(L10n.t("settings.title"))
                 .font(.largeTitle)
-                .padding(.bottom)
 
-            Section(header: Text("一般")) {
-                Toggle("メニューバーに表示", isOn: .constant(true))
+            Section(header: Text(L10n.t("settings.language"))) {
+                HStack {
+                    Text(L10n.t("settings.uiLang"))
+                    Spacer()
+                    Text(L10n.isJapanese ? "日本語" : "English")
+                        .foregroundColor(.secondary)
+                }
+                Text(L10n.t("settings.uiLangNote"))
+                    .font(.caption)
+                    .foregroundColor(.secondary)
             }
 
-            Section(header: Text("プライバシー")) {
-                Button("パーミッションの管理") {
-                    // Open System Settings relevant pane
+            Section(header: Text(L10n.t("settings.privacy"))) {
+                Button(L10n.t("settings.permissions")) {
                     if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
                         NSWorkspace.shared.open(url)
                     }
                 }
+                Button(L10n.t("settings.openDataFolder")) {
+                    NSWorkspace.shared.open(dataDirectoryURL)
+                }
+                Text(L10n.t("settings.privacyNote"))
+                    .font(.caption)
+                    .foregroundColor(.secondary)
             }
 
-            Section(header: Text("デジタル習慣")) {
-                Toggle("週間レポートを有効にする", isOn: .constant(true))
+            Section(header: Text(L10n.t("settings.habits"))) {
+                Button(role: .destructive) {
+                    showResetConfirm = true
+                } label: {
+                    Text(L10n.t("settings.reset"))
+                }
+                .alert(L10n.t("settings.resetConfirmTitle"), isPresented: $showResetConfirm) {
+                    Button(L10n.t("settings.resetDo"), role: .destructive) {
+                        habitTracker.resetAll()
+                    }
+                    Button(L10n.t("ui.cancel"), role: .cancel) { }
+                } message: {
+                    Text(L10n.t("settings.resetConfirmMsg"))
+                }
+                Text(L10n.t("settings.resetNote"))
+                    .font(.caption)
+                    .foregroundColor(.secondary)
             }
         }
         .padding()
-        .frame(width: 400, height: 300)
+        .frame(width: 430, height: 340)
     }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        SettingsView(habitTracker: HabitTracker())
     }
 }

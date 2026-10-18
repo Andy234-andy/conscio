@@ -23,6 +23,15 @@ struct ConscioMenuView: View {
                 .help(L10n.t("ui.reportHelp"))
 
                 Button(action: {
+                    openSettingsWindow()
+                }) {
+                    Image(systemName: "gearshape")
+                        .font(.body)
+                }
+                .buttonStyle(.plain)
+                .help(L10n.t("ui.settingsHelp"))
+
+                Button(action: {
                     NSApp.terminate(nil)
                 }) {
                     Image(systemName: "power")
@@ -134,12 +143,24 @@ struct ConscioMenuView: View {
 
     private func openReportWindow() {
         let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 450, height: 420),
+            contentRect: NSRect(x: 0, y: 0, width: 450, height: 560), // 進化#5チャートが508→560枠に合うよう修正
             styleMask: [.titled, .closable, .resizable],
             backing: .buffered, defer: false)
         window.center()
-        window.title = "Conscio デジタル習慣レポート"
+        window.title = L10n.t("report.title")
         window.contentView = NSHostingView(rootView: ReportView(habitTracker: viewModel.habitTracker))
+        window.makeKeyAndOrderFront(nil)
+    }
+
+    /// 🧬 進化#11: 設定ウィンドウ (ポップオーバーの⚙から / 旧: only ⌘,でしか開けなかった)
+    private func openSettingsWindow() {
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 440, height: 360),
+            styleMask: [.titled, .closable],
+            backing: .buffered, defer: false)
+        window.center()
+        window.title = L10n.t("settings.title")
+        window.contentView = NSHostingView(rootView: SettingsView(habitTracker: viewModel.habitTracker))
         window.makeKeyAndOrderFront(nil)
     }
 }

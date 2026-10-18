@@ -9,6 +9,9 @@ struct AppUsageStats: Identifiable {
 }
 
 class HabitTracker: ObservableObject {
+    // 🧬 進化#11: シングルトン (ポップオーバー/レポート/設定すべてで同じインスタンスを共有)
+    static let shared = HabitTracker()
+
     @Published var totalFocusTimeSeconds: TimeInterval = 0
     @Published var contextSwitchCount: Int = 0
     @Published var appUsageList: [AppUsageStats] = []
@@ -97,6 +100,18 @@ class HabitTracker: ObservableObject {
         return FocusScoreResult(score: Int(base.rounded()),
                                 todaySeconds: todayS,
                                 yesterdaySeconds: yRaw < 0 ? nil : yRaw)
+    }
+
+    // 🧬 進化#11: 習慣データ全リセット (保存ファイルも削除)
+    func resetAll() {
+        totalFocusTimeSeconds = 0
+        contextSwitchCount = 0
+        appUsageList = []
+        dailyFocusMap = [:]
+        recentAppBuffer = []
+        lastAppName = nil
+        lastAppStartTime = nil
+        try? FileManager.default.removeItem(at: storeURL)
     }
 
     /// 進化#5 レポートチャート用: 直近7日分 (ラベルは "M/d" 相当の短縮)

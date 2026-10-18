@@ -22,7 +22,8 @@ struct ConscioApp: App {
         }
 
         Settings {
-            SettingsView()
+            // 🧬 進化#11: 設定を共有HabitTrackerと接続 (⌘,でも⚙でも同じデータを見る)
+            SettingsView(habitTracker: HabitTracker.shared)
         }
     }
 }

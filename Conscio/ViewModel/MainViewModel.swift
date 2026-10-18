@@ -7,7 +7,7 @@ class MainViewModel: ObservableObject {
     @Published var suggestions: [Suggestion]
     @Published var isSuppressingNotifications: Bool = false
 
-    @Published var habitTracker = HabitTracker() // Added HabitTracker
+    @Published var habitTracker = HabitTracker.shared // 進化#11: 共有インスタンス
 
     private var contextMonitor = ContextMonitor()
     private var notificationManager = NotificationManager()
