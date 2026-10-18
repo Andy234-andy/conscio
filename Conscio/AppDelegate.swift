@@ -20,7 +20,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let button = statusItem.button {
             button.target = self
             button.image = NSImage(systemSymbolName: "brain.head.profile", accessibilityDescription: "Conscio")
-            button.action = #selector(togglePopover(_:))
+            button.action = #selector(statusItemClicked(_:))
+            // 🧬 進化#23: 左クリック=popover / 右クリック(またはCtrl+クリック)=quick menu を1ボタンで振り分け
+            button.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
 
         // アクセシビリティ権限のシステムプロンプトを表示（許可すると文脈認識が有効になる）
@@ -59,6 +61,60 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             button.image = image
             button.contentTintColor = nil
         }
+    }
+
+    @objc func statusItemClicked(_ sender: NSStatusBarButton?) {
+        let event = NSApp.currentEvent
+        // 🧬 進化#23: 右クリック (or Ctrl+クリック) → quick menu, 左クリック → popover
+        if event?.type == .rightMouseUp || event?.modifierFlags.contains(.control) == true {
+            showQuickMenu()
+        } else {
+            togglePopover(nil)
+        }
+    }
+
+    /// 🧬 進化#23: 右クリック quick menu (レポート/設定/終了へのショートカット)
+    private func showQuickMenu() {
+        let menu = NSMenu()
+        let report = NSMenuItem(title: L10n.t("ui.quickReport"),
+                                action: #selector(openReportFromMenu), keyEquivalent: "")
+        let settings = NSMenuItem(title: L10n.t("ui.quickSettings"),
+                                  action: #selector(openSettingsFromMenu), keyEquivalent: "")
+        let quit = NSMenuItem(title: L10n.t("ui.quickQuit"),
+                              action: #selector(quitFromMenu), keyEquivalent: "")
+        for item in [report, settings, quit] { item.target = self }
+        menu.addItem(report)
+        menu.addItem(settings)
+        menu.addItem(.separator())
+        menu.addItem(quit)
+
+        statusItem.menu = menu          // 一時的にメニューを差し込んで
+        statusItem.button?.performClick(nil)  // クリック位置でメニューを開く
+        statusItem.menu = nil           // 開き終えたら解除 (次の左クリックでpopoverを維持)
+    }
+
+    @objc func openReportFromMenu() {
+        let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 450, height: 560),
+                              styleMask: [.titled, .closable, .resizable],
+                              backing: .buffered, defer: false)
+        window.center()
+        window.title = L10n.t("report.title")
+        window.contentView = NSHostingView(rootView: ReportView(habitTracker: HabitTracker.shared))
+        window.makeKeyAndOrderFront(nil)
+    }
+
+    @objc func openSettingsFromMenu() {
+        let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 440, height: 360),
+                              styleMask: [.titled, .closable],
+                              backing: .buffered, defer: false)
+        window.center()
+        window.title = L10n.t("settings.title")
+        window.contentView = NSHostingView(rootView: SettingsView(habitTracker: HabitTracker.shared))
+        window.makeKeyAndOrderFront(nil)
+    }
+
+    @objc func quitFromMenu() {
+        NSApp.terminate(nil)
     }
 
     @objc func togglePopover(_ sender: AnyObject?) {
