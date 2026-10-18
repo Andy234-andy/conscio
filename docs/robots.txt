@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://andy234-andy.github.io/conscio/sitemap.txt
