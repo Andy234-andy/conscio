@@ -1,9 +1,31 @@
 # Conscio 🧠
 
+<p align="center">
+  <img src="landing/og-card.png" alt="Conscio" width="720">
+</p>
+
 **「情報は選ばせるものじゃない。選ばれるべき情報だけが、そこにあればいい。」**
+*本プロジェクトはAIアシストで設計・実装され、人間が確認・意思決定しています。*
+
+<p align="center">
+  <a href="https://github.com/Andy234-andy/conscio/releases/latest"><img alt="Downloads" src="https://img.shields.io/github/downloads-pre/Andy234-andy/conscio/latest/total?label=downloads&color=blue"></a>
+  <a href="https://github.com/Andy234-andy/conscio/blob/main/Conscio/LICENSE"><img alt="License MIT" src="https://img.shields.io/badge/license-MIT-green"></a>
+  <a href="https://andy234-andy.github.io/conscio/"><img alt="Platform" src="https://img.shields.io/badge/platform-macOS%2013%2B-black"></a>
+  <a href="#"><img alt="On-device AI" src="https://img.shields.io/badge/AI-on--device%20NLP-purple"></a>
+</p>
 
 Conscioは、Macのメニューバーに常駐する**文脈認識型デジタルナビゲーター**です。
 いま最前面のアプリ・ドキュメントをリアルタイムで理解し、必要な情報だけをさりげなく提示します。そして、あなたが深く集中している瞬間を守ります。
+
+> 🚀 最新: **v1.1.0 オンデバイスAI提案エンジン** · 🌐 公式サイト: https://andy234-andy.github.io/conscio/
+
+## 🧬 進化ログ (Evolution Log)
+
+| 日時 | 進化内容 |
+|------|----------|
+| 2026-10-18 08:xx | ✅ **進化#1**: 習慣データの永続化(再起動でも集中時間が消えない)＋アプリ終了ボタン |
+| 2026-10-18 06:xx | ✅ v1.1.0: オンデバイスNLP (Apple NaturalLanguage) ＋ AI検索サジェスト |
+| 2026-10-17 | ✅ v1.0.0: 初公開 (文脈認識/スマート提案/ノイズ抑制/習慣レポート) |
 
 ## ✨ 3つのコア機能
 

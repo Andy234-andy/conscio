@@ -17,6 +17,46 @@ class HabitTracker: ObservableObject {
     private var lastAppStartTime: Date?
     private var focusApps: Set<String> = ["Xcode", "Safari", "Pages", "TextEdit", "Code"]
 
+    // 💾 永続化 (Application Support/Conscio/habitstats.json)
+    private var storeURL: URL = {
+        let dir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+            .appendingPathComponent("Conscio", isDirectory: true)
+        try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
+        return dir.appendingPathComponent("habitstats.json")
+    }()
+
+    private struct UsageEntry: Codable {
+        var name: String
+        var seconds: TimeInterval
+    }
+
+    private struct HabitStatsSnapshot: Codable {
+        var focus: TimeInterval
+        var switches: Int
+        var usage: [UsageEntry]
+    }
+
+    init() {
+        loadStats()
+    }
+
+    private func loadStats() {
+        guard let data = try? Data(contentsOf: storeURL),
+              let snap = try? JSONDecoder().decode(HabitStatsSnapshot.self, from: data) else { return }
+        totalFocusTimeSeconds = snap.focus
+        contextSwitchCount = snap.switches
+        appUsageList = snap.usage.map { AppUsageStats(appName: $0.name, durationInSeconds: $0.seconds) }
+    }
+
+    private func saveStats() {
+        let snap = HabitStatsSnapshot(focus: totalFocusTimeSeconds,
+                                      switches: contextSwitchCount,
+                                      usage: appUsageList.map { UsageEntry(name: $0.appName, seconds: $0.durationInSeconds) })
+        if let data = try? JSONEncoder().encode(snap) {
+            try? data.write(to: storeURL)
+        }
+    }
+
     func recordContextChange(to context: Context) {
         let currentApp = context.activeApplication
         let now = Date()
@@ -44,6 +84,7 @@ class HabitTracker: ObservableObject {
 
         lastAppName = currentApp
         lastAppStartTime = now
+        saveStats() // 💾 10秒おき以上の変化時のみファイル書き込み(軽量)
     }
 
     var formattedTotalFocusTime: String {

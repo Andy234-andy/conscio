@@ -21,6 +21,15 @@ struct ConscioMenuView: View {
                 }
                 .buttonStyle(.plain)
                 .help("デジタル習慣レポートを表示")
+
+                Button(action: {
+                    NSApp.terminate(nil)
+                }) {
+                    Image(systemName: "power")
+                        .font(.body)
+                }
+                .buttonStyle(.plain)
+                .help("Conscioを終了")
             }
             .padding(.bottom, 2)
 
