@@ -9,6 +9,7 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
 
     var focusApps: Set<String> = [] // Apps that are considered "focus apps"
     private var lastActiveFocusApp: String? // Track the last active focus app
+    private var suppressStartedAt: Date? // 🧬 進化#22: セッション開始時刻
 
     override init() {
         super.init()
@@ -45,6 +46,7 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
         if focusApps.contains(appName) {
             isSuppressing = true
             lastActiveFocusApp = appName
+            suppressStartedAt = Date() // 🧬 進化#22
             print("Started suppressing notifications for app: \(appName)")
             // Future improvement: Integrate with macOS Focus Filters API if available and user permits
         } else {
@@ -58,18 +60,37 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
         guard isSuppressing else { return } // Not suppressing
 
         isSuppressing = false
-        if suppressedCount > 0 {
-            showNotificationSummary(suppressedCount: suppressedCount)
-            suppressedCount = 0
+
+        // 🧬 進化#22: 解除通知を「実データのセッション報告」に全面刷新。
+        // 旧実装は「N件の通知が抑制されました」と語ったが、macOSの仕様上 willPresent で
+        // 見えるのは Conscio自体の通知のみ → 他アプリの件数を語るのは不誠実だった。
+        // そこで: ①記録できる実データ (どのアプリで何分集中したか) を報告する
+        //          ②自アプリの保留件数がある時だけ実数を添える (OS制限は透明に提示)
+        var minutes = 0
+        if let start = suppressStartedAt {
+            minutes = max(0, Int(Date().timeIntervalSince(start) / 60))
+        }
+        let heldOwnCount = suppressedCount
+        suppressedCount = 0
+        suppressStartedAt = nil
+        if let app = lastActiveFocusApp {
+            showNotificationSummary(focusApp: app, minutes: minutes, heldOwnCount: heldOwnCount)
         }
         lastActiveFocusApp = nil
         print("Stopped suppressing notifications.")
     }
 
-    func showNotificationSummary(suppressedCount: Int) {
+    // 🧬 進化#22: 実データベースのセッション報告通知
+    func showNotificationSummary(focusApp: String, minutes: Int, heldOwnCount: Int) {
         let content = UNMutableNotificationContent()
         content.title = L10n.t("notif.focusOffTitle")
-        content.body = String.localizedStringWithFormat(L10n.t("notif.focusOffBody"), suppressedCount)
+        if heldOwnCount > 0 {
+            content.body = String.localizedStringWithFormat(L10n.t("notif.sessionBodyHeld"),
+                                                            focusApp, minutes, heldOwnCount)
+        } else {
+            content.body = String.localizedStringWithFormat(L10n.t("notif.sessionBody"),
+                                                            focusApp, minutes)
+        }
         content.sound = UNNotificationSound.default
 
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
