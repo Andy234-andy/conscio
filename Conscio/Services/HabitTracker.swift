@@ -12,6 +12,8 @@ class HabitTracker: ObservableObject {
     @Published var totalFocusTimeSeconds: TimeInterval = 0
     @Published var contextSwitchCount: Int = 0
     @Published var appUsageList: [AppUsageStats] = []
+    // 🧬 進化#5: 日ごとの集中時間 (キー: yyyy-MM-dd)
+    @Published var dailyFocusMap: [String: TimeInterval] = [:]
     
     private var lastAppName: String?
     private var lastAppStartTime: Date?
@@ -34,6 +36,50 @@ class HabitTracker: ObservableObject {
         var focus: TimeInterval
         var switches: Int
         var usage: [UsageEntry]
+        // 進化#5: 既存ファイルとの互換性のため Optional で追加
+        var dayFocus: [String: TimeInterval]?
+
+        init(focus: TimeInterval, switches: Int, usage: [UsageEntry], dayFocus: [String: TimeInterval]?) {
+            self.focus = focus
+            self.switches = switches
+            self.usage = usage
+            self.dayFocus = dayFocus
+        }
+
+        enum CodingKeys: String, CodingKey {
+            case focus, switches, usage, dayFocus
+        }
+
+        // 進化#5: 旧フォーマット(dayFocusなし)でもデコードできる
+        init(from decoder: Decoder) throws {
+            let c = try decoder.container(keyedBy: CodingKeys.self)
+            focus = try c.decode(TimeInterval.self, forKey: .focus)
+            switches = try c.decode(Int.self, forKey: .switches)
+            usage = try c.decode([UsageEntry].self, forKey: .usage)
+            dayFocus = try c.decodeIfPresent([String: TimeInterval].self, forKey: .dayFocus)
+        }
+    }
+
+    /// 進化#5 レポートチャート用: 直近7日分 (ラベルは "M/d" 相当の短縮)
+    struct DailyFocusEntry: Identifiable {
+        var id: String { day }
+        var day: String
+        var minutes: Double
+    }
+
+    var last7DaysFocus: [DailyFocusEntry] {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        fmt.locale = Locale(identifier: "en_US_POSIX")
+        let cal = Calendar.current
+        var result: [DailyFocusEntry] = []
+        for offset in stride(from: -6, through: 0, by: 1) {
+            let d = cal.date(byAdding: .day, value: offset, to: Date()) ?? Date()
+            let key = fmt.string(from: d)
+            let label = String(key.suffix(5)).replacingOccurrences(of: "-", with: "/")
+            result.append(DailyFocusEntry(day: label, minutes: (dailyFocusMap[key] ?? 0) / 60))
+        }
+        return result
     }
 
     init() {
@@ -46,15 +92,25 @@ class HabitTracker: ObservableObject {
         totalFocusTimeSeconds = snap.focus
         contextSwitchCount = snap.switches
         appUsageList = snap.usage.map { AppUsageStats(appName: $0.name, durationInSeconds: $0.seconds) }
+        dailyFocusMap = snap.dayFocus ?? [:]
     }
 
     private func saveStats() {
         let snap = HabitStatsSnapshot(focus: totalFocusTimeSeconds,
                                       switches: contextSwitchCount,
-                                      usage: appUsageList.map { UsageEntry(name: $0.appName, seconds: $0.durationInSeconds) })
+                                      usage: appUsageList.map { UsageEntry(name: $0.appName, seconds: $0.durationInSeconds) },
+                                      dayFocus: dailyFocusMap)
         if let data = try? JSONEncoder().encode(snap) {
             try? data.write(to: storeURL)
         }
+    }
+
+    /// 進化#5: 日次キー生成 (yyyy-MM-dd、ロケール固定で安定)
+    private func dayKey(for date: Date) -> String {
+        let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd"
+        f.locale = Locale(identifier: "en_US_POSIX")
+        return f.string(from: date)
     }
 
     func recordContextChange(to context: Context) {
@@ -67,6 +123,8 @@ class HabitTracker: ObservableObject {
             // Record focus time if it's a designated focus app
             if focusApps.contains(lastApp) {
                 totalFocusTimeSeconds += elapsed
+                // 進化#5: 日次集計にも同じ秒数を加算
+                dailyFocusMap[dayKey(for: now), default: 0] += elapsed
             }
 
             // Update app usage stats

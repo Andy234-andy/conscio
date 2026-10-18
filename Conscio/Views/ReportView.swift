@@ -1,5 +1,6 @@
 
 import SwiftUI
+import Charts // 🧬 進化#5: Swift Charts (macOS 13+)
 
 struct ReportView: View {
     @ObservedObject var habitTracker: HabitTracker
@@ -41,6 +42,25 @@ struct ReportView: View {
                             .background(Color.green.opacity(0.2))
                             .cornerRadius(8)
                     }
+                }
+                .padding()
+                .background(Color(NSColor.controlBackgroundColor))
+                .cornerRadius(12)
+
+                // 🧬 進化#5: 直近7日の集中時間チャート (Swift Charts)
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("直近7日の集中時間 (分)")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    Chart(habitTracker.last7DaysFocus) { entry in
+                        BarMark(
+                            x: .value("日付", entry.day),
+                            y: .value("集中", entry.minutes)
+                        )
+                        .foregroundStyle(.purple.gradient)
+                        .cornerRadius(3)
+                    }
+                    .frame(height: 130)
                 }
                 .padding()
                 .background(Color(NSColor.controlBackgroundColor))
@@ -118,7 +138,7 @@ struct ReportView: View {
             }
             .padding()
         }
-        .frame(width: 450, height: 420)
+        .frame(width: 450, height: 560)
     }
 }
 

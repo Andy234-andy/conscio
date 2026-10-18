@@ -16,3 +16,4 @@
 [09:05] 📊 Stars:0 | DL:0 | Uniques:0 | Issues:0 (旧ティック・メトリクスのみ)
 [09:45] 🧬 進化#2公開 : 日本語NLP精度向上(NLLanguageRecognizer) — push済み(0d9fcfa) / 📊 Stars:0 | DL:0 | Uniques:0 | Issues:0
 [10:01] 🧬 進化#3公開 : メニューバーアイコン色替え(集中モード可視化) — push済み / 📊 Stars:0 | DL:0 | Uniques:0 | Issues:0
+[10:15] 🌐 進化#4公開 : ブラウザ実URL取得(Safari/Chrome・AppleScript) — push済み(e5271e0) / 📊 Stars:0 | DL:0 | Uniques:0 | Issues:0
