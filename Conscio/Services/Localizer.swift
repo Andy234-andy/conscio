@@ -37,7 +37,7 @@ enum L10n {
         "settings.habits":   ("デジタル習慣", "Digital habits"),
         "settings.reset":    ("習慣データをリセット", "Reset habit data"),
         "settings.resetConfirmTitle": ("本当にリセットしますか？", "Really reset?"),
-        "settings.resetConfirmMsg": ("すべての習慣データが削除されます。この操作は元に戻せません。", "All habit data will be deleted. This cannot be undone."),
+        "settings.resetConfirmMsg": ("以下が削除されます:\n・総集中時間と日別の記録\n・アプリ別の利用秒数\n・連続集中日数(ストリーク)\n・直近アプリ履歴・切り替え回数\n\nこの操作は元に戻せません。", "Deleted:\n・Total and daily focus minutes\n・Per-app usage seconds\n・Focus streak days\n・Recent apps list and switch count\n\nThis cannot be undone."),
         "settings.resetDo":  ("リセットする", "Reset"),
         "ui.cancel":         ("キャンセル", "Cancel"),
         "ui.settingsHelp":   ("設定を開く", "Open settings"),
