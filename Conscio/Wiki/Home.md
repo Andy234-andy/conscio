@@ -14,6 +14,7 @@ Macが「いま何をしているのか」を理解し、必要なものだけ�
 | [How It Works](How-It-Works.md) | 内部動作の解説（2秒ハートビート／オフロードAI／通知抑制） |
 | [Build from Source](Build-from-Source.md) | ソースからビルドする手順（Xcode プロジェクト不要！） |
 | [FAQ](FAQ.md) | よくある質問（セキュリティ・データ保存先・終了のやり方など） |
+| [SECURITY.md](https://github.com/Andy234-andy/conscio/blob/main/Conscio/SECURITY.md) | 安全性の設計と検証根拠（通信ゼロ監査・収集最小化・配布物ハッシュ） |
 
 ## 🧬 今日の進化の足跡
 
