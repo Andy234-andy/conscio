@@ -1,5 +1,5 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-19T16:34 JST (main tick done: evo#41 article#4 NIGHTTagger draft, publish gated)
+heartbeat: 2026-10-19T17:05 JST (main tick done: evo#42 Japanese nouns-only keywords)
 mode: user-away autonomous evolution
 pending:
   - main      : sh_1530fb290001M2I13Bn8Le6Arz (~17:0x → 進化#41 企画選択待ち)

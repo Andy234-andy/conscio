@@ -103,7 +103,9 @@ class ContextMonitor: ObservableObject {
                 }
                 let options: NLTagger.Options = [.omitPunctuation, .omitWhitespace, .omitOther]
                 tagger.enumerateTags(in: nlpText.startIndex..<nlpText.endIndex, unit: .word, scheme: .lexicalClass, options: options) { tag, range in
-                    if tag == .noun || tag == .verb {
+                    // 🧬 進化#42: 日本語の窓タイトルからは名詞だけ収集 (動詞は「〜する」系のノイズになりやすい・記事#41の議論と一致)
+                    let isMeaningful = (tag == .noun) || (!isJapanese && tag == .verb)
+                    if isMeaningful {
                         let word = String(nlpText[range])
                         // 日本語は2文字で意味を持つ名詞が多い。欧米系は3文字以上
                         let minLen = isJapanese ? 2 : 3
