@@ -5,7 +5,7 @@
 Conscio is a **context-aware digital navigator** that lives in your Mac's menu bar.
 It understands the app and document on your screen in real time, quietly surfaces exactly what you need, and protects the moments you are deeply focused.
 
-> 🚀 **Latest: [v1.3.0](https://github.com/Andy234-andy/conscio/releases/latest)** — 13 evolutions in 2 days · 🌐 Site: https://andy234-andy.github.io/conscio/ · 📖 [Wiki / Docs](https://github.com/Andy234-andy/conscio/blob/main/Conscio/Wiki/Home.md)
+> 🚀 **Latest: [v1.4.1](https://github.com/Andy234-andy/conscio/releases/latest)** — 53 evolutions in 2 days · 🌐 Site: https://andy234-andy.github.io/conscio/ · 📖 [Wiki / Docs](https://github.com/Andy234-andy/conscio/blob/main/Conscio/Wiki/Home.md)
 
 ## ✨ Core Features
 
@@ -20,8 +20,8 @@ Only *real* suggestions, never placeholder content:
 - **"Return to 〇〇"** — one click actually switches you back to your recent relevant app (launches it if it isn't running)
 - **On-device keyword search** — opens DuckDuckGo only when *you* click it
 
-### 4. Intelligent Noise Suppression (Focus Guard)
-While you work in focus apps (Xcode, Safari, Pages, TextEdit, VS Code…), notifications are silently held. When you're done, a single summary tells you how many were quietly kept out. The menu bar icon turns **purple** so you can see you're protected.
+### 4. Focus Guard (measured, honestly)
+While you work in focus apps (Xcode, Safari, Pages, TextEdit, VS Code…), Conscio quietly *measures* your real focus session. When you step away, it reports the actual minutes — **never fabricated notification counts** (macOS does not allow reading other apps' notifications, and we say so). The menu bar icon turns **purple** while a focus session is live.
 
 ### 5. Digital Habit Report
 - **Today's focus** as a big number right in the popover (tap it to open the full report)
@@ -56,6 +56,14 @@ cd conscio && swift build
 - Notifications carry app names and session minutes only — never document titles
 - Honest limitation: the app is **not App-Sandboxed** (macOS restricts reading other apps' window titles from sandboxed processes), so the safety posture is *zero networking + minimal storage + reproducible verification* instead
 - No telemetry, no account, no purchases — MIT licensed
+
+## 🧬 Evolution highlights (2 days, 53 ticks)
+
+- **v1.4.0** — real-app icon in popover, click-to-report flow, demo-suggestion cleanup, focus streak 🔥, honest Focus Guard wording, quick menu
+- **v1.4.1** — NLTagger audit discovered Japanese POS tags never activate (all `OtherWord`); keyword fallback now does word-level refinement (particles and hiragana-only words dropped). Ships a debug audit tool (`tools/keyword_audit.swift`)
+- **Privacy audit (2026-10-20)** — bundle ID contained the build machine's username; neutralized to `com.conscio.menubar`, affected release zip replaced. Details: [PRIVACY_AUDIT_2026-10-20.md](GROWTH/PRIVACY_AUDIT_2026-10-20.md)
+
+Related write-ups (Japanese): [Qiita series ×5](https://qiita.com/Atsuki33) ・ [note essay](https://note.com/fine_thyme7447/n/n317579949e7d)
 - Latest release: **v1.4.1** (see Releases)
 
 ## 💡 Why it matters
