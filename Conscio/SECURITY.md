@@ -61,8 +61,8 @@ Conscioは**App Sandbox化していません**。理由: macOSの仕様上、サ
 Conscio-macOS-arm64-v1.4.0.zip  (1,759,665 bytes)
 SHA-256 = ff41e959e4411132f6b5528b44484bb2789ba74ae9490fb8c56bc9d6b48907b3
 
-Conscio-v1.4.1.zip  (1,784,576 bytes)
-SHA-256 = 0e30e43ecb52fda144037d3a3398ab1a8a45ab9988fa3741a776c085274ec444
+Conscio-v1.4.1.zip  (1,784,579 bytes — 2026-10-20 re-upload 固有ID修正後)
+SHA-256 = 7df73513120a66ac716161e947f4a92d57c9d456421a6f2fa6004646cf55d38b
 ```
 
 自分で確認する場合:

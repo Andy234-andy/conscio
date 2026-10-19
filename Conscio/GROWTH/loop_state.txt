@@ -1,5 +1,5 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-19T22:17 JST (STOPPED - user going to sleep; all sleepers SIGTERM'd, caffeinate not running)
+heartbeat: 2026-10-20T07:49 JST (privacy audit requested by user - bundle ID neutralized, v1.4.1 zip replaced; loop stays STOPPED)
 mode: STOPPED (ユーザーの「ループ止めて」指示・再開は新しいユーザーメッセージにて)
 pending:
   - main      : (なし - 停止中)

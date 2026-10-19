@@ -56,7 +56,7 @@ Macで仕事のスピードが変わる、体験を。
 1. github.com で New repository → 名前 `conscio` ・ Public
 2. ターミナルで:
 ```bash
-cd "/Users/atsuki/Documents/Default Project"
+cd ~/Documents/<プロジェクトをcloneしたディレクトリ>
 git init && git add Conscio Conscio.app Package.swift
 git commit -m "Conscio v1.0 公開"
 git branch -M main
