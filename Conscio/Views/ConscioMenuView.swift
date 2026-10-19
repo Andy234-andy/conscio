@@ -56,6 +56,34 @@ struct ConscioMenuView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(L10n.t("ctx.header"))
                     .font(.headline)
+
+                // 🧬 進化#33: アクセシビリティ未許可のときはpopover内で静かに案内 (推測が動かない理由を隠さない)
+                if !ContextMonitor.isAccessibilityGranted {
+                    HStack(spacing: 8) {
+                        Image(systemName: "lock.shield")
+                            .foregroundColor(.orange)
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(L10n.t("menu.axNeeded"))
+                                .font(.caption)
+                                .bold()
+                            Text(L10n.t("menu.axHint"))
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
+                        }
+                        Spacer()
+                        Button(L10n.t("menu.axOpen")) {
+                            if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
+                                NSWorkspace.shared.open(url)
+                            }
+                        }
+                        .buttonStyle(.link)
+                        .font(.caption)
+                    }
+                    .padding(8)
+                    .background(Color.orange.opacity(0.12))
+                    .cornerRadius(10)
+                }
+
                 HStack {
                     Text(L10n.t("ctx.app"))
                         .foregroundColor(.secondary)

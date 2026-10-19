@@ -7,6 +7,11 @@ import NaturalLanguage
 class ContextMonitor: ObservableObject {
     @Published var currentContext: Context = Context(activeApplication: "Unknown", keywords: [])
 
+    /// 🧬 進化#33: アクセシビリティ許可の有無をUIから参照できる公開ヘルパ (把握したい返りはBoolだけ)
+    static var isAccessibilityGranted: Bool {
+        AXIsProcessTrusted()
+    }
+
     private var timer: Timer?
     private var cancellables = Set<AnyCancellable>()
     // 🌐 進化#4: ブラウザURL取得用の状態
