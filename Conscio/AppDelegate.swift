@@ -131,7 +131,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // This is a placeholder for actual permission requests.
         // Real implementation would involve checking accessibility permissions,
         // file access, calendar access, etc., and guiding the user to System Settings.
+        #if DEBUG
         print("Requesting necessary permissions...")
+        #endif
         // For example, to check Accessibility:
         // if !AXIsProcessTrusted() {
         //     print("Accessibility permissions not granted. Please enable in System Settings.")

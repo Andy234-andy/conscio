@@ -131,7 +131,9 @@ class ContextMonitor: ObservableObject {
                                           keywords: Array(Set(aiKeywords).prefix(8)),
                                           calendarEvents: []) // Remove duplicates
             
+            #if DEBUG
             print("Context Updated: App='\(appName)', Doc='\(activeDocument ?? "N/A")', URL='\(activeURL ?? "N/A")', Keywords=\(self.currentContext.keywords.joined(separator: ", ")))")
+            #endif
         }
     }
 
@@ -152,7 +154,9 @@ class ContextMonitor: ObservableObject {
         }
         if let err = errorInfo {
             // 権限が未許可(-1743)の場合は静かにフォールバック: URLはnilのまま動作継続
+            #if DEBUG
             print("🌐 URL取得エラー: \(err[NSAppleScript.errorMessage] ?? "unknown")")
+            #endif
         }
         return nil
     }
@@ -162,7 +166,9 @@ class ContextMonitor: ObservableObject {
         let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as NSString: true]
         let accessibilityEnabled = AXIsProcessTrustedWithOptions(options)
         if !accessibilityEnabled {
+            #if DEBUG
             print("Accessibility permissions are not granted. Please enable them in System Settings > Privacy & Security > Accessibility for Conscio.")
+            #endif
             // You might want to provide a button in the UI to open System Settings directly
         }
     }

@@ -18,7 +18,9 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
             UNUserNotificationCenter.current().delegate = self
             requestNotificationPermissions()
         } else {
+            #if DEBUG
             print("ℹ️ アプリバンドル外のため通知機能をスキップしました")
+            #endif
         }
     }
 
@@ -26,9 +28,13 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
     func requestNotificationPermissions() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if granted {
+                #if DEBUG
                 print("Notification permissions granted.")
+                #endif
             } else if let error = error {
+                #if DEBUG
                 print("Notification permissions denied: \(error.localizedDescription)")
+                #endif
             }
         }
     }
@@ -36,7 +42,9 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
     // Set apps that should NOT have their notifications suppressed
     func setFocusApps(_ apps: Set<String>) {
         self.focusApps = apps
+        #if DEBUG
         print("Focus apps set to: \(focusApps)")
+        #endif
     }
 
     // Call this when user enters a "focus context"
@@ -47,11 +55,15 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
             isSuppressing = true
             lastActiveFocusApp = appName
             suppressStartedAt = Date() // 🧬 進化#22
+            #if DEBUG
             print("Started suppressing notifications for app: \(appName)")
+            #endif
             // Future improvement: Integrate with macOS Focus Filters API if available and user permits
         } else {
             // Not a focus app, no suppression
+            #if DEBUG
             print("Active app '\(appName)' is not a designated focus app. No suppression started.")
+            #endif
         }
     }
 
@@ -77,7 +89,9 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
             showNotificationSummary(focusApp: app, minutes: minutes, heldOwnCount: heldOwnCount)
         }
         lastActiveFocusApp = nil
+        #if DEBUG
         print("Stopped suppressing notifications.")
+        #endif
     }
 
     // 🧬 進化#22: 実データベースのセッション報告通知
@@ -96,7 +110,9 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
+                #if DEBUG
                 print("Error showing notification summary: \(error.localizedDescription)")
+                #endif
             }
         }
     }
@@ -105,7 +121,9 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         // Only suppress if we are actively suppressing and the notification is not from a focus app
         if isSuppressing {
+            #if DEBUG
             print("Intercepted notification: \(notification.request.content.title)")
+            #endif
 
             if lastActiveFocusApp != nil {
                 // This is a conceptual check. Directly identifying the sending app from UNNotificationContent
@@ -116,7 +134,9 @@ class NotificationManager: NSObject, ObservableObject, UNUserNotificationCenterD
                 // For demonstration, let's assume if we are suppressing, we suppress *all* notifications
                 // that are not explicitly allowed. This is a very blunt instrument.
                 // A better approach would be to use Focus Filters (macOS 12+) or advanced Accessibility APIs.
+                #if DEBUG
                 print("Suppressing notification: \(notification.request.content.title)")
+                #endif
                 suppressedCount += 1
                 completionHandler([]) // Do not display the notification
                 return
