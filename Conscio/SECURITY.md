@@ -49,11 +49,42 @@ UIフレームワークの間接リンク（`CFNetwork` 等）は存在します
 
 Conscioは**App Sandbox化していません**。理由: macOSの仕様上、サンドボックス付き実行では他アプリのウィンドウタイトルを参照するアクセシビリティAPI（本命機能の核）が制限されるためです。この限界と、代替として「通信ゼロ＋保存最小化＋検証可能」を清掃的に守る方針を取っています。
 
-## 6. 配布物の検証
+## 6. 配布物の検証（実行可能な手順）
 
 - 配布zipは **Apple Silicon (arm64) 専用**・**ad-hoc署名**。未署名/他ソース版は入手不可とし、不明な配布元からのバイナリは避けてください。
 - 不安があれば、リポジトリから自前ビルドを推奨（`Build from Source` のWiki参照）。
 - リリースノートは必ずAI表明を含め、人間が確認してから公開しています。
+
+### 6.1 v1.4.0 の実ハッシュ（GitHub Releasesで公開済みバイナリ）
+
+```
+Conscio-macOS-arm64-v1.4.0.zip  (1,759,665 bytes)
+SHA-256 = ff41e959e4411132f6b5528b44484bb2789ba74ae9490fb8c56bc9d6b48907b3
+```
+
+自分で確認する場合:
+
+```bash
+# ダウンロードしたzipに対して
+shasum -a 256 Conscio-macOS-arm64-v1.4.0.zip
+```
+
+### 6.2 展開後の署名確認
+
+```bash
+# ad-hocでは "Signature=adhoc" と表示されます（正当な表示）
+codesign -dv Conscio.app 2>&1 | grep Signature
+
+# 改ざん検証（失敗時は非ゼロ終了します）
+codesign --verify --deep --strict Conscio.app && echo "verified OK"
+
+# arm64専用ビルドであることの確認
+lipo -info Conscio.app/Contents/MacOS/Conscio
+```
+
+### 6.3 Gatekeeperについて（正直な注意）
+
+ad-hoc署名のため、**初回起動時に「開発元を検証できません」ダイアログが出ます（仕様どおり）**。対処は「右クリック → 開く」か、システム設定 → プライバシーとセキュリティ → 「このまま開く」許可です。`spctl`（Gatekeeper）による自動承認はad-hoc署名では期待しないでください。
 
 ## 7. ルールの固定
 
