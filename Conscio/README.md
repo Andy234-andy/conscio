@@ -23,6 +23,7 @@ Conscioは、Macのメニューバーに常駐する**文脈認識型デジタ�
 
 | 日時 | 進化内容 |
 |------|----------|
+| 2026-10-19 13:1x | 🧬 **進化#37**: Package.swiftにドキュメント類を明示excludeして **"unhandled files"警告をゼロに**（Wiki/zenn/各種.md/LICENSE等16件を整理・コード=バイナリ同値のためアプリ再起動なし） |
 | 2026-10-19 12:4x | 🧬 **進化#36**: 提案に**本日上位アプリを混合**（実利用3分以上・重複排除）＋起動経路を非推奨API完全回避化（標準ディレクトリから.app探索→openApplication。ビルド警告0維持） |
 | 2026-10-19 12:1x | 🧬 **進化#35**: Wiki How-It-Worksに**🔒セキュリティと透明性**節を追加 (SECURITY.mdリンク・通信ゼロ監査・収集最小化・配布物検証・sandbox限界の開示) ＋ Homeのページ一覧にもSECURITY.md行 |
 | 2026-10-19 11:5x | 🧬 **進化#34**: ビルド警告ゼロ化 — 非推奨 **launchApplication** を `openApplication(at:configuration:)` へ移行 ⁄ 未使用変数 `keywords` 削除 (削除の合言葉: 警告0で緑化) |

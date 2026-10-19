@@ -43,7 +43,8 @@
 34. ✅ **ビルド警告ゼロ化**: launchApplication → openApplication(at:configuration:) 移行 ⁄ dead keywords削除 (警告0・バイナリmtime確認習慣も確立)
 35. ✅ **WikiにSecurity節+SECURITY.mdリンク追加** (How-It-Works🔒節+Home一覧行・v1.4.0表記へ更新)
 36. ✅ **提案に本日上位混合+起動経路の非推奨完全回避** (実データ3分以上・重複排除・警告0維持)
-37. ⬜ **Package.swiftの"16 files unhandled"警告整理** (Wiki/GROWTH等をexcludeに追加し警告0へ)
+37. ✅ **Package.swift warning sweep** (unhandled 16 files as exclude — build completely warning-free, app binaries are identical so no restart needed)
+38. ⬜ **zenn / ARTICLE.md older wording audit** (sync to v1.4.0 — check remaining "notification suppression" old wording and sync to real-world version)
 
 ## 守り (変更時も絶対)
 - 個人情報の保存なし・外部送信なし

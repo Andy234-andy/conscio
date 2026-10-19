@@ -16,7 +16,12 @@ let package = Package(
         .executableTarget(
             name: "Conscio",
             path: "Conscio",
-            exclude: ["tools", "GROWTH", "landing"],
+            // 🧬 進化#37: ドキュメント類を明示excludeして"unhandled files"警告をゼロに
+            exclude: [
+                "tools", "GROWTH", "landing", "Wiki", "zenn",
+                "ARTICLE.md", "PH_LAUNCH.md", "PROMOTION.md",
+                "README.md", "README_EN.md", "RULES.md", "SECURITY.md", "LICENSE",
+            ],
             resources: []
         )
     ]
