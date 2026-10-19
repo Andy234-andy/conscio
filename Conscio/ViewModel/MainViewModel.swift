@@ -75,6 +75,19 @@ class MainViewModel: ObservableObject {
             }
         }
 
+        // 🧬 進化#36: 本日の利用上位から提案を混合 (実データ・3分以上・戻る提案と重複しない)
+        if newSuggestions.count < 2,
+           let top = habitTracker.topApps.first(where: { $0.appName != context.activeApplication }) {
+            let minutes = Int(top.durationInSeconds / 60)
+            if minutes >= 3, !newSuggestions.contains(where: { $0.targetAppName == top.appName }) {
+                newSuggestions.append(Suggestion(type: .appSwitch,
+                                                 title: String(format: L10n.t("ui.topAppTitle"), top.appName, minutes),
+                                                 url: nil,
+                                                 contentPreview: L10n.t("ui.topAppNote"),
+                                                 targetAppName: top.appName))
+            }
+        }
+
         self.suggestions = newSuggestions
     }
 

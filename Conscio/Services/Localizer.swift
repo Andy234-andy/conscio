@@ -34,6 +34,8 @@ enum L10n {
         "settings.openDataFolder": ("データ保存フォルダをFinderで開く", "Open data folder in Finder"),
         "settings.privacyNote": ("統計はこのフォルダの1ファイルにだけ保存され、外部送信は行いません。", "Stats live in a single file here — nothing is ever sent."),
         "settings.collectedDetail":  ("保存内容: アプリ名・利用秒数・セッション回数のみ。文書タイトル・URL・個人情報は保存せず、通信コードは含みません（ソース監査済み）。", "Stored: app names, usage seconds and session counts only. No document titles, URLs or personal data; no networking code at all (source-audited)."),
+        "ui.topAppTitle": ("「%@」に戻る（本日 %d分）", "Back to %@ (today %d min)"),
+        "ui.topAppNote":  ("本日の実利用時間からの提案です。クリックで切替。", "From your real usage today. Click to switch."),
         "menu.axNeeded": ("アクセシビリティ許可が必要です", "Accessibility permission needed"),
         "menu.axHint":   ("許可すると現在地の推測と提案が動きます。", "This enables context detection and suggestions."),
         "menu.axOpen":   ("設定を開く", "Open Settings"),

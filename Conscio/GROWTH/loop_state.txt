@@ -1,5 +1,5 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-19T12:07 JST (main tick done: evo#35 wiki security section)
+heartbeat: 2026-10-19T12:47 JST (main tick done: evo#36 today-top-app suggestion + no-deprecated launch path)
 mode: user-away autonomous evolution
 pending:
   - main      : sh_151a29ab3001BP1BC26AvYTzHS (~10:2x → 進化#32 リセット明細表示)

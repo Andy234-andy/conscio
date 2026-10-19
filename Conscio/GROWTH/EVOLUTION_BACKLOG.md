@@ -42,7 +42,8 @@
 33. ✅ **初回起動ヒント**: アクセシビリティ未許可時にpopoverで案内表示実装 (理由の説明+設定導線・日英)
 34. ✅ **ビルド警告ゼロ化**: launchApplication → openApplication(at:configuration:) 移行 ⁄ dead keywords削除 (警告0・バイナリmtime確認習慣も確立)
 35. ✅ **WikiにSecurity節+SECURITY.mdリンク追加** (How-It-Works🔒節+Home一覧行・v1.4.0表記へ更新)
-36. ⬜ **交流設計**: お気に入りアプリの学習提案への反映（直近履歴+本日上位数を組み合わせた次候補）
+36. ✅ **提案に本日上位混合+起動経路の非推奨完全回避** (実データ3分以上・重複排除・警告0維持)
+37. ⬜ **Package.swiftの"16 files unhandled"警告整理** (Wiki/GROWTH等をexcludeに追加し警告0へ)
 
 ## 守り (変更時も絶対)
 - 個人情報の保存なし・外部送信なし

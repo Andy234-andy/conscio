@@ -196,10 +196,15 @@ struct ConscioMenuView: View {
         if let running = NSWorkspace.shared.runningApplications.first(where: { $0.localizedName == name }) {
             running.activate(options: [.activateAllWindows])
         } else {
-            // 🧬 進化#34: 非推奨API (macOS 11+) をopenApplicationへ移行 — 未起動アプリもモダン経路で起動
-            let path = NSWorkspace.shared.fullPath(forApplication: name)
-            if let path = path, !path.isEmpty {
-                NSWorkspace.shared.openApplication(at: URL(fileURLWithPath: path),
+            // 🧬 進化#34/36: 非推奨API群 (launchApplication/fullPath家族) を使わない起動 —
+            // 標準ディレクトリから「<name>.app」を直接探して openApplication へ
+            let fm = FileManager.default
+            let roots = ["/Applications", "/System/Applications", NSHomeDirectory() + "/Applications"]
+            let appURL = roots.lazy
+                .map { URL(fileURLWithPath: $0).appendingPathComponent("\(name).app") }
+                .first { fm.fileExists(atPath: $0.path) }
+            if let appURL = appURL {
+                NSWorkspace.shared.openApplication(at: appURL,
                                                    configuration: NSWorkspace.OpenConfiguration(),
                                                    completionHandler: nil)
             }
