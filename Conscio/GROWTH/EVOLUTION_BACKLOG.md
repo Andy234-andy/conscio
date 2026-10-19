@@ -45,7 +45,8 @@
 36. ✅ **提案に本日上位混合+起動経路の非推奨完全回避** (実データ3分以上・重複排除・警告0維持)
 37. ✅ **Package.swift warning sweep** (unhandled 16 files as exclude — build completely warning-free, app binaries are identical so no restart needed)
 38. ✅ **zenn/ARTICLE/PROMOTION旧文言監査** (抑制過大3件 → Focus Guard実データ版へ同期 — 全件未公開内部docs)
-39. ⬜ **リリースNote一覧のREADME統合チェック** (v1.4.0 追加分がREADME進化ログに残りなく整理 OK か確認)
+39. ✅ **note掲載（ユーザーが投稿）** →文具検査でAI表明・実数・リンク全OK確認済み
+40. ⬜ **来周の種まき**: 推移メトリクス (note / Qiita / GitHub) の土日報告まとめ1本 드래フト
 
 ## 守り (変更時も絶対)
 - 個人情報の保存なし・外部送信なし
