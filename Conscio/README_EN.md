@@ -56,7 +56,7 @@ cd conscio && swift build
 - Notifications carry app names and session minutes only — never document titles
 - Honest limitation: the app is **not App-Sandboxed** (macOS restricts reading other apps' window titles from sandboxed processes), so the safety posture is *zero networking + minimal storage + reproducible verification* instead
 - No telemetry, no account, no purchases — MIT licensed
-- Latest release: **v1.4.0** (see Releases)
+- Latest release: **v1.4.1** (see Releases)
 
 ## 💡 Why it matters
 

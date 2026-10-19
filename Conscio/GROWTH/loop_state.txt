@@ -1,9 +1,9 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-19T19:49 JST (publication burst done: Qiita #4 + #5 published with user approval; backups checked)
+heartbeat: 2026-10-19T20:11 JST (main tick done: evo#49 v1.4.1 release published)
 mode: user-away autonomous evolution
 pending:
-  - main      : sh_153b7fbbe001 (fires ~20:0x → 進化#48)
-  - backup    : sh_153b7fbbe002 (~20:2x, freshなら無言退場)
+  - main      : sh_153d3d0de001 (fires ~21:0x → 進化#50)
+  - backup    : sh_153d3d0e1001 (~21:2x, freshなら無言退場)
   - emergency : (なし)
 protocol:
   - MAIN wake: ①先にリアーム(main 30m + backup 47m + emergency 3h) ②tick作業 ③heartbeat更新
