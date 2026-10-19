@@ -1,9 +1,9 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-19T21:39 JST (server restarted - all sleepers died; RECOVERY_PROTOCOL re-armed 3 lanes, no work lost)
+heartbeat: 2026-10-19T22:10 JST (main tick done: evo#53 reaction-pattern reflection documented)
 mode: user-away autonomous evolution
 pending:
-  - main      : sh_1542c2c2e001 (fires ~22:0x → 進化#53)
-  - backup    : sh_1542c2c43001 (~22:2x, freshなら無言退場)
+  - main      : sh_15448318e001 (fires ~22:3x → 進化#54)
+  - backup    : sh_15448318f001 (~23:0x, freshなら無言退場)
   - emergency : sh_1542c2c44001 (~00:3x発火, heartbeat新鮮なら静かに退場)
 protocol:
   - MAIN wake: ①先にリアーム(main 30m + backup 47m + emergency 3h) ②tick作業 ③heartbeat更新
