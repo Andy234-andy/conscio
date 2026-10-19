@@ -116,9 +116,15 @@ class ContextMonitor: ObservableObject {
                     return true
                 }
             }
-            // NLPが空のときのフォールバック: 単純分割
+            // 🧬 進化#43: NLPが空のときのフォールバック分割 — 言語別の閾値(#42と同じ基準)に合わせる
             if aiKeywords.isEmpty, let doc = activeDocument {
-                aiKeywords = doc.components(separatedBy: CharacterSet.alphanumerics.inverted).filter { $0.count > 2 }
+                let fbRecognizer = NLLanguageRecognizer()
+                fbRecognizer.processString(doc)
+                let fbIsJapanese = (fbRecognizer.dominantLanguage == .japanese)
+                let fbMinLen = fbIsJapanese ? 2 : 3
+                aiKeywords = doc
+                    .components(separatedBy: CharacterSet.alphanumerics.inverted)
+                    .filter { $0.count >= fbMinLen }
             }
             // 🌐 進化#4: ブラウザの実URLを取得する
             // Safari/ChromeはAppleScriptに公開させており、最前面タブのURLを正確に取得できる。
