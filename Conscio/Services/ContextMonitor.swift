@@ -116,15 +116,32 @@ class ContextMonitor: ObservableObject {
                     return true
                 }
             }
-            // 🧬 進化#43: NLPが空のときのフォールバック分割 — 言語別の閾値(#42と同じ基準)に合わせる
+            // 🧬 進化#43+: NLPが空のときのフォールバック分割 — 言語別の閾値(#42と同じ基準)に合わせる
+            // 🧬 進化#44: 日本語チャンクはさらに語単位に精製 (監査で「区切りなし日本語が丸ごと1キーワード化」を実測 → 助詞・ひらがなのみの語を除去)
             if aiKeywords.isEmpty, let doc = activeDocument {
                 let fbRecognizer = NLLanguageRecognizer()
                 fbRecognizer.processString(doc)
                 let fbIsJapanese = (fbRecognizer.dominantLanguage == .japanese)
                 let fbMinLen = fbIsJapanese ? 2 : 3
-                aiKeywords = doc
-                    .components(separatedBy: CharacterSet.alphanumerics.inverted)
-                    .filter { $0.count >= fbMinLen }
+                let particles: Set<String> = ["の", "を", "に", "は", "が", "で", "と", "も", "へ", "から", "まで", "より", "って"]
+                let tokenizer = NLTokenizer(unit: .word)
+                var collected: [String] = []
+                for chunk in doc.components(separatedBy: CharacterSet.alphanumerics.inverted) {
+                    if fbIsJapanese {
+                        tokenizer.string = chunk
+                        tokenizer.enumerateTokens(in: chunk.startIndex..<chunk.endIndex) { range, _ in
+                            let w = String(chunk[range])
+                            let hiraganaOnly = !w.isEmpty && w.unicodeScalars.allSatisfy { (0x3040...0x309F).contains($0.value) }
+                            if w.count >= fbMinLen, !particles.contains(w), !hiraganaOnly {
+                                collected.append(w)
+                            }
+                            return true
+                        }
+                    } else if chunk.count >= fbMinLen {
+                        collected.append(chunk)
+                    }
+                }
+                aiKeywords = collected
             }
             // 🌐 進化#4: ブラウザの実URLを取得する
             // Safari/ChromeはAppleScriptに公開させており、最前面タブのURLを正確に取得できる。
