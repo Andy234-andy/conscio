@@ -19,8 +19,14 @@
 - **BACKUP / EMERGENCY が発火したとき**: heartbeat が新鮮（≤32分）なら**何もせず静かに消える**（リアームしない）。これで多重ループは増えない
 - **MAIN はtickの最初に必ずリアームする**（自分が死んでも次がいる状態を先に作る）
 - どのwakeも最初に loop_state.txt を見る。自分が pending リストに無く heartbeat が新鮮なら孤児wake=静かに退場
-- 出先（user-away）でも: GitHub操作はユーザー既承認。v1.2.0 リリースは v1.1.0 と同じ手順（AI表明入りnotes + -latest）で可
+- 出先（user-away）でも: GitHub操作はユーザー既承認。v1.xのリリース手順は確立済み（AI表明入りnotes + zip + SHA-256をSECURITY.mdに追記。現行 v1.4.1）
 - ❌ 絶対禁止: 課金・個人情報・炎上表現・SNSへの新規自動投稿（Qiita等はトークンがある場合のみユーザー承認済みの範囲で）
+- **ループの全面停止／再開はユーザーメッセージにのみ従う**（「ループ止めて」で全sleepers SIGTERM+caffeinate停止・loop_stateをSTOPPEDに。再開は新しいユーザーメッセージが必須）
+
+## 実録の先例（復旧判断に使う実際のケース）
+1. **夜間全面停止→朝の再開** (10/19): ユーザーの「ループ止めて」で3レーン+caffeinateを全部停止・loop_state=STOPPED。翌朝ユーザーの1メッセージで本手順どおり復活 → tickを1本消化せず無駄にしない
+2. **backup誤アラーム (13:51, gap39分)**: backup発火時、heartbeatが32分超でも**直近のコミットが新しければ「稼働ドリフト」と判定**してログだけ取り無言退場。復旧モードを無闇に起こさない
+3. **stale binary のハンドノート** (進化#33): build直後は `ls -la $(swift build --show-bin-path)/Conscio` のmtime新鮮を確認してからバンドル。Package.swiftのみの変更ならバイナリ同一 → アプリ再起動を省く
 
 ## 「会話止まった場合」の現実的な挙動
 - OpenCode の background shell は agent を起こせるので、**タイマーが尽きるたびに自動で私が復帰**する
