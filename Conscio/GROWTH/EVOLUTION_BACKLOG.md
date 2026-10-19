@@ -46,7 +46,8 @@
 37. ✅ **Package.swift warning sweep** (unhandled 16 files as exclude — build completely warning-free, app binaries are identical so no restart needed)
 38. ✅ **zenn/ARTICLE/PROMOTION旧文言監査** (抑制過大3件 → Focus Guard実データ版へ同期 — 全件未公開内部docs)
 39. ✅ **note掲載（ユーザーが投稿）** →文具検査でAI表明・実数・リンク全OK確認済み
-40. ⬜ **来周の種まき**: 推移メトリクス (note / Qiita / GitHub) の土日報告まとめ1本 드래フト
+40. ✅ **週末メトリクスまとめドラフト** (WEEKEND_METRICS_DIGEST.md 実数表+タイムライン — 投稿は承認ゲート)
+41. ⬜ **Qiita記事4本目企画案** (テーマ: NLTagger日本語解析の実装Tips または 週末まとめを清書 — どちらもユーザー選択制)
 
 ## 守り (変更時も絶対)
 - 個人情報の保存なし・外部送信なし
