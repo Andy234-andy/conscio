@@ -42,7 +42,7 @@ class ContextMonitor: ObservableObject {
 
             var activeDocument: String?
             var activeURL: String?
-            var keywords: [String] = []
+            // 🧬 進化#34: 未使用だったローカルkeywordsを削除 (NLPは下のaiKeywordsに直書き)
 
             // Attempt to get document/window title using Accessibility API
             if let pid = frontmostApp?.processIdentifier {
