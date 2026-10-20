@@ -92,6 +92,10 @@ Expected hashes for every release: [SECURITY.md §6.1](SECURITY.md). If verifica
 
 MIT
 
+## 📜 Changelog
+
+Version-by-version details: [CHANGELOG.md](CHANGELOG.md) (all 7 releases; every note written with AI assistance and human-reviewed).
+
 ---
 
 *This README was written with AI assistance and reviewed by a human.*
