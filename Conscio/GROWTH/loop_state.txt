@@ -1,5 +1,5 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-20T19:30 JST (evo#78 アプリ実装: 提案のノイズ抑制完了)
+heartbeat: 2026-10-20T19:55 JST (evo#81 リリース後観察+夕締め完了)
 mode: user-away autonomous evolution
 pending:
   - main      : sh_158490bcf0018UoaWopPf6IfaA (~17:1x発火 → 進化#75)

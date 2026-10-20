@@ -87,7 +87,9 @@
 78. ✅ **提案のノイズ抑制** (⭐アプリ実装: キーワード提案に✕却下ボタン — 却下語は日付付きでUserDefaults保存・同一日の再表示なし・翌日は自動再登場=誤爆に寛容・期限切れ語は書込時に一掃・Suggestionモデルにkeyword欄追加)
 79. ✅ **v1.4.3リリース** (https://github.com/Andy234-andy/conscio/releases/tag/v1.4.3 — SHA-256=`4addb5e9…4296`・verify_release全GREEN・AI表明notes・SECURITY§6.1追記済み)
 80. ✅ **Qiita記事#6投稿** (cadence適用1本目=更新2本積み → https://qiita.com/Andy342/items/f641539d82818d7693e0 『不在中は考えるな』省CPU設計・AI表明入り・本文保存=GROWTH/ARTICLE6_idle_cpu_qiita.md)
-81. ⬜ **リリース後観察+1日締め** (①v1.4.3のDL人数 ②Qiita記事#6のPV反応 ③夕の一日REFLECTION最終版[全ティック数値固定] ④wiki pushは1回/tick継続)
+81. ✅ **リリース後観察+1日締め** (v1.4.3 DL=0件[公開〜2時間・正直記録]・記事#6は35PV/90分・夕REFLECTIONをday_reportへ)
+82. ⬜ **wiki push継続+リリース後2日目観察** (v1.4.3のDL数・記事#6のストック発生チェック)
+83. ⬜ **Qiita cadence記事#7候補** (30日チャート+却下機能の設計話 — cadence=更新2〜3回積み+**同日連投は避ける**[「たまに」運用]・投稿は翌日以降)
 
 ## 守り (変更時も絶対)
 - 個人情報の保存なし・外部送信なし
