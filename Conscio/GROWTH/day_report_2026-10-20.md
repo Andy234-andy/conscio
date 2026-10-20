@@ -28,3 +28,4 @@
 [17:4x] 📝 ユーザー承認メモ: 「アプリ更新のたびGitHub・たまにでいいからQiitaも」cadence → RECOVERY条文+loop_stateに施行 (新規投稿はcadence内・既存記事編集は都度承認・他SNS自動投稿は禁止維持)・backlog #79 (v1.4.3バッチリリース) / #80 (Qiita cadence記事候補)
 [17:5x] 🧬 進化#79公開: **v1.4.3リリース** (#75集中目標設定+#76ロック時省CPUバッチ — Info.plist 1.4.3/build 8・ditto zip 1,797,516B・SHA-256=4addb5e9…4296・verify_release全GREEN・AI表明notes → https://github.com/Andy234-andy/conscio/releases/tag/v1.4.3 / 公開notesの誤字[\`>\`余分]は公開直後にgh release editで自力修正=透明記録) / 📝 文書同期: CHANGELOG v1.4.3節・README hero v1.4.3+全8リリース・README_EN heroのv1.4.1凍結解消(#66部分適用の是正)+最新節・landing v1.4.3+SHA差替・SECURITY §6.1形式追加 / WIKI: wiki push 失敗 (404のまま)
 [17:5x] 📦 リリース実観察: v1.4.3の初期DLは現時点0 — 次ティック以降でDL数を観察 (参照基準: v1.4.2は公開直後に1件)
+[18:2x] 🧬 進化#80公開: Qiita記事#6投稿 (cadence適用1本目 — 「不在中は考えるな」省CPU設計の実装話+NSWorkspace screensaver通知がmacOS27 SDKにない実測+codesign detritus地雷の対処順序 / AI表明・3931字・タグ macOS·Swift·個人開発 / https://qiita.com/Andy342/items/f641539d82818d7693e0) — 記事6本体制 / WIKI: wiki push 失敗 (404のまま)
