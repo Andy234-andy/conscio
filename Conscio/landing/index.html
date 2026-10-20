@@ -173,6 +173,14 @@
     </blockquote>
     <p>— Conscio 開発思想</p>
   </section>
+
+  <section style="max-width:860px;margin:0 auto 2.5rem;padding:1.2rem 1.4rem;border:1px solid #e2e8f0;border-radius:12px;background:#fafcff">
+    <h3 style="margin:0 0 .5rem">🛡 <b>ダウンロードしたzipの検証方法</b>（1コマンド）</h3>
+    <p style="margin:.2rem 0;color:#333;font-size:.95rem">releases で落とした zip は、リポジトリ同梱のスクリプトで SHA-256 照合と codesign 検証がまとめてできます（ネットワーク不要）： </p>
+    <pre style="background:#0b1021;color:#9ae6b4;padding:.9rem 1rem;border-radius:8px;font-size:.85rem;overflow-x:auto">./Conscio/tools/verify_release.sh Conscio-v1.4.2.zip \
+  1ae2b6f94080a5dd83f54ee99f4dd5acac828acfb93d431808f65e2e18691055</pre>
+    <p style="margin:.4rem 0 0;color:#555;font-size:.9rem">全バージョンの期待ハッシュは <a href="https://github.com/Andy234-andy/conscio/blob/main/Conscio/SECURITY.md">SECURITY.md §6.1</a> に掲載。検証が一致しない場合、絶対に起動しないでください。</p>
+  </section>
 </div>
 
 <footer>
