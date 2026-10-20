@@ -79,6 +79,8 @@ enum L10n {
         "report.chart7":     ("直近7日の集中時間 (分)", "Focus time, last 7 days (min)"),
         "report.chart30":    ("直近30日の集中時間 (分) — 破線=目標", "Focus time, last 30 days (min) — dashed = goal"),
         "ui.dismissHelp":    ("この提案を今日はもう表示しない", "Hide this suggestion for today"),
+        "report.exportCSV":  ("直近30日をCSVで書き出す", "Export last 30 days as CSV"),
+        "report.exportDone": ("書き出しました: %@", "Exported: %@"),
         "report.chart30Avg": ("30日平均 %d分/日", "30-day avg: %d min/day"),
         "report.switches":   ("文脈切り替え回数", "Context switches"),
         "report.steady":     ("非常に安定しています", "Very steady"),

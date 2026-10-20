@@ -142,6 +142,22 @@ class HabitTracker: ObservableObject {
         return result
     }
 
+    /// 🧬 進化#84: 直近30日をCSV形式で返す (date,focus_minutes — 端末内完結)
+    func last30DaysCSV() -> String {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        fmt.locale = Locale(identifier: "en_US_POSIX")
+        let cal = Calendar.current
+        var lines = ["date,focus_minutes"]
+        for offset in stride(from: -29, through: 0, by: 1) {
+            let d = cal.date(byAdding: .day, value: offset, to: Date()) ?? Date()
+            let key = fmt.string(from: d)
+            let minutes = Int((dailyFocusMap[key] ?? 0) / 60)
+            lines.append("\(key),\(minutes)")
+        }
+        return lines.joined(separator: "\n")
+    }
+
     /// 🧬 進化#77: 直近30日の集中エントリ (月次チャート用 — dailyFocusMapをそのまま使用)
     var last30DaysFocus: [DailyFocusEntry] {
         let fmt = DateFormatter()

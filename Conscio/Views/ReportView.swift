@@ -1,9 +1,12 @@
 
 import SwiftUI
 import Charts // 🧬 進化#5: Swift Charts (macOS 13+)
+import UniformTypeIdentifiers // 🧬 進化#84: CSV書き出しのUTType
 
 struct ReportView: View {
     @ObservedObject var habitTracker: HabitTracker
+    // 🧬 進化#84: CSV書き出しの結果表示 (保存先パス)
+    @State private var exportMessage: String = ""
 
     var body: some View {
         ScrollView {
@@ -238,6 +241,30 @@ struct ReportView: View {
                         NSWorkspace.shared.open(dir.appendingPathComponent("Conscio"))
                     }
                     .buttonStyle(.link)
+
+                    // 🧬 進化#84: 直近30日をCSV書き出し (ユーザー選択先のみ・端末内完結・個人情報なし)
+                    Button(L10n.t("report.exportCSV")) {
+                        let panel = NSSavePanel()
+                        panel.nameFieldStringValue = "conscio-focus-30days.csv"
+                        panel.allowedContentTypes = [UTType.commaSeparatedText]
+                        panel.canCreateDirectories = true
+                        panel.begin { response in
+                            guard response == .OK, let url = panel.url else { return }
+                            do {
+                                try habitTracker.last30DaysCSV().write(to: url, atomically: true, encoding: .utf8)
+                                exportMessage = url.path
+                            } catch {
+                                exportMessage = "error: \(error.localizedDescription)"
+                            }
+                        }
+                    }
+                    .buttonStyle(.link)
+                    if !exportMessage.isEmpty {
+                        Text(String(format: L10n.t("report.exportDone"), exportMessage))
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                            .textSelection(.enabled)
+                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
