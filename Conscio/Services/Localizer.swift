@@ -81,6 +81,8 @@ enum L10n {
         "ui.dismissHelp":    ("この提案を今日はもう表示しない", "Hide this suggestion for today"),
         "report.exportCSV":  ("直近30日をCSVで書き出す", "Export last 30 days as CSV"),
         "report.exportDone": ("書き出しました: %@", "Exported: %@"),
+        "report.weekCompare": ("先週比 %+d%% (8〜14日前の合計と比較・欠損日は0分扱い)", "vs prev week: %+d%% (compared to days 8-14 ago; missing days count as 0)"),
+        "report.weekCompareNA": ("先週のデータがまだありません", "No data for the previous week yet"),
         "report.chart30Avg": ("30日平均 %d分/日", "30-day avg: %d min/day"),
         "report.switches":   ("文脈切り替え回数", "Context switches"),
         "report.steady":     ("非常に安定しています", "Very steady"),

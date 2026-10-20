@@ -1,5 +1,5 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-21T07:47 JST (復旧ティック: 記事#7投稿+v1.4.4リリース完了)
+heartbeat: 2026-10-21T08:19 JST (evo#89 アプリ実装: 週次比較完了)
 mode: user-away autonomous evolution
 pending:
   - main      : sh_158490bcf0018UoaWopPf6IfaA (~17:1x発火 → 進化#75)
@@ -11,7 +11,7 @@ protocol:
   - 孤児wake (pendingにないID): heartbeat新鮮なら無言退場
   - ⚠️ app-evolution guard (2026-10-20ユーザー指摘「記事に偏りすぎ・アプリが進化してない」→進化#75から施行):
     - Swiftコードを触らないティックは**3連続まで**。4本目は必ずアプリ実装（バックログの⭐タスクから）
-    - last_app_change: #84 (レポートからCSV書き出し) — 都度更新
+    - last_app_change: #89 (週次比較) — 都度更新
   - 毎tick: メトリクス → day_report追記 → 末尾にQiitaダッシュボード表(./Conscio/tools/qiita_table.sh)。RULES.md厳守
   - 公開物: GitHub ops既承認+アプリ更新のたび記載。Qiita/note新規投稿=ユーザーcadence承認(2026-10-20「たまにでいいから」・更新2〜3回に1回目安)・AI表明必須。既存記事の編集は都度承認
   - Qiitaトークン2nd (fa735df...) は ~/.conscio_qiita_token2 に保存済み・用途: PV監視+ユーザー承認済みPATCHのみ

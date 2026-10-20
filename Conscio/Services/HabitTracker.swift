@@ -188,6 +188,20 @@ class HabitTracker: ObservableObject {
         return total
     }
 
+    /// 🧬 進化#89: 前の7日 (8〜14日前) の合計秒数 (週次比較用 — データ欠損日は0分扱い)
+    var previousWeekTotalSeconds: TimeInterval {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        fmt.locale = Locale(identifier: "en_US_POSIX")
+        let cal = Calendar.current
+        var total: TimeInterval = 0
+        for offset in stride(from: -13, through: -7, by: 1) {
+            let d = cal.date(byAdding: .day, value: offset, to: Date()) ?? Date()
+            total += dailyFocusMap[fmt.string(from: d)] ?? 0
+        }
+        return total
+    }
+
     // 🧬 進化#8: 今日の集中時間 (ポップオーバーのビッグ数字表示用)
     var todayFocusSeconds: TimeInterval {
         dailyFocusMap[dayKey(for: Date())] ?? 0

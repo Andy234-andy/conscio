@@ -75,6 +75,19 @@ struct ReportView: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
+                    // 🧬 進化#89: 週次比較 (今週 vs 先週 — データ欠損日は0分扱い・誇張なし)
+                    let prevMin = Int(habitTracker.previousWeekTotalSeconds / 60)
+                    let nowMin = Int(habitTracker.last7DaysTotalSeconds / 60)
+                    if prevMin > 0 {
+                        let pct = (nowMin - prevMin) * 100 / prevMin
+                        Text(String(format: L10n.t("report.weekCompare"), pct))
+                            .font(.caption)
+                            .foregroundColor(pct > 0 ? .green : (pct < 0 ? .orange : .secondary))
+                    } else {
+                        Text(L10n.t("report.weekCompareNA"))
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 .padding()
                 .background(Color(NSColor.controlBackgroundColor))
