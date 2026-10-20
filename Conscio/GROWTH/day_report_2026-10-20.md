@@ -44,3 +44,4 @@
 [20:2x] 🧬 進化#82: 観察ティック (v1.4.3 DL=0[公開90分]・全リリースDL合計2件[v1.4.0/v1.4.2各1]・熱負荷なし・WIKI: wiki push 失敗 (404のまま)) / backlogに#84「レポートCSV書き出し[NSSavePanel・端末内完結]」をアプリ実装候補として追加
 [21:0x] 🧬 進化#84公開: ⭐アプリ実装 レポートからCSV書き出し (NSSavePanel[UTType.commaSeparatedText]→ユーザー選択先にdate,focus_minutes CSV保存・HabitTracker.last30DaysCSV()追加[30日ループは#77と同じdailyFocusMap集計]・書き出し済みパス表示[.textSelection]) / #83は同日連投回避で持ち越し[運用判断を透明記録] / build緑207秒・警告0・xattr→再署名→codesign strict ✓・反映(pid 90135) / 作業小事件: HabitTracker挿入時のコメント関連ずれをread検証で捕捉・即修正 / WIKI: wiki push 失敗 (404のまま)
 [21:3x] 🧬 進化#83下書き: 記事#7「許す設計」(30日チャート+目標破線/提案却下の日限定/CSV書き出し=ユーザー選択先の3本を一つの縦糸で) — GROWTH/ARTICLE7_forgiving_design_qiita.md に保存・乱れ4箇所を清掃[投稿は10/21・同日連投回避] / WIKI: wiki push 失敗 (404のまま)
+[21:5x] 🧬 夜間観察ティック: v1.4.3 DL=0 (公開〜2.5時間)・health GREEN・アプリv1.4.3 build 8稼働 / backlogに#85「v1.4.4リリース」を追加[#77/78/84の3機能はv1.4.3に未同梱=明日バッチ版化] / WIKI: wiki push 失敗 (404のまま)
