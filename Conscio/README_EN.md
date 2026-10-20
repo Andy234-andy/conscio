@@ -64,7 +64,7 @@ cd conscio && swift build
 - **Privacy audit (2026-10-20)** — bundle ID contained the build machine's username; neutralized to `com.conscio.menubar`, affected release zip replaced. Details: [PRIVACY_AUDIT_2026-10-20.md](GROWTH/PRIVACY_AUDIT_2026-10-20.md)
 
 Related write-ups (Japanese): [Qiita series ×5](https://qiita.com/Atsuki33) ・ [note essay](https://note.com/fine_thyme7447/n/n317579949e7d)
-- Latest release: **v1.4.1** (see Releases)
+- Latest release: **v1.4.2** (see Releases)
 
 ## 💡 Why it matters
 
