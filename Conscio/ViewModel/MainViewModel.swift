@@ -49,6 +49,33 @@ class MainViewModel: ObservableObject {
         }
     }
 
+    /// 🧬 進化#78: キーワード提案の却下 (その語は「同じ日」は出さない・翌日は再登場=誤爆に寛容)
+    private static let dismissedKeywordsKey = "dismissedKeywordSuggestions"
+
+    private var dismissedKeywords: [String: String] {
+        UserDefaults.standard.dictionary(forKey: MainViewModel.dismissedKeywordsKey) as? [String: String] ?? [:]
+    }
+
+    func dismissKeywordSuggestion(_ keyword: String) {
+        guard !keyword.isEmpty else { return }
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        fmt.locale = Locale(identifier: "en_US_POSIX")
+        let today = fmt.string(from: Date())
+        var dict = dismissedKeywords.filter { $0.value == today } // 期限切れを一掃
+        dict[keyword] = today
+        UserDefaults.standard.set(dict, forKey: MainViewModel.dismissedKeywordsKey)
+        suggestions.removeAll { $0.keyword == keyword } // 即時非表示
+    }
+
+    private func isKeywordDismissed(_ keyword: String) -> Bool {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        fmt.locale = Locale(identifier: "en_US_POSIX")
+        let today = fmt.string(from: Date())
+        return dismissedKeywords[keyword] == today
+    }
+
     private func generateSuggestions(for context: Context) {
         var newSuggestions: [Suggestion] = []
 
@@ -66,12 +93,14 @@ class MainViewModel: ObservableObject {
 
         // 🤖 AI (on-device NLP) による文脈検索サジェスト
         let appNameLower = context.activeApplication.lowercased()
-        if let kw = context.keywords.first(where: { $0.count >= 3 && $0.lowercased() != appNameLower }) {
+        // 🧬 進化#78: その日很短却下された語は候補から外す
+        if let kw = context.keywords.first(where: { $0.count >= 3 && $0.lowercased() != appNameLower && !isKeywordDismissed($0) }) {
             if let q = kw.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
                 newSuggestions.append(Suggestion(type: .knowledge,
                                                  title: String(format: L10n.t("ui.searchTitle"), kw),
                                                  url: URL(string: "https://duckduckgo.com/?q=\(q)"),
-                                                 contentPreview: L10n.t("ui.searchNote")))
+                                                 contentPreview: L10n.t("ui.searchNote"),
+                                                 keyword: kw))
             }
         }
 

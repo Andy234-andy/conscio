@@ -142,6 +142,17 @@ struct ConscioMenuView: View {
                                     Image(systemName: "arrow.up.right.circle.fill")
                                         .foregroundColor(.accentColor)
                                 }
+                                // 🧬 進化#78: キーワード提案は却下できる (却下済み語は同じ日は出ない)
+                                if suggestion.keyword != nil {
+                                    Button {
+                                        viewModel.dismissKeywordSuggestion(suggestion.keyword ?? "")
+                                    } label: {
+                                        Image(systemName: "xmark.circle")
+                                            .foregroundColor(.secondary)
+                                    }
+                                    .buttonStyle(.plain)
+                                    .help(L10n.t("ui.dismissHelp"))
+                                }
                             } else if suggestion.type == .appSwitch, let appName = suggestion.targetAppName {
                                 // 🧬 進化#12: 戻る提案は実際にそのアプリへ切り替えるアクション
                                 Button {
