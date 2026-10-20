@@ -14,12 +14,21 @@
    ```
 5. 復旧ティックを実行: backlogタスク実装 →swift build緑 → 本Appに反映 → commit/push → README進化ログ更新 → day_report追記 → heartbeat 更新
 6. caffeinate が生きているか `pgrep caffeinate` で確認、無ければ `nohup caffeinate -i &`
+7. 標準ティック指示の末尾に「**⑥ `./Conscio/GROWTH/metrics.sh` 実行(1日1行自動)**」を含めること（進化#63で結線済み — 忘れると当日行が欠落する）
+
+## ツールSET（進化#55/#60で定着・復旧後の点検に使う）
+| ツール | 用途 | 実行 |
+|--------|------|------|
+| `tools/health_check.sh` | プロセス生存・バージョン・バンドルID・**ネット接続0の実測**・保存データ検査 | `./Conscio/tools/health_check.sh` |
+| `tools/verify_release.sh` | リリースzipのSHA-256+codesign検証（不一致はexit 1） | `./Conscio/tools/verify_release.sh <zip> [期待SHA]` |
+| `GROWTH/metrics.sh` | 日次メトリクス行の自動追記（同日2回目はスキップ） | `./Conscio/GROWTH/metrics.sh` |
+| `GROWTH/USER_CHECKIN.md` | ユーザー来訪時の保留判断リスト（勝手に編集せず提案で置くこと） | 読むだけ |
 
 ## 挙動ルール（増殖を防止する）
 - **BACKUP / EMERGENCY が発火したとき**: heartbeat が新鮮（≤32分）なら**何もせず静かに消える**（リアームしない）。これで多重ループは増えない
 - **MAIN はtickの最初に必ずリアームする**（自分が死んでも次がいる状態を先に作る）
 - どのwakeも最初に loop_state.txt を見る。自分が pending リストに無く heartbeat が新鮮なら孤児wake=静かに退場
-- 出先（user-away）でも: GitHub操作はユーザー既承認。v1.xのリリース手順は確立済み（AI表明入りnotes + zip + SHA-256をSECURITY.mdに追記。現行 v1.4.1）
+- 出先（user-away）でも: GitHub操作はユーザー既承認。v1.xのリリース手順は確立済み（AI表明入りnotes + zip + SHA-256をSECURITY.mdに追記。現行 v1.4.2）。**公開コンテンツの変更（Qiita記事編集・note編集）は従来承認済みでも別途ユーザー承認を取り直す**（USER_CHECKINの提案欄に積む）
 - ❌ 絶対禁止: 課金・個人情報・炎上表現・SNSへの新規自動投稿（Qiita等はトークンがある場合のみユーザー承認済みの範囲で）
 - **ループの全面停止／再開はユーザーメッセージにのみ従う**（「ループ止めて」で全sleepers SIGTERM+caffeinate停止・loop_stateをSTOPPEDに。再開は新しいユーザーメッセージが必須）
 
