@@ -88,8 +88,9 @@
 79. ✅ **v1.4.3リリース** (https://github.com/Andy234-andy/conscio/releases/tag/v1.4.3 — SHA-256=`4addb5e9…4296`・verify_release全GREEN・AI表明notes・SECURITY§6.1追記済み)
 80. ✅ **Qiita記事#6投稿** (cadence適用1本目=更新2本積み → https://qiita.com/Andy342/items/f641539d82818d7693e0 『不在中は考えるな』省CPU設計・AI表明入り・本文保存=GROWTH/ARTICLE6_idle_cpu_qiita.md)
 81. ✅ **リリース後観察+1日締め** (v1.4.3 DL=0件[公開〜2時間・正直記録]・記事#6は35PV/90分・夕REFLECTIONをday_reportへ)
-82. ⬜ **wiki push継続+リリース後2日目観察** (v1.4.3のDL数・記事#6のストック発生チェック)
+82. ✅ **wiki push継続+リリース後観察2回目** (v1.4.3 DL=0件[公開〜90分・正直記録]・全8リリースDL合計=2件[v1.4.0/v1.4.2各1]・WIKI: wiki push 失敗 (404のまま))
 83. ⬜ **Qiita cadence記事#7候補** (30日チャート+却下機能の設計話 — cadence=更新2〜3回積み+**同日連投は避ける**[「たまに」運用]・投稿は翌日以降)
+84. ⬜ ⭐**レポートからCSV書き出し** (アプリ実装候補: 直近30日データを~/Documents配下ではなくユーザー選択先にCSV保存 — NSSavePanel・端末内完結・個人情報なし)
 
 ## 守り (変更時も絶対)
 - 個人情報の保存なし・外部送信なし
