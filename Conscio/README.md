@@ -17,7 +17,7 @@
 Conscioは、Macのメニューバーに常駐する**文脈認識型デジタルナビゲーター**です。
 いま最前面のアプリ・ドキュメントをリアルタイムで理解し、必要な情報だけをさりげなく提示します。そして、あなたが深く集中している瞬間を守ります。
 
-> 🚀 最新: **v1.4.2 — 進化57件** (統計保存の10秒スロットル化+終了時フラッシュ・監査ツール同梱・バンドルID中性化済み) · 🌐 公式サイト: https://andy234-andy.github.io/conscio/ · 📖 **[使い方・仕組みWiki](Conscio/Wiki/Home.md)**
+> 🚀 最新リリース: **v1.4.2**（公開時点で進化57件 → **現在 進化#66まで継続中**: 統計保存の10秒スロットル化+終了時フラッシュ・監査/health/verifyツール同梱・バンドルID中性化済み） · 🌐 公式サイト: https://andy234-andy.github.io/conscio/ · 📖 **[使い方・仕組みWiki](Conscio/Wiki/Home.md)** · 📜 [全7リリースのCHANGELOG](Conscio/CHANGELOG.md)
 
 ## 🧬 進化ログ (Evolution Log)
 

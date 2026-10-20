@@ -57,7 +57,9 @@ cd conscio && swift build
 - Honest limitation: the app is **not App-Sandboxed** (macOS restricts reading other apps' window titles from sandboxed processes), so the safety posture is *zero networking + minimal storage + reproducible verification* instead
 - No telemetry, no account, no purchases — MIT licensed
 
-## 🧬 Evolution highlights (2 days, 53 ticks)
+## 🧬 Evolution highlights (2 days, 66 ticks and counting)
+
+- **v1.4.2** — stats disk writes throttled to once per 10s (was every 2s tick) + flush on terminate; runtime health check tool (`tools/health_check.sh`) and a one-command release verify script (`tools/verify_release.sh`)
 
 - **v1.4.0** — real-app icon in popover, click-to-report flow, demo-suggestion cleanup, focus streak 🔥, honest Focus Guard wording, quick menu
 - **v1.4.1** — NLTagger audit discovered Japanese POS tags never activate (all `OtherWord`); keyword fallback now does word-level refinement (particles and hiragana-only words dropped). Ships a debug audit tool (`tools/keyword_audit.swift`)

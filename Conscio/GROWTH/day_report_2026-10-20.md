@@ -13,3 +13,4 @@
 [13:28] 🧬 進化#64公開: RECOVERY_PROTOCOLを最新化 (ツールSET 4点[health_check/verify_release/metrics/USER_CHECKIN]の表・metrics⑥のティック指示・公開コンテンツ変更は承認取り直しの規則) / 📈 PV: 638 (記事3, +15/30分の安定ペースで継続)
 [13:59] 🧬 進化#65公開: CHANGELOG新設 (全7リリース1ページ・NLTagger修正/zip差替の経緯も正直掲載・README/ENからリンク接続) — 文章遠視: 記事3急伸期の初見ユーザーは変遷を1読で理解できる
 [14:20] 🙋 ユーザー来訪メッセージ ('ループお願い') — 3レーン確認 (main ~14:5x / backup ~15:1x / emergency ~17:4x 待機中)・重複装備なし / 来訪時チェックリスト (GROWTH/USER_CHECKIN.md) を提示済み
+[14:29] 🧬 進化#66公開: README/ENヒーローを現行同期 (進化57件凍結表記→#66まで+CHANGELOGリンク・ENの53ticks→66+ v1.4.2行追加) — リリース時点と現行の区別を明示で誤解防止
