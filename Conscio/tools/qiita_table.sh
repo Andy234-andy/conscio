@@ -1,5 +1,5 @@
 #!/bin/zsh
-# 📊 qiita_table.sh — 連載5記事のQiitaダッシュボード表 (進化#73定着)
+# 📊 qiita_table.sh — 連載Qiitaダッシュボード表 (進化#73定着・進化#80で6本化)
 # ユーザー要望「毎回の最後に投稿時間・閲覧数・スター数等の表を載せて」→ 毎ティックの最終メッセージ末尾で実行する
 # 使い方: ./Conscio/tools/qiita_table.sh   → Markdown表を出力 (そのまま会話/記録に貼る)
 # 実装メモ: HTTPはcurl (macOSのpython urllibはSSL証明書検証で失敗するため)
@@ -23,7 +23,7 @@ CONSCIO_QT_DIR="$TDIR" python3 - <<'PYEOF'
 import json, os
 
 base = os.environ["CONSCIO_QT_DIR"]
-IDS_N = 5
+IDS_N = 6
 
 print("| # | タイトル | 投稿 (JST) | PV | ❤ | 📚 | 💬 | タグ |")
 print("|---|----------|-----------|---:|---:|---:|---:|------|")
