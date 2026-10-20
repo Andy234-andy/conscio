@@ -6,6 +6,8 @@ import Cocoa
 struct SettingsView: View {
     @ObservedObject var habitTracker: HabitTracker
     @State private var showResetConfirm = false
+    // 🧬 進化#75: 今日の集中目標を設定化 (既定60分・15〜240分・15分刻み)
+    @AppStorage("dailyGoalMinutes") private var dailyGoalMinutes: Int = 60
 
     private var dataDirectoryURL: URL {
         FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
@@ -47,6 +49,23 @@ struct SettingsView: View {
                     .foregroundColor(.secondary)
             }
 
+            // 🧬 進化#75: 今日の集中目標 (スコアと色判定の基準・このMacのみに保存)
+            Section(header: Text(L10n.t("settings.goal"))) {
+                Stepper(value: $dailyGoalMinutes, in: 15...240, step: 15) {
+                    HStack {
+                        Text(L10n.t("settings.goalMinutes"))
+                        Spacer()
+                        Text("\(dailyGoalMinutes)\(L10n.t("settings.goalUnit"))")
+                            .monospacedDigit()
+                            .foregroundColor(.purple)
+                            .bold()
+                    }
+                }
+                Text(L10n.t("settings.goalNote"))
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+
             Section(header: Text(L10n.t("settings.habits"))) {
                 Button(role: .destructive) {
                     showResetConfirm = true
@@ -67,7 +86,7 @@ struct SettingsView: View {
             }
         }
         .padding()
-        .frame(width: 430, height: 340)
+        .frame(width: 430, height: 425)
     }
 }
 

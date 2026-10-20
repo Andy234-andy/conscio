@@ -22,13 +22,16 @@ enum L10n {
         "report.score":      ("集中達成スコア", "Focus score"),
         "report.vsYesterday":("昨日は %d 分", "Yesterday: %d min"),
         "report.firstDay":   ("2日目から昨日比が表示されます", "Comparison shows from day 2"),
-        "report.target":     ("目標 60分/日", "Goal: 60 min/day"),
         "report.weekTotal":  ("直近7日の合計", "Last 7 days total"),
         "report.weekPerAvg": ("1日平均: %d分", "Daily avg: %d min"),
         "settings.title":    ("Conscioの設定", "Conscio Settings"),
         "settings.language": ("言語", "Language"),
         "settings.uiLang":   ("UIの表示言語", "UI language"),
         "settings.uiLangNote": ("macOSのシステム言語に従います（現在は日本語/英語の自動判別）", "Follows macOS system language (auto ja/en)"),
+        "settings.goal":     ("今日の集中目標", "Daily focus goal"),
+        "settings.goalMinutes": ("1日の集中時間", "Daily focus time"),
+        "settings.goalUnit":    (" 分", " min"),
+        "settings.goalNote":   ("達成スコアと色判定の基準になります（この Mac にのみ保存）", "Baseline for the achievement score and its colors (stored on this Mac only)."),
         "settings.privacy":  ("プライバシー", "Privacy"),
         "settings.permissions": ("パーミッションを管理（システム設定を開く）", "Manage permissions (opens System Settings)"),
         "settings.openDataFolder": ("データ保存フォルダをFinderで開く", "Open data folder in Finder"),
@@ -90,5 +93,10 @@ enum L10n {
     static func t(_ key: String) -> String {
         guard let entry = table[key] else { return key }
         return isJapanese ? entry.ja : entry.en
+    }
+
+    /// 🧬 進化#75: 目標は設定で変わるため動的に組み立てる
+    static func target(_ minutes: Int) -> String {
+        isJapanese ? "目標 \(minutes)分/日" : "Goal: \(minutes) min/day"
     }
 }

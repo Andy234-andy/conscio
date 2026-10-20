@@ -136,7 +136,7 @@ struct ReportView: View {
                                 .font(.caption2)
                                 .foregroundColor(.gray)
                         }
-                        Text(L10n.t("report.target"))
+                        Text(L10n.target(Int(HabitTracker.dailyGoalSeconds / 60)))
                             .font(.caption2)
                             .foregroundColor(.gray)
                     }

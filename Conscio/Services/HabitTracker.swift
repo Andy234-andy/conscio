@@ -89,7 +89,11 @@ class HabitTracker: ObservableObject {
     }
 
     // 🧬 進化#10: スコア計算 (誠実な指標のみ・捏造なし)
-    private static let dailyGoalSeconds: TimeInterval = 3600 // 目標60分/日
+    // 🧬 進化#75: 目標を設定で変更可能に (UserDefaults "dailyGoalMinutes"・既定60分・15〜240分に正規化・このMacにのみ保存)
+    static var dailyGoalSeconds: TimeInterval {
+        let mins = UserDefaults.standard.object(forKey: "dailyGoalMinutes") as? Int ?? 60
+        return TimeInterval(max(15, min(240, mins)) * 60)
+    }
 
     var focusScore: FocusScoreResult {
         let fmt = DateFormatter()
