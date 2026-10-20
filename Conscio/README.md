@@ -23,6 +23,9 @@ Conscioは、Macのメニューバーに常駐する**文脈認識型デジタ�
 
 | 日時 | 進化内容 |
 |------|----------|
+| 2026-10-20 17:0x | 🧬 **進化#75**: **⭐アプリ実装: 集中目標の設定化** (HabitTrackerのハードコード3600秒→設定に15〜240分Stepper[既定60・15分刻み] — スコア・色・表記が動的追従・保存はこのMacのみ) — ユーザー指摘を起点に **app-evolution guard施行** (Swift非コードティックは3連続まで) · build緑705秒→bundle再組立て+codesign検証✓ |
+| 2026-10-20 17:4x | 🧬 **進化#76**: **⭐アプリ実装: ロック/不在時の省CPU** (スクリーンセーバ/ロック中はAppleScriptのURL取得を完全停止[osascript起動ゼロ]・解除後即1回再開 — DistributedNotificationCenter実測4通知[macOS27 SDKにNSWorkspace screensaver通知なしをコンパイル実測]) · build緑20.3秒・警告0復活(CHANGELOG exclude) · 🧬 cadence承認施行 (アプリ更新のたびGitHub・たまにQiita) |
+| 2026-10-20 17:5x | 🧬 **進化#79**: **v1.4.3リリース公開** (#75+#76バッチ — Info.plist 1.4.3/build 8・ditto zip 1,797,516B・SHA-256=`4addb5e9…4296`をSECURITY§6.1追加・`verify_release.sh`全GREEN・AI表明notes ※公開直後の誤字[\`>\`]はgh release editで透明修正) · 文書同期 (CHANGELOG/README・EN hero凍結[v1.4.1残留]解消/landing/SECURITY) · https://github.com/Andy234-andy/conscio/releases/tag/v1.4.3 |
 | 2026-10-20 16:5x | 🧬 **進化#74**: **初コメント観測** (Art#2に外部ユーザー「Whatcha」氏のコメント2件[10/18・10/19] — 「自走ループ設計が興味深い」「誠実リファクタが信頼を高める」=全面的に肯定的・質問なし → 返信は承認事項としてUSER_CHECKINへ) · health全GREEN (負荷3.55) |
 | 2026-10-20 16:2x | 🧬 **進化#73**: **Qiitaダッシュボード表の定着** (ユーザー要望「毎回の最後に投稿時刻/PV/❤/ストック等の表を」→ `tools/qiita_table.sh` ワンコマンド化・RECOVERY標準ティックに⑧組み込み・以後毎ティック末尾で表示) · 🎉 **記事3=701** (700突破! 合計1,737) |
 | 2026-10-20 16:2x | 🧬 **進化#72**: **Wiki同期** (Home v1.3.0/17進化凍結→v1.4.2/70進化+CHANGELOGリンク・How-It-Works「時点」表記をv1.4.2へ+verifyツール追記・Usageは差分をCHANGELOGに委譲する誠実表記) · 📈 記事3=**697**（700まであと3）· health_check全GREEN（負荷3.34） |
