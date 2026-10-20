@@ -1,5 +1,5 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-20T21:58 JST (記事#6消失を検出・調査中=ユーザー確認待ち)
+heartbeat: 2026-10-21T07:47 JST (復旧ティック: 記事#7投稿+v1.4.4リリース完了)
 mode: user-away autonomous evolution
 pending:
   - main      : sh_158490bcf0018UoaWopPf6IfaA (~17:1x発火 → 進化#75)

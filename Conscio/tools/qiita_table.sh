@@ -12,7 +12,8 @@ fi
 TDIR=$(mktemp -d)
 trap 'rm -rf "$TDIR"' EXIT
 
-IDS=(9f1b6af7a9edc5b70968 041923a512b1c7b3328b dbd23baa4b3976dfdfae 22a016208cab808bba1a 1bd5641ad076e8e93cd0 f641539d82818d7693e0)
+IDS=(9f1b6af7a9edc5b70968 041923a512b1c7b3328b dbd23baa4b3976dfdfae 22a016208cab808bba1a 1bd5641ad076e8e93cd0 c63a2f08513de055491d)
+# ※ 旧6本目 f641539d82818d7693e0 (記事#6) は2026-10-20深夜に消失[ユーザー確認待ち] — 復活したら入れ替え戻し
 i=0
 for id in "$IDS[@]"; do
   i=$((i+1))

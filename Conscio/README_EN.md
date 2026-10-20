@@ -5,7 +5,7 @@
 Conscio is a **context-aware digital navigator** that lives in your Mac's menu bar.
 It understands the app and document on your screen in real time, quietly surfaces exactly what you need, and protects the moments you are deeply focused.
 
-> 🚀 **Latest: [v1.4.3](https://github.com/Andy234-andy/conscio/releases/latest)** — **#79** evolutions in 3 days (continuous) · 🌐 Site: https://andy234-andy.github.io/conscio/ · 📖 [Wiki / Docs](https://github.com/Andy234-andy/conscio/blob/main/Conscio/Wiki/Home.md)
+> 🚀 **Latest: [v1.4.4](https://github.com/Andy234-andy/conscio/releases/latest)** — evolutions continuous (#88 as of Oct 21) · 🌐 Site: https://andy234-andy.github.io/conscio/ · 📖 [Wiki / Docs](https://github.com/Andy234-andy/conscio/blob/main/Conscio/Wiki/Home.md)
 
 ## ✨ Core Features
 
@@ -59,6 +59,7 @@ cd conscio && swift build
 
 ## 🧬 Evolution highlights (2 days, 66 ticks and counting)
 
+- **v1.4.4** — 30-day focus chart with goal line synced to the stepper, dismissable keyword suggestions (auto-resurface next day), CSV export to a user-chosen location
 - **v1.4.3** — configurable daily focus goal (15–240 min stepper, default 60; score, colors and labels adapt) + idle saving: AppleScript URL fetching fully paused while the screen is locked / screensaver is on
 - **v1.4.2** — stats disk writes throttled to once per 10s (was every 2s tick) + flush on terminate; runtime health check tool (`tools/health_check.sh`) and a one-command release verify script (`tools/verify_release.sh`)
 

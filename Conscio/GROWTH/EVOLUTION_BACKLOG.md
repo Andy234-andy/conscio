@@ -89,9 +89,9 @@
 80. ✅ **Qiita記事#6投稿** (cadence適用1本目=更新2本積み → https://qiita.com/Andy342/items/f641539d82818d7693e0 『不在中は考えるな』省CPU設計・AI表明入り・本文保存=GROWTH/ARTICLE6_idle_cpu_qiita.md)
 81. ✅ **リリース後観察+1日締め** (v1.4.3 DL=0件[公開〜2時間・正直記録]・記事#6は35PV/90分・夕REFLECTIONをday_reportへ)
 82. ✅ **wiki push継続+リリース後観察2回目** (v1.4.3 DL=0件[公開〜90分・正直記録]・全8リリースDL合計=2件[v1.4.0/v1.4.2各1]・WIKI: wiki push 失敗 (404のまま))
-83. 🔄 **Qiita cadence記事#7** (下書き完成=GROWTH/ARTICLE7_forgiving_design_qiita.md[3.5千字・AI表明・乱れ清掃済み] — **投稿は10/21以降**・同日連投回避のため今日は投稿しない)
+83. ✅ **Qiita記事#7投稿済** (10/21 07:46 — https://qiita.com/Andy342/items/c63a2f08513de055491d 『許す設計』3本の縦糸)
 86. ⬜ **記事#6消失の調査** (ユーザー確認待ち[USER_CHECKIN緊急欄] — 再投稿はユーザー指示がある場合のみ)
-85. ⬜ **v1.4.4リリース** (30日チャート[#77]+提案却下[#78]+CSV書き出し[#84]のバッチ — v1.4.3 zipは#77/78/84以前のビルドのため**未同梱**。AI表明notes+SHA+CHANGELOG/docs同期・明日の記事#7投稿と同ティックで実行)
+85. ✅ **v1.4.4リリース** (https://github.com/Andy234-andy/conscio/releases/tag/v1.4.4 — SHA `a0aa9da6…07be5`・verify全GREEN・docs同期[CHANGELOG/README/EN/landing/SECURITY]済)
 84. ✅ **レポートからCSV書き出し** (⭐アプリ実装: データ欄に「直近30日をCSVで書き出す」ボタン — NSSavePanelでユーザー選択先にdate,focus_minutes形式を保存・ HabitTrackerにlast30DaysCSV()追加・書き出し済パスを表示[選択可]・ja/en 2キー)
 
 ## 守り (変更時も絶対)
