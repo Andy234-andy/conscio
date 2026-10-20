@@ -89,7 +89,7 @@
 80. ✅ **Qiita記事#6投稿** (cadence適用1本目=更新2本積み → https://qiita.com/Andy342/items/f641539d82818d7693e0 『不在中は考えるな』省CPU設計・AI表明入り・本文保存=GROWTH/ARTICLE6_idle_cpu_qiita.md)
 81. ✅ **リリース後観察+1日締め** (v1.4.3 DL=0件[公開〜2時間・正直記録]・記事#6は35PV/90分・夕REFLECTIONをday_reportへ)
 82. ✅ **wiki push継続+リリース後観察2回目** (v1.4.3 DL=0件[公開〜90分・正直記録]・全8リリースDL合計=2件[v1.4.0/v1.4.2各1]・WIKI: wiki push 失敗 (404のまま))
-83. ⬜ **Qiita cadence記事#7候補** (30日チャート+却下機能の設計話 — cadence=更新2〜3回積み+**同日連投は避ける**[「たまに」運用]・投稿は翌日以降 ※10/20は78/84と同日のため持ち越し確定)
+83. 🔄 **Qiita cadence記事#7** (下書き完成=GROWTH/ARTICLE7_forgiving_design_qiita.md[3.5千字・AI表明・乱れ清掃済み] — **投稿は10/21以降**・同日連投回避のため今日は投稿しない)
 84. ✅ **レポートからCSV書き出し** (⭐アプリ実装: データ欄に「直近30日をCSVで書き出す」ボタン — NSSavePanelでユーザー選択先にdate,focus_minutes形式を保存・ HabitTrackerにlast30DaysCSV()追加・書き出し済パスを表示[選択可]・ja/en 2キー)
 
 ## 守り (変更時も絶対)

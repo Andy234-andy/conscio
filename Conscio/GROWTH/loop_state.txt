@@ -1,5 +1,5 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-20T21:01 JST (evo#84 アプリ実装: CSV書き出し完了)
+heartbeat: 2026-10-20T21:28 JST (evo#83下書き完成・投稿は10/21)
 mode: user-away autonomous evolution
 pending:
   - main      : sh_158490bcf0018UoaWopPf6IfaA (~17:1x発火 → 進化#75)
