@@ -17,6 +17,9 @@ class ContextMonitor: ObservableObject {
     // 🌐 進化#4: ブラウザURL取得用の状態
     private var urlFetchTick = 0
     private var lastFetchedURL: String?
+    // 🧬 進化#76: ロック/スクリーンセーバ中の省CPU (URLのosascript起動を停止)
+    private var screensaverActive = false
+    private var workspaceObservers: [NSObjectProtocol] = []
 
     init() {
         // Start monitoring when the object is initialized
@@ -24,6 +27,8 @@ class ContextMonitor: ObservableObject {
     }
 
     deinit {
+        DistributedNotificationCenter.default().removeObserver(self)
+        workspaceObservers.forEach { DistributedNotificationCenter.default().removeObserver($0) }
         timer?.invalidate()
     }
 
@@ -32,6 +37,34 @@ class ContextMonitor: ObservableObject {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { [weak self] _ in // Check every 2 seconds
             self?.updateContext()
+        }
+        registerScreensaverObservers()
+    }
+
+    /// 🧬 進化#76: ロック/スクリーンセーバを監視して不在中はURLのosascript起動を止める
+    /// - macOS 27 SDKのNSWorkspaceにはスクリーンセーバ通知が存在しなかった (コンパイル実測) ため、
+    ///   名前に依存しない DistributedNotificationCenter の実測名 (loginwindow/screensaver が投げる) を使用
+    /// - 復帰時は urlFetchTick=0 に戻し、直後に即1回取得
+    private func registerScreensaverObservers() {
+        let dist = DistributedNotificationCenter.default()
+        let onStartNames: [Notification.Name] = [
+            Notification.Name("com.apple.screensaver.didstart"),
+            Notification.Name("com.apple.screenIsLocked"),   // loginwindow のロック
+        ]
+        let onStopNames: [Notification.Name] = [
+            Notification.Name("com.apple.screensaver.didstop"),
+            Notification.Name("com.apple.screenIsUnlocked"), // 復帰=解除
+        ]
+        for name in onStartNames {
+            workspaceObservers.append(dist.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in
+                self?.screensaverActive = true
+            })
+        }
+        for name in onStopNames {
+            workspaceObservers.append(dist.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in
+                self?.screensaverActive = false
+                self?.urlFetchTick = 0
+            })
         }
     }
 
@@ -146,12 +179,18 @@ class ContextMonitor: ObservableObject {
             // 🌐 進化#4: ブラウザの実URLを取得する
             // Safari/ChromeはAppleScriptに公開させており、最前面タブのURLを正確に取得できる。
             // (以前の example.com プレースホルダーを置換)
+            // 🧬 進化#76: ロック/スクリーンセーバ中は取得しない (osascript起動を完全停止=CPU/熱に優しい)
+            // 復帰後は registerScreensaverObservers が urlFetchTick=0 に戻し、直後に即1回実行する
             if appName.contains("Safari") || appName.contains("Chrome") {
-                if self.urlFetchTick % 3 == 0 { // 負荷軽減: 2秒×3=6秒ごとに取得
-                    self.lastFetchedURL = self.fetchBrowserURL(for: appName)
+                if self.screensaverActive {
+                    activeURL = self.lastFetchedURL
+                } else {
+                    if self.urlFetchTick % 3 == 0 { // 負荷軽減: 2秒×3=6秒ごとに取得
+                        self.lastFetchedURL = self.fetchBrowserURL(for: appName)
+                    }
+                    self.urlFetchTick += 1
+                    activeURL = self.lastFetchedURL
                 }
-                self.urlFetchTick += 1
-                activeURL = self.lastFetchedURL
             }
 
 

@@ -21,6 +21,7 @@ let package = Package(
                 "tools", "GROWTH", "landing", "Wiki", "zenn",
                 "ARTICLE.md", "PH_LAUNCH.md", "PROMOTION.md",
                 "README.md", "README_EN.md", "RULES.md", "SECURITY.md", "LICENSE",
+                "CHANGELOG.md",
             ],
             resources: []
         )
