@@ -96,6 +96,49 @@ struct ReportView: View {
                 .background(Color(NSColor.controlBackgroundColor))
                 .cornerRadius(12)
 
+                // 🧬 進化#77: 直近30日の集中チャート (月次ビュー — dailyFocusMapをそのまま使用・目標破線つき)
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack(alignment: .firstTextBaseline) {
+                        Text(L10n.t("report.chart30"))
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                        let avg30 = Int(habitTracker.last30DaysTotalSeconds / 60 / 30)
+                        Text(String.localizedStringWithFormat(L10n.t("report.chart30Avg"), avg30))
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    Chart {
+                        ForEach(habitTracker.last30DaysFocus) { entry in
+                            AreaMark(
+                                x: .value(L10n.t("report.chartDate"), entry.day),
+                                y: .value(L10n.t("report.chartFocus"), entry.minutes)
+                            )
+                            .foregroundStyle(.purple.opacity(0.22).gradient)
+                            .interpolationMethod(.catmullRom)
+                            LineMark(
+                                x: .value(L10n.t("report.chartDate"), entry.day),
+                                y: .value(L10n.t("report.chartFocus"), entry.minutes)
+                            )
+                            .foregroundStyle(.purple)
+                            .lineStyle(StrokeStyle(lineWidth: 1.5))
+                            .interpolationMethod(.catmullRom)
+                        }
+                        RuleMark(y: .value(L10n.t("report.chartFocus"), Double(HabitTracker.dailyGoalSeconds / 60)))
+                            .foregroundStyle(.green.opacity(0.55))
+                            .lineStyle(StrokeStyle(lineWidth: 1, dash: [4, 3]))
+                            .annotation(position: .top, alignment: .trailing) {
+                                Text(L10n.target(Int(HabitTracker.dailyGoalSeconds / 60)))
+                                    .font(.caption2)
+                                    .foregroundColor(.green)
+                            }
+                    }
+                    .frame(height: 110)
+                }
+                .padding()
+                .background(Color(NSColor.controlBackgroundColor))
+                .cornerRadius(12)
+
                 // 🧬 進化#10: スコアを実データから算出 (直近て勝拙計算に一回のみ呼び出し)
                 let score = habitTracker.focusScore
 

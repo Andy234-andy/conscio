@@ -30,3 +30,4 @@
 [17:5x] 📦 リリース実観察: v1.4.3の初期DLは現時点0 — 次ティック以降でDL数を観察 (参照基準: v1.4.2は公開直後に1件)
 [18:2x] 🧬 進化#80公開: Qiita記事#6投稿 (cadence適用1本目 — 「不在中は考えるな」省CPU設計の実装話+NSWorkspace screensaver通知がmacOS27 SDKにない実測+codesign detritus地雷の対処順序 / AI表明・3931字・タグ macOS·Swift·個人開発 / https://qiita.com/Andy342/items/f641539d82818d7693e0) — 記事6本体制 / WIKI: wiki push 失敗 (404のまま)
 [18:3x] 🔍 異常点検: EVOLUTION_BACKLOG.mdが#75時点に巻き戻っていた (git logでf415227が最終タッチ — #76/#79/#80のpython書込が'ok'表示ながらディスクに反映されていなかった) → backlog再構築完了[76✅/79✅/80✅/81追加] / RECOVERY・loop_state・README・Wiki・day_reportは全grep検証で反映確認 / 教訓: 書込後は'ok'表示でなく必ずgrep再読で検証する運用に改定
+[18:5x] 🧬 進化#77公開: ⭐アプリ実装 直近30日の集中チャート (ReportView — AreaMark+LineMark catmullRom・RuleMarkで目標破線[設定Stepper値を動的参照=#75と統合]・30日平均併記 / HabitTracker: last30DaysFocus+last30DaysTotalSeconds追加[dailyFocusMapをそのまま使用・新規保存形式なし] / Localizer: chart30+chart30Avgのja/en) / build緑254秒・警告0・xattr→再署名→codesign --verify --deep --strict ✓・反映(pid 85437) / WIKI: wiki push 失敗 (404のまま)

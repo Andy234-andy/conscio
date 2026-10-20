@@ -83,7 +83,7 @@
 74. ✅ **初コメント観測+観察ツール運用開始** (Art#2に「Whatcha」氏の外部コメント2件[10/18・10/19・全面的に肯定的・質問なし] → 返信は公開コンテンツ=承認事項としてUSER_CHECKINに保存・health GREEN 負荷3.55)
 75. ✅ **集中目標の設定化** (⭐アプリ実装: HabitTrackerのハードコード「60分/日」→設定のStepperで15〜240分に変更可・スコア計算とレポート表記が動的に追従[進化#10の親戚]) — **ユーザー指摘「アプリが進化していない」を起点にapp-evolution guard施行**
 76. ✅ **ロック/不在時の省CPU** (実装済・DistributedNotificationCenter実測4通知を監視・ロック中はURL取得ゼロ誘導・build緑20.3秒・codesign strict ✓・アプリ反映) (AppleScriptのURL取得ポーリングをロック・スクリーンセーバ中は間引く — 熱意識ループの血統)
-77. ⬜ ⭐**レポートに直近30日の集中チャート** (月次ビュー・データは既存dailyFocusMapをそのまま使用)
+77. ✅ **直近30日の集中チャート** (⭐アプリ実装: ReportViewにAreaMark+LineMarkの月次ビュー+目標値と連動する破線RuleMark[#75のStepperと統合]・HabitTrackerにlast30DaysFocus/last30DaysTotalSeconds追加・Localizerに2キー[ja/en])
 78. ⬜ ⭐**提案のノイズ抑制** (キーワード提案を却下できる・却下済み語は同じ日に出さない)
 79. ✅ **v1.4.3リリース** (https://github.com/Andy234-andy/conscio/releases/tag/v1.4.3 — SHA-256=`4addb5e9…4296`・verify_release全GREEN・AI表明notes・SECURITY§6.1追記済み)
 80. ✅ **Qiita記事#6投稿** (cadence適用1本目=更新2本積み → https://qiita.com/Andy342/items/f641539d82818d7693e0 『不在中は考えるな』省CPU設計・AI表明入り・本文保存=GROWTH/ARTICLE6_idle_cpu_qiita.md)

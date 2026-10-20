@@ -142,6 +142,36 @@ class HabitTracker: ObservableObject {
         return result
     }
 
+    /// 🧬 進化#77: 直近30日の集中エントリ (月次チャート用 — dailyFocusMapをそのまま使用)
+    var last30DaysFocus: [DailyFocusEntry] {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        fmt.locale = Locale(identifier: "en_US_POSIX")
+        let cal = Calendar.current
+        var result: [DailyFocusEntry] = []
+        for offset in stride(from: -29, through: 0, by: 1) {
+            let d = cal.date(byAdding: .day, value: offset, to: Date()) ?? Date()
+            let key = fmt.string(from: d)
+            let label = String(key.suffix(5)).replacingOccurrences(of: "-", with: "/")
+            result.append(DailyFocusEntry(day: label, minutes: (dailyFocusMap[key] ?? 0) / 60))
+        }
+        return result
+    }
+
+    /// 🧬 進化#77: 直近30日の合計秒数 (チャートと同一の集計期間)
+    var last30DaysTotalSeconds: TimeInterval {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        fmt.locale = Locale(identifier: "en_US_POSIX")
+        let cal = Calendar.current
+        var total: TimeInterval = 0
+        for offset in stride(from: -29, through: 0, by: 1) {
+            let d = cal.date(byAdding: .day, value: offset, to: Date()) ?? Date()
+            total += dailyFocusMap[fmt.string(from: d)] ?? 0
+        }
+        return total
+    }
+
     // 🧬 進化#8: 今日の集中時間 (ポップオーバーのビッグ数字表示用)
     var todayFocusSeconds: TimeInterval {
         dailyFocusMap[dayKey(for: Date())] ?? 0
