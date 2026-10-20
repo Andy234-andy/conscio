@@ -258,15 +258,36 @@ struct TodayFocusCard: View {
     @ObservedObject var tracker: HabitTracker
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(L10n.t("ui.todayFocus"))
-                .font(.caption)
-                .foregroundColor(.secondary)
-            Text(tracker.formattedTodayFocus)
-                .font(.system(size: 34, weight: .bold, design: .rounded))
-                .foregroundColor(.purple)
-                .contentTransition(.numericText())
-                .animation(.snappy, value: tracker.formattedTodayFocus)
+        HStack(spacing: 10) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(L10n.t("ui.todayFocus"))
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                Text(tracker.formattedTodayFocus)
+                    .font(.system(size: 34, weight: .bold, design: .rounded))
+                    .foregroundColor(.purple)
+                    .contentTransition(.numericText())
+                    .animation(.snappy, value: tracker.formattedTodayFocus)
+            }
+            Spacer()
+            // 🧬 進化#90: 目標達成リング (#75のStepper設定値と連動・100%到達で緑化)
+            let fraction = min(1.0, tracker.todayFocusSeconds / max(1, HabitTracker.dailyGoalSeconds))
+            ZStack {
+                Circle()
+                    .stroke(Color.gray.opacity(0.25), lineWidth: 6)
+                Circle()
+                    .trim(from: 0, to: fraction)
+                    .stroke(fraction >= 1.0 ? Color.green : Color.purple,
+                            style: StrokeStyle(lineWidth: 6, lineCap: .round))
+                    .rotationEffect(.degrees(-90))
+                    .animation(.snappy, value: fraction)
+                Text("\(Int(fraction * 100))%")
+                    .font(.caption2)
+                    .bold()
+                    .foregroundColor(fraction >= 1.0 ? .green : .secondary)
+            }
+            .frame(width: 44, height: 44)
+            .help(String(format: L10n.t("ui.todayGoalHelp"), Int(fraction * 100)))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }

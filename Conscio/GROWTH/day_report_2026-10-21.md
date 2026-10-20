@@ -3,3 +3,4 @@
 [07:4x] 🧬 進化#87: Qiita記事#7投稿 (cadence適用 — 『許す設計』=目標破線/却下の翌日復活/CSVユーザー選択先 · https://qiita.com/Andy342/items/c63a2f08513de055491d) / 記事#6消失はユーザー確認待ち継続[qiita_tableのIDスロットは#7に差替・復活時戻し]
 [07:5x] 🧬 進化#88: v1.4.4リリース (30日チャート+目標破線/提案✕却下/CSV書き出しのバッチ — v1.4.3 zipに未同梱だった機能群 · Info.plist 1.4.4 build 9・zip 1,835,048B・SHA-256=a0aa9da6…07be5・verify_release全GREEN) / codesign小事件: plist編集後の再署名がdetritus拒否→xattrを2度挟んで通過[Wikit知見追加予定] / docs同期: CHANGELOG/README/README_EN/landing/SECURITY §6.1 / WIKI: wiki push 失敗 (404のまま)
 [08:2x] 🧬 進化#89公開: ⭐アプリ実装 週次比較 (7日カードに先週比±%表示 — previousWeekTotalSeconds[8〜14日前]・欠損日0分扱いの明記[誇張回避]・先週なし専用表示) / build緑134秒・警告0・codesign strict ✓・反映(pid 97194) / WIKI: wiki push 失敗 (404のまま)
+[08:5x] 🧬 進化#90公開: ⭐アプリ実装 目標達成リング (TodayFocusCardをHStack化+ZStackのCircle trimゲージ[44px] — fraction=min(1.0, today/goal)は#75設定値参照・100%で緑化・snappyアニメ・helpに進捗%表示·Localizerにui.todayGoalHelp) / build緑151秒・警告0・codesign strict ✓・反映(pid 98998) / WIKI: wiki push 失敗 (404のまま)
