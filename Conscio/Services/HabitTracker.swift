@@ -29,6 +29,8 @@ class HabitTracker: ObservableObject {
     
     private var lastAppName: String?
     private var lastAppStartTime: Date?
+    // 🧬 進化#56: ディスク書込スロットル用 (10秒に1回以下)
+    private var lastDiskWrite: Date?
     private var focusApps: Set<String> = ["Xcode", "Safari", "Pages", "TextEdit", "Code"]
 
     // 💾 永続化 (Application Support/Conscio/habitstats.json)
@@ -210,6 +212,9 @@ class HabitTracker: ObservableObject {
     }
 
     private func saveStats() {
+        // �ILOGs 進化#56: ディスク書込は10秒スロットル (2秒ティックが連続書込しない・コメントの意図を実装に合わせる)
+        if let last = lastDiskWrite, Date().timeIntervalSince(last) < 10 { return }
+        lastDiskWrite = Date()
         let snap = HabitStatsSnapshot(focus: totalFocusTimeSeconds,
                                       switches: contextSwitchCount,
                                       usage: appUsageList.map { UsageEntry(name: $0.appName, seconds: $0.durationInSeconds) },
@@ -267,7 +272,13 @@ class HabitTracker: ObservableObject {
             }
         }
 
-        saveStats() // 💾 10秒おき以上の変化時のみファイル書き込み(軽量)
+        saveStats() // 💾 進化#56: 10秒スロットル付き保存 (細かいデータはメモリにあり・最悪10秒分が失われるだけ)
+    }
+
+    // 🧬 進化#56: アプリ終了時は現在有効な値をそのままフラッシュ (スロットルを迂回)
+    func flushStatsOnTerminate() {
+        lastDiskWrite = nil
+        saveStats()
     }
 
     var formattedTotalFocusTime: String {

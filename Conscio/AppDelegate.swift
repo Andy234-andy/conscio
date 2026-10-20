@@ -10,6 +10,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var cancellables = Set<AnyCancellable>()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // 🧬 進化#56: 終了時に保存データをフラッシュ (10秒スロットルの最悪10秒分を失わない)
+        NotificationCenter.default.addObserver(forName: NSApplication.willTerminateNotification, object: nil, queue: .main) { _ in
+            HabitTracker.shared.flushStatsOnTerminate()
+        }
         // Initialize NotificationManager here to ensure its delegate is set early
         notificationManager = NotificationManager()
         // The delegate is set in NotificationManager's init, but we need to ensure UNUserNotificationCenter has our manager as its delegate.
