@@ -71,8 +71,11 @@ SHA-256 = 1ae2b6f94080a5dd83f54ee99f4dd5acac828acfb93d431808f65e2e18691055
 自分で確認する場合:
 
 ```bash
-# ダウンロードしたzipに対して
-shasum -a 256 Conscio-macOS-arm64-v1.4.0.zip
+# 1コマンド検証 (進化#60: 同梱スクリプト — SHA-256照合+codesign+バンドルIDを一括)
+./Conscio/tools/verify_release.sh Conscio-v1.4.2.zip 1ae2b6f94080a5dd83f54ee99f4dd5acac828acfb93d431808f65e2e18691055
+
+# 手動でも同じことができます
+shasum -a 256 Conscio-v1.4.2.zip
 ```
 
 ### 6.2 展開後の署名確認

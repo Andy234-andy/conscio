@@ -73,6 +73,21 @@ Modern knowledge workers switch context hundreds of times a day. Task managers k
 Conscio's philosophy is simple:
 **Tools should move toward people — never the other way around.**
 
+## 🔒 Verifying a release zip (one command)
+
+Downloaded a `Conscio-v*.zip`? Verify it with the bundled script (no network needed; extraction happens in a temp dir and is cleaned up):
+
+```zsh
+git clone https://github.com/Andy234-andy/conscio.git
+./conscio/Conscio/tools/verify_release.sh Conscio-v1.4.2.zip \
+  1ae2b6f94080a5dd83f54ee99f4dd5acac828acfb93d431808f65e2e18691055
+# ✅ SHA-256 match → ✅ codesign verify passed → bundle ID & version printed
+```
+
+Expected hashes for every release: [SECURITY.md §6.1](SECURITY.md). If verification fails, do NOT launch the app.
+
+*Evolution #60 (2026-10-20) — script version of the "verify your download" steps that shipped in Evolution #30.*
+
 ## 📝 License
 
 MIT
