@@ -1,9 +1,9 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-20T15:00 JST (main tick done: evo#68 REFLECTION drafted midday)
+heartbeat: 2026-10-20T15:17 JST (main tick done: evo#69 malware eradicated + thermal-aware loop standard)
 mode: user-away autonomous evolution
 pending:
-  - main      : sh_157e42189001 (fires ~16:1x → 進化#69)
-  - backup    : sh_157e436fa001 (~16:3x, freshなら無言退場)
+  - main      : sh_157f4ca6c001 (fires ~15:5x → 進化#70)
+  - backup    : sh_157f4e187001 (~16:2x, freshなら無言退場)
   - emergency : sh_157ac9a47001 (~17:4x発火, heartbeat新鮮なら静かに退場)
 protocol:
   - MAIN wake: ①先にリアーム(main 30m + backup 47m + emergency 3h) ②tick作業 ③heartbeat更新

@@ -31,3 +31,19 @@ print('6) 保存中身の検査: 個人的タイトル/URLフィールド =', '�
 else
   echo "5) habitstats.json: なし (未起動時)"
 fi
+
+# — 進化#69: 隠れマイナー (CPU窃盗プロセス) + 熱/負荷チェック (ユーザー要請「暑さも意識してループ」) —
+echo "7) 隠れマイナー検査:"
+if pgrep -l xmrig >/dev/null 2>&1; then echo "   ⚠⚠ xmrig検出! 即kill推奨"; else echo "   xmrig: なし ✓"; fi
+SUS=$(launchctl list 2>/dev/null | awk '{print $3}' | grep -E "^com\.[a-z]{15,}$")
+if [ -n "$SUS" ]; then echo "   ⚠ らしき名前のLaunchAgent: $SUS (精査を!)"; else echo "   不審LaunchAgent: なし ✓"; fi
+
+echo "8) 熱/負荷意識:"
+TH=$(pmset -g therm 2>/dev/null | head -1)
+echo "   $TH"
+LOAD=$(uptime | sed -E 's/.*load averages: //' | awk '{print $1}')
+if python3 -c "import sys; sys.exit(0 if float('$LOAD') < 8 else 1)"; then
+  echo "   負荷 $LOAD (閾値8未満) → 通常ティックOK ✓"
+else
+  echo "   負荷 $LOAD → ⚠ 高め: このティックのswift buildは見合わせ推奨"
+fi
