@@ -1,10 +1,10 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-20T10:25 JST (main tick done: evo#58 repo hygiene green + PV surge recorded)
+heartbeat: 2026-10-20T10:58 JST (main tick done: evo#59 PV surge external-referrer sweep = 0 public links)
 mode: user-away autonomous evolution
 pending:
-  - main      : sh_156e99378001 (fires ~10:5x → 進化#59)
-  - backup    : sh_156e99379001 (~11:1x, freshなら無言退場)
-  - emergency : sh_1565d2f01002 (~10:5x発火, heartbeat新鮮なら静かに退場)
+  - main      : sh_157054e86001 (fires ~11:2x → 進化#60)
+  - backup    : sh_157054e86002 (~11:5x, freshなら無言退場)
+  - emergency : sh_157054e86003 (~13:5x発火, heartbeat新鮮なら静かに退場)
 protocol:
   - MAIN wake: ①先にリアーム(main 30m + backup 47m + emergency 3h) ②tick作業 ③heartbeat更新
   - BACKUP/EMERGENCY wake: heartbeat≤32分なら何もせず消える / 死んでいたら復旧モード(RECOVERY_PROTOCOL.md準拠)
