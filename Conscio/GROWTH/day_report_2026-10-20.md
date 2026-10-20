@@ -19,3 +19,5 @@
 [15:17] 🧬 進化#69公開: マルウェア排除+熱意識化完了 (xmrig kill 15:05/不正LaunchAgent2隔離15:09/kit tmp除去:証拠保全tar 3.3MB/security incident記録/health_checkに検査7-8(マイナー・熱・負荷)/ティックの⑦熱ルール) / 感染元追及はユーザー作業(Avastフルスキャン推奨)
 [15:48] 🧬 進化#70公開: C2解析証跡化 (URL難読化=文字コード組み立て・eth_callスマコンC2と推定[明記]・実行検証なし) + health_check全GREEN (負荷 21.5→2.63 冷却確認) / 📈 記事3=687 (700まであと13)
 [15:54] 📝 進化#71: noteドラフト2本製作 (NOTE_DRAFTS/note1_mac_hot_incident.md + note2_evolution_loop_day3.md) — ユーザー承認「noteにもどんどん」を note=公開API無しの実態に合わせて『ドラフト→コピペ』フローで実装・両方AI表明入り・個人情報ゼロ
+[16:2x] 🧬 進化#72公開: Wiki同期 (Home v1.3.0/17進化の凍結→v1.4.2/70進化+CHANGELOG誘導へ全面更新・How-It-Worksの「時点」表記をv1.4.2+verify_release追記・Usageは差分をCHANGELOGに委譲する誠実表記) / 📈 記事3=697 / health_check全GREEN (負荷3.34)
+[16:2x] 📝 進化#73: tools/qiita_table.sh 定着 (Qiita5記事の投稿時刻/PV/❤/📚/💬/タグ表をワンコマンド化=macOS pythonのSSL問題はcurl統一で回避・RECOVERY_PROTOCOL標準ティックに⑧として組み込み) / WIKI:  / 📈 初回集計: PV計1,737・❤5・📚2・💬2 — 記事3=701で700突破

@@ -15,6 +15,7 @@
 5. 復旧ティックを実行: backlogタスク実装 →swift build緑 → 本Appに反映 → commit/push → README進化ログ更新 → day_report追記 → heartbeat 更新
 6. caffeinate が生きているか `pgrep caffeinate` で確認、無ければ `nohup caffeinate -i &`
 7. 標準ティック指示の末尾に「**⑥ `./Conscio/GROWTH/metrics.sh` 実行(1日1行自動)**」を含めること（進化#63で結線済み — 忘れると当日行が欠落する）
+8. 標準ティック指示に「**⑧ ティックの最終メッセージ末尾に `./Conscio/tools/qiita_table.sh` のQiitaダッシュボード表を必ず載せる**」を含めること（進化#73定着・2026-10-20のユーザー要望「毎回の最後に投稿時間・閲覧数・スター数等の表を」）
 
 ## ツールSET（進化#55/#60で定着・復旧後の点検に使う）
 | ツール | 用途 | 実行 |
@@ -22,6 +23,7 @@
 | `tools/health_check.sh` | プロセス生存・バージョン・バンドルID・**ネット接続0の実測**・保存データ検査 | `./Conscio/tools/health_check.sh` |
 | `tools/verify_release.sh` | リリースzipのSHA-256+codesign検証（不一致はexit 1） | `./Conscio/tools/verify_release.sh <zip> [期待SHA]` |
 | `GROWTH/metrics.sh` | 日次メトリクス行の自動追記（同日2回目はスキップ） | `./Conscio/GROWTH/metrics.sh` |
+| `tools/qiita_table.sh` | Qiita連載5記事のダッシュボード表（投稿時刻/PV/❤/📚/💬/タグ）をティックの最終メッセージ末尾に必ず載せる（進化#73・ユーザー要望）| `./Conscio/tools/qiita_table.sh` |
 | `GROWTH/USER_CHECKIN.md` | ユーザー来訪時の保留判断リスト（勝手に編集せず提案で置くこと） | 読むだけ |
 
 ## 挙動ルール（増殖を防止する）

@@ -1,14 +1,14 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-20T15:54 JST (user-directed work: evo#71 note drafts x2 created)
+heartbeat: 2026-10-20T16:27 JST (evo#72 Wiki同期 + evo#73 qiita_table.sh定着)
 mode: user-away autonomous evolution
 pending:
-  - main      : sh_158109839001 (fires ~16:1x → 進化#71)
-  - backup    : sh_15810a16d001 (~16:5x, freshなら無言退場)
+  - main      : sh_1582d08dd001a50JhBWMPO7agb (~16:5x発火 → 進化#74)
+  - backup    : sh_1582d21d30017W6VOr9gJZQebg (~17:1x発火, heartbeat≤32分なら無言退場)
   - emergency : sh_157ac9a47001 (~17:4x発火, heartbeat新鮮なら静かに退場)
 protocol:
   - MAIN wake: ①先にリアーム(main 30m + backup 47m + emergency 3h) ②tick作業 ③heartbeat更新
   - BACKUP/EMERGENCY wake: heartbeat≤32分なら何もせず消える / 死んでいたら復旧モード(RECOVERY_PROTOCOL.md準拠)
   - 孤児wake (pendingにないID): heartbeat新鮮なら無言退場
-  - 毎tick: メトリクス → day_report追記。RULES.md厳守
-  - 公開物: GitHub ops既承認。v1.xリリース手順は確立済み(現行v1.4.1): AI表明notes+zip+SHA-256
-  - Qiitaトークン2nd (fa735df...) は ~/.conscio_qiita_token2 に保存済み・用途はユーザー回答待ち
+  - 毎tick: メトリクス → day_report追記 → 末尾にQiitaダッシュボード表(./Conscio/tools/qiita_table.sh)。RULES.md厳守
+  - 公開物: GitHub ops既承認。v1.xリリース手順は確立済み(現行v1.4.2): AI表明notes+zip+SHA-256
+  - Qiitaトークン2nd (fa735df...) は ~/.conscio_qiita_token2 に保存済み・用途: PV監視+ユーザー承認済みPATCHのみ
