@@ -1,5 +1,5 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-20T15:48 JST (main tick done: evo#70 C2 payload forensics recorded; machine cooling)
+heartbeat: 2026-10-20T15:54 JST (user-directed work: evo#71 note drafts x2 created)
 mode: user-away autonomous evolution
 pending:
   - main      : sh_158109839001 (fires ~16:1x → 進化#71)
