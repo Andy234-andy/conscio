@@ -53,6 +53,10 @@ struct ConscioMenuView: View {
                 }
                 .help(L10n.t("ui.todayFocusHelp"))
 
+            // 🧬 進化#96: 紙の作業などオフライン集中の自計測ボタン (画面計測と混ぜない自主申告)
+            ManualFocusRow(tracker: viewModel.habitTracker)
+                .padding(.bottom, 4)
+
             VStack(alignment: .leading, spacing: 4) {
                 Text(L10n.t("ctx.header"))
                     .font(.headline)
@@ -249,6 +253,40 @@ struct ConscioMenuView: View {
 struct ConscioMenuView_Previews: PreviewProvider {
     static var previews: some View {
         ConscioMenuView()
+    }
+}
+
+// 🧬 進化#96: オフライン集中の自主申告ボタン行 (開始/停止)
+struct ManualFocusRow: View {
+    @ObservedObject var tracker: HabitTracker
+
+    var body: some View {
+        if tracker.isManualSessionActive {
+            Button {
+                tracker.stopManualSession()
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "stop.circle.fill")
+                        .foregroundColor(.red)
+                    Text(String(format: L10n.t("ui.manualStop"), Int(tracker.runningManualSeconds / 60)))
+                        .font(.caption)
+                }
+            }
+            .buttonStyle(.plain)
+            .help(L10n.t("ui.manualStart"))
+        } else {
+            Button {
+                tracker.startManualSession()
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "pencil.and.outline")
+                    Text(L10n.t("ui.manualStart"))
+                        .font(.caption)
+                }
+            }
+            .buttonStyle(.plain)
+            .help(L10n.t("ui.manualStart"))
+        }
     }
 }
 

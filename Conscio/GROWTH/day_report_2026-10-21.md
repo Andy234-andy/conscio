@@ -14,3 +14,7 @@
 - **codesign修復記録**: DocumentsはiCloudデスクトップ&書類同期領域 → fileprovider属性[fpfs#P]がxattr後に再付与され署名スキャン拒否がcontinue / 既存dirへの cp -R でネストが発生し『unsealed contents in bundle root』回避 — **修復フロー: 同期外のscratch dirへ(cp先は非存在dest)→xattr -cr+provenance削除→codesign署名+strict検証→ルートはrm再cpでクリーン再装備→strict検証** / Wiki知見としても追記
 - build緑(147秒+18秒增量)+codesign strict ✓・反映(pid 2886) / WIKI: wiki push 失敗 (404のまま)
 - **データに関する正直な記録**: このMacの過去の「集中」記録は実質存在しない(=表示が0のまま全集計系) — 遡及入れない。Chromeを追加した**今日から実数の計上が本人の使用で刻む**。過去表示が0のままと説明できる形に変更(当日分のshowcaseでの誇張はしない)
+[15:5x] 🛟 **ディスク100%事件の全経緯と復旧** (11:2x検出[lit回 収集: Data volume 202Gi/228Gi 使用] → Documents/dataless化 → GitHub保全カーテン → 15:0x swift/gitのstub回復を確認 → 15:5x work-tree paged-in確認[git status M×4 = #95差分生存]) — <<エージェント実行: ユーザーデータは不touch>>
+[11:3x-15:0x] hold中: build/リリース停止 (RECOVERY_PROTOCOL追記済み — Data 100%時のプログラム) / 15:09 PV手動計測 合計2,007PV[2,000突破!Art#7=66PV/❤1] / caffeinate·App(pid 2886 v1.4.4 build 9) 健在 / Metrics skip (同日2行目)
+[15:5x] 🧬 **進化#95公開[反映待ち]**: 週カードに「うち不在: X分」行 (last7DaysLockSeconds/dayLock集計+Localizer ja/en) — ディスク停止によりbuild未実行
+[15:5x] 🧬 **進化#96公開[反映待ち]**: ノートタイム手動打刻 (ユーザー承認あり提案 — ManualFocusRow[開始/停止ボタン]‑manualFocusMap日次+UserDefaults打刻化restoreManualSession+snapshot互換dayManual[decodeIfPresent旧互換]+ReportViewに「ノートの集中: X分 (自主申告)」 — 画面計測と混ぜない設計) — ビルド復旧後 reflecting

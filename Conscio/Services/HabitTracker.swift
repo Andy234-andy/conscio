@@ -21,6 +21,10 @@ class HabitTracker: ObservableObject {
     @Published var recentAppBuffer: [String] = []
     // 🧬 進化#92: 日ごとの不在(ロック)時間 (キー: yyyy-MM-dd) — #91で集計から外した時間を正直に可視化
     @Published var dayLockMap: [String: TimeInterval] = [:]
+    // 🧬 進化#96: 日ごとのオフライン集中 (紙の作業など・キー: yyyy-MM-dd) — 画面計測と混ぜない自主申告データ
+    @Published var manualFocusMap: [String: TimeInterval] = [:]
+    // 🧬 進化#96: 手動セッションの開始時刻 (UserDefaultsで再起動後も残る)
+    private var manualStartedAt: Date?
 
     // 🧬 進化#10: 実データベースの集中達成スコア (偽値88/100を置換)
     struct FocusScoreResult {
@@ -93,18 +97,21 @@ class HabitTracker: ObservableObject {
         var recentApps: [String]?
         // 🧬 進化#92: 不在(ロック)時間の日次マップ (旧ファイル互換のため Optional)
         var dayLock: [String: TimeInterval]?
+        // 🧬 進化#96: オフライン集中(自主申告)の日次マップ (旧ファイル互換のため Optional)
+        var dayManual: [String: TimeInterval]?
 
-        init(focus: TimeInterval, switches: Int, usage: [UsageEntry], dayFocus: [String: TimeInterval]?, recentApps: [String]?, dayLock: [String: TimeInterval]?) {
+        init(focus: TimeInterval, switches: Int, usage: [UsageEntry], dayFocus: [String: TimeInterval]?, recentApps: [String]?, dayLock: [String: TimeInterval]?, dayManual: [String: TimeInterval]?) {
             self.focus = focus
             self.switches = switches
             self.usage = usage
             self.dayFocus = dayFocus
             self.recentApps = recentApps
             self.dayLock = dayLock
+            self.dayManual = dayManual
         }
 
         enum CodingKeys: String, CodingKey {
-            case focus, switches, usage, dayFocus, recentApps, dayLock
+            case focus, switches, usage, dayFocus, recentApps, dayLock, dayManual
         }
 
         // 進化#5: 旧フォーマット(dayFocusなし)でもデコードできる
@@ -116,6 +123,7 @@ class HabitTracker: ObservableObject {
             dayFocus = try c.decodeIfPresent([String: TimeInterval].self, forKey: .dayFocus)
             recentApps = try c.decodeIfPresent([String].self, forKey: .recentApps)
             dayLock = try c.decodeIfPresent([String: TimeInterval].self, forKey: .dayLock)
+            dayManual = try c.decodeIfPresent([String: TimeInterval].self, forKey: .dayManual)
         }
     }
 
@@ -248,6 +256,73 @@ class HabitTracker: ObservableObject {
         return Int((dayLockMap[dayKey(for: Date())] ?? 0) / 60)
     }
 
+    // 🧬 進化#96: オフライン集中 (紙の作業など) の手動打刻
+    // 画面計測とは混ぜない — ユーザーが自分で計った時間を「自主申告」として明示ラベルで表示する
+    var isManualSessionActive: Bool {
+        return manualStartedAt != nil
+    }
+
+    /// 進化#96: 実行中セッションの現在秒 (表示用)
+    var runningManualSeconds: TimeInterval {
+        guard let at = manualStartedAt else { return 0 }
+        return Date().timeIntervalSince(at)
+    }
+
+    var todayManualMinutes: Int {
+        return Int((manualFocusMap[dayKey(for: Date())] ?? 0) / 60)
+    }
+
+    /// 進化#96: 「紙の作業を開始」ボタン
+    func startManualSession() {
+        guard manualStartedAt == nil else { return }
+        manualStartedAt = Date()
+        saveManualAnchor()
+    }
+
+    /// 進化#96: 「停止」ボタン — 区間を日次マップへ集計
+    func stopManualSession() {
+        guard let at = manualStartedAt else { return }
+        let seconds = Date().timeIntervalSince(at)
+        manualStartedAt = nil
+        if seconds > 0 {
+            manualFocusMap[dayKey(for: Date()), default: 0] += seconds
+        }
+        saveManualAnchor()
+        saveStats()
+    }
+
+    /// 進化#96: 開始時刻の UserDefaults 保存 (起動中に再起動が来てもセッションは続く)
+    private func saveManualAnchor() {
+        if let at = manualStartedAt {
+            UserDefaults.standard.set(at.timeIntervalSince1970, forKey: "manualSessionStart")
+        } else {
+            UserDefaults.standard.removeObject(forKey: "manualSessionStart")
+        }
+    }
+
+    /// 進化#96: 起動時に未終了セッションの復元 (開始時刻は UserDefaults)
+    func restoreManualSession() {
+        if let epoch = UserDefaults.standard.object(forKey: "manualSessionStart") as? TimeInterval {
+            manualStartedAt = Date(timeIntervalSince1970: epoch)
+        } else {
+            manualStartedAt = nil
+        }
+    }
+
+    // 🧬 進化#95: 直近7日の不在(ロック・無操作)合計秒 (週次カードに開示 — #91/92/93の系列)
+    var last7DaysLockSeconds: TimeInterval {
+        let fmt = DateFormatter()
+        fmt.dateFormat = "yyyy-MM-dd"
+        fmt.locale = Locale(identifier: "en_US_POSIX")
+        let cal = Calendar.current
+        var total: TimeInterval = 0
+        for offset in stride(from: 0, through: -6, by: -1) {
+            let d = cal.date(byAdding: .day, value: offset, to: Date()) ?? Date()
+            total += dayLockMap[fmt.string(from: d)] ?? 0
+        }
+        return total
+    }
+
     // 🧬 進化#8: 今日の集中時間 (ポップオーバーのビッグ数字表示用)
     var todayFocusSeconds: TimeInterval {
         dailyFocusMap[dayKey(for: Date())] ?? 0
@@ -309,6 +384,7 @@ class HabitTracker: ObservableObject {
 
     init() {
         loadStats()
+        restoreManualSession() // 🧬 進化#96: 未終了の手動セッションがあれば復元
     }
 
     private func loadStats() {
@@ -320,6 +396,7 @@ class HabitTracker: ObservableObject {
         dailyFocusMap = snap.dayFocus ?? [:]
         recentAppBuffer = snap.recentApps ?? []
         dayLockMap = snap.dayLock ?? [:] // 🧬 進化#92: 不在時間の復元
+        manualFocusMap = snap.dayManual ?? [:] // 🧬 進化#96: 自主申告の復元
     }
 
     private func saveStats() {
@@ -331,7 +408,8 @@ class HabitTracker: ObservableObject {
                                       usage: appUsageList.map { UsageEntry(name: $0.appName, seconds: $0.durationInSeconds) },
                                       dayFocus: dailyFocusMap,
                                       recentApps: recentAppBuffer,
-                                      dayLock: dayLockMap)
+                                      dayLock: dayLockMap,
+                                      dayManual: manualFocusMap)
         if let data = try? JSONEncoder().encode(snap) {
             try? data.write(to: storeURL)
         }

@@ -53,6 +53,14 @@ struct ReportView: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
+                    // 🧬 進化#96: オフライン集中 (紙作業など) の自主申告 — 画面計測と混ぜない明示ラベル
+                    if habitTracker.todayManualMinutes > 0 {
+                        Label(
+                            String(format: L10n.t("report.manualToday"), habitTracker.todayManualMinutes),
+                            systemImage: "notebook")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 .padding()
                 .background(Color(NSColor.controlBackgroundColor))
@@ -93,6 +101,12 @@ struct ReportView: View {
                             .foregroundColor(pct > 0 ? .green : (pct < 0 ? .orange : .secondary))
                     } else {
                         Text(L10n.t("report.weekCompareNA"))
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    // 🧬 進化#95: 直近7日の不在合計 (#91/93で集計から外した時間の開示 — 誇張ではなく説明)
+                    if Int(habitTracker.last7DaysLockSeconds / 60) > 0 {
+                        Text(String(format: L10n.t("report.weekLock"), Int(habitTracker.last7DaysLockSeconds / 60)))
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
