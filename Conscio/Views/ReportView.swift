@@ -45,6 +45,14 @@ struct ReportView: View {
                             .background(Color.green.opacity(0.2))
                             .cornerRadius(8)
                     }
+                    // 🧬 進化#92: 本日の不在(ロック) — #91で利用時間から除外した時間を毎日明示 (誇張ではなく正直な開示)
+                    if habitTracker.todayLockMinutes > 0 {
+                        Label(
+                            String(format: L10n.t("report.lockToday"), habitTracker.todayLockMinutes),
+                            systemImage: "lock")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 .padding()
                 .background(Color(NSColor.controlBackgroundColor))

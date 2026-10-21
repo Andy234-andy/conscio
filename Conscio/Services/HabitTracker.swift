@@ -19,6 +19,8 @@ class HabitTracker: ObservableObject {
     @Published var dailyFocusMap: [String: TimeInterval] = [:]
     // 🧬 進化#9: 直近アプリ履歴 (直近=MAX_BUFFER nexus件・新着順)
     @Published var recentAppBuffer: [String] = []
+    // 🧬 進化#92: 日ごとの不在(ロック)時間 (キー: yyyy-MM-dd) — #91で集計から外した時間を正直に可視化
+    @Published var dayLockMap: [String: TimeInterval] = [:]
 
     // 🧬 進化#10: 実データベースの集中達成スコア (偽値88/100を置換)
     struct FocusScoreResult {
@@ -31,6 +33,8 @@ class HabitTracker: ObservableObject {
     private var lastAppStartTime: Date?
     // 🧬 進化#56: ディスク書込スロットル用 (10秒に1回以下)
     private var lastDiskWrite: Date?
+    // 🧬 進化#92: ロック区間の始点 (解除時に区間長を計算)
+    private var suspendedAt: Date?
     private var focusApps: Set<String> = ["Xcode", "Safari", "Pages", "TextEdit", "Code"]
 
     // 💾 永続化 (Application Support/Conscio/habitstats.json)
@@ -54,17 +58,20 @@ class HabitTracker: ObservableObject {
         var dayFocus: [String: TimeInterval]?
         // 進化#9: 最近アプリ履歴 (旧ファイル互換のため Optional)
         var recentApps: [String]?
+        // 🧬 進化#92: 不在(ロック)時間の日次マップ (旧ファイル互換のため Optional)
+        var dayLock: [String: TimeInterval]?
 
-        init(focus: TimeInterval, switches: Int, usage: [UsageEntry], dayFocus: [String: TimeInterval]?, recentApps: [String]?) {
+        init(focus: TimeInterval, switches: Int, usage: [UsageEntry], dayFocus: [String: TimeInterval]?, recentApps: [String]?, dayLock: [String: TimeInterval]?) {
             self.focus = focus
             self.switches = switches
             self.usage = usage
             self.dayFocus = dayFocus
             self.recentApps = recentApps
+            self.dayLock = dayLock
         }
 
         enum CodingKeys: String, CodingKey {
-            case focus, switches, usage, dayFocus, recentApps
+            case focus, switches, usage, dayFocus, recentApps, dayLock
         }
 
         // 進化#5: 旧フォーマット(dayFocusなし)でもデコードできる
@@ -75,6 +82,7 @@ class HabitTracker: ObservableObject {
             usage = try c.decode([UsageEntry].self, forKey: .usage)
             dayFocus = try c.decodeIfPresent([String: TimeInterval].self, forKey: .dayFocus)
             recentApps = try c.decodeIfPresent([String].self, forKey: .recentApps)
+            dayLock = try c.decodeIfPresent([String: TimeInterval].self, forKey: .dayLock)
         }
     }
 
@@ -202,6 +210,11 @@ class HabitTracker: ObservableObject {
         return total
     }
 
+    /// 🧬 進化#92: 本日の不在(ロック)分 (#91方針との対比で「使った時間」には数えない)
+    var todayLockMinutes: Int {
+        return Int((dayLockMap[dayKey(for: Date())] ?? 0) / 60)
+    }
+
     // 🧬 進化#8: 今日の集中時間 (ポップオーバーのビッグ数字表示用)
     var todayFocusSeconds: TimeInterval {
         dailyFocusMap[dayKey(for: Date())] ?? 0
@@ -273,6 +286,7 @@ class HabitTracker: ObservableObject {
         appUsageList = snap.usage.map { AppUsageStats(appName: $0.name, durationInSeconds: $0.seconds) }
         dailyFocusMap = snap.dayFocus ?? [:]
         recentAppBuffer = snap.recentApps ?? []
+        dayLockMap = snap.dayLock ?? [:] // 🧬 進化#92: 不在時間の復元
     }
 
     private func saveStats() {
@@ -283,7 +297,8 @@ class HabitTracker: ObservableObject {
                                       switches: contextSwitchCount,
                                       usage: appUsageList.map { UsageEntry(name: $0.appName, seconds: $0.durationInSeconds) },
                                       dayFocus: dailyFocusMap,
-                                      recentApps: recentAppBuffer)
+                                      recentApps: recentAppBuffer,
+                                      dayLock: dayLockMap)
         if let data = try? JSONEncoder().encode(snap) {
             try? data.write(to: storeURL)
         }
@@ -306,12 +321,23 @@ class HabitTracker: ObservableObject {
         guard suspended != on else { return }
         suspended = on
         if on {
+            // 🧬 進化#92: ロック区間の始点を記録
+            suspendedAt = Date()
             // ロック直前までの断片を一度だけ正しく計上してから止める
             // (lastAppNameを渡すのでアプリは変わらず・切替カウントも増えない)
             if let last = lastAppName, !last.isEmpty {
                 recordContextChange(to: Context(activeApplication: last, keywords: []))
             }
         } else {
+            // 🧬 進化#92: 不在(ロック)時間を日次で記録 (#91で利用時間から除外した時間の実測)
+            if let at = suspendedAt {
+                let seconds = Date().timeIntervalSince(at)
+                if seconds > 0 {
+                    dayLockMap[dayKey(for: Date()), default: 0] += seconds
+                }
+                suspendedAt = nil
+                saveStats()
+            }
             // 再開時: ロック期間を含めず、計測の始点だけ今に合わせる
             lastAppStartTime = Date()
         }
@@ -370,6 +396,13 @@ class HabitTracker: ObservableObject {
 
     // 🧬 進化#56: アプリ終了時は現在有効な値をそのままフラッシュ (スロットルを迂回)
     func flushStatsOnTerminate() {
+        // 🧬 進化#92: ロック中に終了した場合も不在時間を記録してから保存
+        if suspended, let at = suspendedAt {
+            let seconds = Date().timeIntervalSince(at)
+            if seconds > 0 {
+                dayLockMap[dayKey(for: Date()), default: 0] += seconds
+            }
+        }
         lastDiskWrite = nil
         saveStats()
     }

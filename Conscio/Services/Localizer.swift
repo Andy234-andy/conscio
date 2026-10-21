@@ -84,6 +84,7 @@ enum L10n {
         "report.weekCompare": ("先週比 %+d%% (8〜14日前の合計と比較・欠損日は0分扱い)", "vs prev week: %+d%% (compared to days 8-14 ago; missing days count as 0)"),
         "report.weekCompareNA": ("先週のデータがまだありません", "No data for the previous week yet"),
         "ui.todayGoalHelp": ("今日の目標進捗 %d%%", "Today's goal progress: %d%%"),
+        "report.lockToday": ("本日の不在(ロック): %d分 — 利用時間には含めません", "Away (locked) today: %d min — not counted as usage"),
         "report.chart30Avg": ("30日平均 %d分/日", "30-day avg: %d min/day"),
         "report.switches":   ("文脈切り替え回数", "Context switches"),
         "report.steady":     ("非常に安定しています", "Very steady"),

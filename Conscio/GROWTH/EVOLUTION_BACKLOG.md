@@ -92,6 +92,7 @@
 83. ✅ **Qiita記事#7投稿済** (10/21 07:46 — https://qiita.com/Andy342/items/c63a2f08513de055491d 『許す設計』3本の縦糸)
 86. ⬜ **記事#6消失の調査** (ユーザー確認待ち[USER_CHECKIN緊急欄] — 再投稿はユーザー指示がある場合のみ)
 85. ✅ **v1.4.4リリース** (https://github.com/Andy234-andy/conscio/releases/tag/v1.4.4 — SHA `a0aa9da6…07be5`・verify全GREEN・docs同期[CHANGELOG/README/EN/landing/SECURITY]済)
+92. ✅ **不在(ロック)時間の記録と表示** (⭐アプリ実装: #91の対になる正直データ機能 — HabitTrackerにdayLockMap[日次]追加+setSuspendedで区間計測[suspendedAt]·解除時に日次へ加算+保存·終了時も記録·habitstats.jsonへdayLock追加[decodeIfPresentで旧ファイル互換]·レポートTotalカードに「本日の不在(ロック): X分」をlockアイコンで表示[0分日は非表示=ノイズ抑制])
 91. ✅ **ロック中の集計停止** (⭐アプリ実装: 数据正確性バグ修正 — ロック中も recordContextChange が elapsed を前アプリに計上し続ける過大計上を防ぐ · HabitTrackerにsuspended/setSuspended[フラッシュ+再開は始点リセット]·ContextMonitorのscreensaverActiveを@Published化·MainViewModel sink接続·停止中はディスク書込もスキップ)
 90. ✅ **目標達成リング** (⭐アプリ実装: ポップオーバー「今日の集中」カードに円形ゲージ追加 — #75のStepper値と連動・100%到達で緑化+アニメーション[%数字は実測値])
 89. ✅ **週次比較 (今週 vs 先週)** (⭐アプリ実装: 7日カードに「先週比±%」 — HabitTrackerにpreviousWeekTotalSeconds[8〜14日前集計]追加・欠損日は0分扱いを表記明記・先週データなし時は専用表示・緑/橙/灰の色分け)
