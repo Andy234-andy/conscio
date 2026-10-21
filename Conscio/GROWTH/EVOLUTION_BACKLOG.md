@@ -92,6 +92,7 @@
 83. ✅ **Qiita記事#7投稿済** (10/21 07:46 — https://qiita.com/Andy342/items/c63a2f08513de055491d 『許す設計』3本の縦糸)
 86. ⬜ **記事#6消失の調査** (ユーザー確認待ち[USER_CHECKIN緊急欄] — 再投稿はユーザー指示がある場合のみ)
 85. ✅ **v1.4.4リリース** (https://github.com/Andy234-andy/conscio/releases/tag/v1.4.4 — SHA `a0aa9da6…07be5`・verify全GREEN・docs同期[CHANGELOG/README/EN/landing/SECURITY]済)
+93. ✅ **無操作(5分)の集計停止** (⭐アプリ実装: #91の一般化 — CGEventSourceで最後の入力からの経過秒だけを取得[内容は一切見ない]·300秒以上=不在とみなしロックと同じsuspended経路へ·放置アプリの時間膨張を防止·不在中はAX/URL取得も停止[省電力]· Sight note: 動画再生など入力なしの使用は不在扱い[デリバラブルな入力のみ量るという正直なポリシー])
 92. ✅ **不在(ロック)時間の記録と表示** (⭐アプリ実装: #91の対になる正直データ機能 — HabitTrackerにdayLockMap[日次]追加+setSuspendedで区間計測[suspendedAt]·解除時に日次へ加算+保存·終了時も記録·habitstats.jsonへdayLock追加[decodeIfPresentで旧ファイル互換]·レポートTotalカードに「本日の不在(ロック): X分」をlockアイコンで表示[0分日は非表示=ノイズ抑制])
 91. ✅ **ロック中の集計停止** (⭐アプリ実装: 数据正確性バグ修正 — ロック中も recordContextChange が elapsed を前アプリに計上し続ける過大計上を防ぐ · HabitTrackerにsuspended/setSuspended[フラッシュ+再開は始点リセット]·ContextMonitorのscreensaverActiveを@Published化·MainViewModel sink接続·停止中はディスク書込もスキップ)
 90. ✅ **目標達成リング** (⭐アプリ実装: ポップオーバー「今日の集中」カードに円形ゲージ追加 — #75のStepper値と連動・100%到達で緑化+アニメーション[%数字は実測値])

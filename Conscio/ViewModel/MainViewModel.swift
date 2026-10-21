@@ -34,10 +34,19 @@ class MainViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
-        // 🧬 進化#91: ロック/スクリーンセーバに入ったら集計を一時停止・戻ったら再開
+        // 🧬 進化#91+#93: ロック or 5分以上の無操作 = 不在 → 集計を一時停止 (両方の「現在値」をORして反映)
         contextMonitor.$screensaverActive
             .sink { [weak self] locked in
-                self?.habitTracker.setSuspended(locked)
+                guard let self = self else { return }
+                self.habitTracker.setSuspended(locked || self.contextMonitor.userIdleActive)
+            }
+            .store(in: &cancellables)
+
+        // 🧬 進化#93: 無操作(5分)の開始/復帰も同じ集計停止に接続 (再開は入力の検出で自動)
+        contextMonitor.$userIdleActive
+            .sink { [weak self] idle in
+                guard let self = self else { return }
+                self.habitTracker.setSuspended(idle || self.contextMonitor.screensaverActive)
             }
             .store(in: &cancellables)
         

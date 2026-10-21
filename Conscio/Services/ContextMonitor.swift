@@ -2,6 +2,7 @@
 import Foundation
 import Cocoa
 import Combine
+import CoreGraphics
 import NaturalLanguage
 
 class ContextMonitor: ObservableObject {
@@ -20,6 +21,8 @@ class ContextMonitor: ObservableObject {
     // 🧬 進化#76: ロック/スクリーンセーバ中の省CPU (URLのosascript起動を停止)
     // 🧬 進化#91: ロック/スクリーンセーバ状態 (@Published化 — MainViewModelが集計停止の合図に使用)
     @Published var screensaverActive = false
+    // 🧬 進化#93: 無操作(5分以上の入力不在)状態 — 正確にはロックしていなくても「不在」とみなす
+    @Published var userIdleActive = false
     private var workspaceObservers: [NSObjectProtocol] = []
 
     init() {
@@ -74,12 +77,21 @@ class ContextMonitor: ObservableObject {
             let frontmostApp = NSWorkspace.shared.frontmostApplication
             let appName = frontmostApp?.localizedName ?? "Unknown Application"
 
+            // 🧬 進化#93: 操作不在の検出 — 最後のキーボード/マウス入力からの経過秒のみを使う
+            // (入力の内容や頻度の記録はしない・集計停止の合図のための秒数計算だけ)
+            let idleSeconds = CGEventSource.secondsSinceLastEventType(.combinedSessionState, eventType: CGEventType(rawValue: 0xFFFFFFFF)!)
+            if (idleSeconds >= 300) != self.userIdleActive {
+                self.userIdleActive = (idleSeconds >= 300)
+            }
+            // 🧬 進化#93派生: 不在(ロック/無操作)中はAXタイトル取得を停止して前回値を使う (#76のURL版と同じ省電力化)
+            let away = self.screensaverActive || self.userIdleActive
+
             var activeDocument: String?
             var activeURL: String?
             // 🧬 進化#34: 未使用だったローカルkeywordsを削除 (NLPは下のaiKeywordsに直書き)
 
             // Attempt to get document/window title using Accessibility API
-            if let pid = frontmostApp?.processIdentifier {
+            if let pid = frontmostApp?.processIdentifier, !away {
                 let appElement = AXUIElementCreateApplication(pid)
                 var focusedWindow: AnyObject?
                 AXUIElementCopyAttributeValue(appElement, kAXFocusedWindowAttribute as CFString, &focusedWindow)
@@ -183,7 +195,7 @@ class ContextMonitor: ObservableObject {
             // 🧬 進化#76: ロック/スクリーンセーバ中は取得しない (osascript起動を完全停止=CPU/熱に優しい)
             // 復帰後は registerScreensaverObservers が urlFetchTick=0 に戻し、直後に即1回実行する
             if appName.contains("Safari") || appName.contains("Chrome") {
-                if self.screensaverActive {
+                if self.screensaverActive || self.userIdleActive {
                     activeURL = self.lastFetchedURL
                 } else {
                     if self.urlFetchTick % 3 == 0 { // 負荷軽減: 2秒×3=6秒ごとに取得
