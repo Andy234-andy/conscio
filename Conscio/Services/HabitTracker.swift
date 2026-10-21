@@ -297,9 +297,38 @@ class HabitTracker: ObservableObject {
         return f.string(from: date)
     }
 
+    // 🧬 進化#91: ロック/スクリーンセーバ中は利用秒数の集計を停止する
+    // (不在時間を先頭アプリの利用時間として計上してしまう過大計上を防ぐ — 正直なデータ設計)
+    private var suspended = false
+
+    /// 進化#91: ロック状態の反映 (true=計上を一時停止・false=再開)
+    func setSuspended(_ on: Bool) {
+        guard suspended != on else { return }
+        suspended = on
+        if on {
+            // ロック直前までの断片を一度だけ正しく計上してから止める
+            // (lastAppNameを渡すのでアプリは変わらず・切替カウントも増えない)
+            if let last = lastAppName, !last.isEmpty {
+                recordContextChange(to: Context(activeApplication: last, keywords: []))
+            }
+        } else {
+            // 再開時: ロック期間を含めず、計測の始点だけ今に合わせる
+            lastAppStartTime = Date()
+        }
+    }
+
     func recordContextChange(to context: Context) {
         let currentApp = context.activeApplication
         let now = Date()
+
+        // 🧬 進化#91: 停止中は集計せず時計の始点だけ更新 (解除時の過大計上を防止・ディスク書込も抑制)
+        if suspended {
+            lastAppStartTime = now
+            if lastAppName != currentApp {
+                lastAppName = currentApp
+            }
+            return
+        }
 
         if let lastApp = lastAppName, let startTime = lastAppStartTime {
             let elapsed = now.timeIntervalSince(startTime)

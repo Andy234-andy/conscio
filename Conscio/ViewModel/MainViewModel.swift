@@ -33,6 +33,13 @@ class MainViewModel: ObservableObject {
                 self.habitTracker.recordContextChange(to: context) // Record stats for HabitTracker
             }
             .store(in: &cancellables)
+
+        // 🧬 進化#91: ロック/スクリーンセーバに入ったら集計を一時停止・戻ったら再開
+        contextMonitor.$screensaverActive
+            .sink { [weak self] locked in
+                self?.habitTracker.setSuspended(locked)
+            }
+            .store(in: &cancellables)
         
         notificationManager.$isSuppressing
             .assign(to: \.isSuppressingNotifications, on: self)

@@ -18,7 +18,8 @@ class ContextMonitor: ObservableObject {
     private var urlFetchTick = 0
     private var lastFetchedURL: String?
     // 🧬 進化#76: ロック/スクリーンセーバ中の省CPU (URLのosascript起動を停止)
-    private var screensaverActive = false
+    // 🧬 進化#91: ロック/スクリーンセーバ状態 (@Published化 — MainViewModelが集計停止の合図に使用)
+    @Published var screensaverActive = false
     private var workspaceObservers: [NSObjectProtocol] = []
 
     init() {
