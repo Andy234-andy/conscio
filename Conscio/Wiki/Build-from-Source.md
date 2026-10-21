@@ -39,6 +39,8 @@ open Conscio.app
 |------|-----------|
 | `invalid Info.plist (signature modified)` | plist編集後に再署名した際の拡張属性残留 → `xattr -cr` してから再署名 |
 | `detritus not allowed` が xattr 後でも出る時 | plist編集直後は `xattr -cr` を**codesign直前にもう一度**挟むと通る[2026-10-21 v1.4.4実測 — `com.apple.provenance` は残るが無害] |
+| Documents配下( iCloud同期) で codesign が連続拒否される時 | FileProvider属性[fpfs#P]が xattr 後に再付与される → **同期外のscratch dirで署名**し strict検証を通してから `cp -R` で戻す (destは必ず非存在に rm -rf 後に cp) |
+| `unsealed contents present in the bundle root` | **既存dirへの `cp -R` でネストが発生**している (tmpを書いた後に再度 cp) → 配下に `Contents/` と `Conscio.app/` 親子が並列に存在 → tree再構築[根からrm → 正品バックアップから cp -R(非existing dest)→xattr掃除→再署名] |
 | `resource fork, Finder information, or similar detritus not allowed` (既存.appへの差し替え再署名時) | **新バイナリが持つ拡張属性が拒否原因** → `cp` 直後に `xattr -cr` を挟み、その後 `codesign --force --deep --sign -` (進化#76実測: この順序なら再署名も通る) |
 | Resource fork not allowed (codesign) | バンドル全体をREST (新規ディレクトリに組み直し)が最速 |
 | 通知が来ない・クラッシュ | 生バイナリ直接実行 → `.app` を作って実行する |

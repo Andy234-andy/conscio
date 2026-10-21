@@ -6,6 +6,8 @@ import Cocoa
 struct SettingsView: View {
     @ObservedObject var habitTracker: HabitTracker
     @State private var showResetConfirm = false
+    // 🧬 進化#94: 集中アプリの追加入力
+    @State private var newFocusApp = ""
     // 🧬 進化#75: 今日の集中目標を設定化 (既定60分・15〜240分・15分刻み)
     @AppStorage("dailyGoalMinutes") private var dailyGoalMinutes: Int = 60
 
@@ -66,6 +68,39 @@ struct SettingsView: View {
                     .foregroundColor(.secondary)
             }
 
+            // 🧬 進化#94: 集中アプリの管理 (このMacで本当に使うアプリをユーザーが選ぶ — 既定リストの押し付けを解消)
+            Section(header: Text(L10n.t("settings.focusApps"))) {
+                ForEach(habitTracker.focusAppNamesSorted, id: \.self) { name in
+                    HStack {
+                        Text(name)
+                        Spacer()
+                        Button {
+                            habitTracker.removeFocusApp(name)
+                        } label: {
+                            Image(systemName: "minus.circle")
+                                .foregroundColor(.red)
+                        }
+                        .buttonStyle(.plain)
+                        .help(L10n.t("settings.focusAddRemove"))
+                    }
+                }
+                HStack {
+                    TextField(L10n.t("settings.focusAddPlaceholder"), text: $newFocusApp)
+                    Button {
+                        habitTracker.addFocusApp(newFocusApp)
+                        newFocusApp = ""
+                    } label: {
+                        Image(systemName: "plus.circle.fill")
+                    }
+                    .buttonStyle(.plain)
+                    .help(L10n.t("settings.focusAddRemove"))
+                    .disabled(newFocusApp.trimmingCharacters(in: .whitespaces).isEmpty)
+                }
+                Text(L10n.t("settings.focusAppNote"))
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+
             Section(header: Text(L10n.t("settings.habits"))) {
                 Button(role: .destructive) {
                     showResetConfirm = true
@@ -86,7 +121,7 @@ struct SettingsView: View {
             }
         }
         .padding()
-        .frame(width: 430, height: 425)
+        .frame(width: 430)
     }
 }
 

@@ -35,7 +35,40 @@ class HabitTracker: ObservableObject {
     private var lastDiskWrite: Date?
     // 🧬 進化#92: ロック区間の始点 (解除時に区間長を計算)
     private var suspendedAt: Date?
-    private var focusApps: Set<String> = ["Xcode", "Safari", "Pages", "TextEdit", "Code"]
+    private(set) var focusApps: Set<String> = {
+        // 🧬 進化#94: 集中アプリをユーザーが管理できる (このMacのみに保存・ハードコード既定は初回のみのseed)
+        // 背景: 既定リスト[Xcode/Safari/Pages/TextEdit/Code]と実際の使い方 (例: Chrome中心) が合致せず
+        // 「集中」が恒久0になる不整合が判明。ユーザーの環境に合わせられない仕様は誇りに反するので設定化。
+        if let saved = UserDefaults.standard.stringArray(forKey: "focusAppNames"), !saved.isEmpty {
+            return Set(saved)
+        }
+        let seed = ["Xcode", "Safari", "Pages", "TextEdit", "Code"]
+        UserDefaults.standard.set(seed, forKey: "focusAppNames")
+        return Set(seed)
+    }()
+
+    /// 🧬 進化#94: 集中アプリを追加 (即UserDefaultsに保存・通知抑止側にも同期)
+    func addFocusApp(_ name: String) {
+        let trimmed = name.trimmingCharacters(in: .whitespaces)
+        guard !trimmed.isEmpty else { return }
+        objectWillChange.send()
+        focusApps.insert(trimmed)
+        UserDefaults.standard.set(focusApps.sorted(), forKey: "focusAppNames")
+        NotificationCenter.default.post(name: Notification.Name("conscio.focusAppsChanged"), object: nil)
+    }
+
+    /// 🧬 進化#94: 集中アプリを削除 (既定アプリも削除可 — 初期値の誤配から自由にする)
+    func removeFocusApp(_ name: String) {
+        objectWillChange.send()
+        focusApps.remove(name)
+        UserDefaults.standard.set(focusApps.sorted(), forKey: "focusAppNames")
+        NotificationCenter.default.post(name: Notification.Name("conscio.focusAppsChanged"), object: nil)
+    }
+
+    /// 🧬 進化#94: 設定UI用の表示順 (アルファベット順)
+    var focusAppNamesSorted: [String] {
+        return focusApps.sorted()
+    }
 
     // 💾 永続化 (Application Support/Conscio/habitstats.json)
     private var storeURL: URL = {
@@ -89,7 +122,7 @@ class HabitTracker: ObservableObject {
     // 🧬 進化#9: 「さっき見てた関連アプリに戻る」提案の材料
     // 直近履歴のうち「現在アプリ以外」で最初に見つかったもの (フォーカス級を優先)
     func recentRelatedApp(excluding currentApp: String) -> String? {
-        let focusSet: Set<String> = ["Xcode", "Safari", "Pages", "TextEdit", "Code"]
+        let focusSet = focusApps // 🧬 進化#94: ハードコードをユーザー設定に統一
         for app in recentAppBuffer where app != currentApp {
             if focusSet.contains(app) { return app }
         }

@@ -21,7 +21,8 @@ class MainViewModel: ObservableObject {
         _suggestions = Published(initialValue: [])
         currentAppIcon = NSWorkspace.shared.icon(for: .application)
 
-        notificationManager.setFocusApps(["Xcode", "Safari", "Pages", "TextEdit", "Code"])
+        // 🧬 進化#94: 抑止リストもユーザー設定の集中アプリに統一 (ハードコード廃止)
+        notificationManager.setFocusApps(HabitTracker.shared.focusApps)
 
         contextMonitor.$currentContext
             .sink { [weak self] context in
@@ -49,6 +50,12 @@ class MainViewModel: ObservableObject {
                 self.habitTracker.setSuspended(idle || self.contextMonitor.screensaverActive)
             }
             .store(in: &cancellables)
+        
+        // 🧬 進化#94: 集中アプリの変更を通知抑止側へも即期同期 (抑止リストを常に一貫させる)
+        NotificationCenter.default.addObserver(forName: Notification.Name("conscio.focusAppsChanged"), object: nil, queue: .main) { [weak self] _ in
+            guard let self = self else { return }
+            self.notificationManager.setFocusApps(self.habitTracker.focusApps)
+        }
         
         notificationManager.$isSuppressing
             .assign(to: \.isSuppressingNotifications, on: self)
