@@ -69,6 +69,8 @@ struct ReportView: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
+                    // 🧬 進化#100: 直近28日の集中ヒートマップ (実データの粒度表示 — 盛らない)
+                    Heatmap28View(tracker: habitTracker)
                 }
                 .padding()
                 .background(Color(NSColor.controlBackgroundColor))
@@ -325,5 +327,49 @@ struct ReportView: View {
 struct ReportView_Previews: PreviewProvider {
     static var previews: some View {
         ReportView(habitTracker: HabitTracker())
+    }
+}
+
+// 🧬 進化#100: 直近28日の集中ヒートマップ (GitHub風グリッド・実データのみ)
+struct Heatmap28View: View {
+    @ObservedObject var tracker: HabitTracker
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(L10n.t("report.heatmap"))
+                .font(.caption)
+                .foregroundColor(.secondary)
+            let cells = tracker.focusHeatmapLevels()
+            HStack(spacing: 3) {
+                ForEach(0..<4, id: \.self) { col in
+                    VStack(spacing: 3) {
+                        ForEach(0..<7, id: \.self) { rowIdx in
+                            let idx = col * 7 + rowIdx
+                            RoundedRectangle(cornerRadius: 3)
+                                .fill(Self.color(level: idx < cells.count ? cells[idx].level : 0))
+                                .frame(width: 13, height: 13)
+                                .help(idx < cells.count ? Self.label(cells[idx]) : "")
+                        }
+                    }
+                }
+            }
+        }
+        .padding(.top, 2)
+    }
+
+    private static func color(level: Int) -> Color {
+        switch level {
+        case 0: return Color.primary.opacity(0.07)
+        case 1: return Color.accentColor.opacity(0.22)
+        case 2: return Color.accentColor.opacity(0.45)
+        case 3: return Color.accentColor.opacity(0.68)
+        default: return Color.accentColor.opacity(0.95) // 目標達成
+        }
+    }
+
+    private static func label(_ cell: (day: Date, level: Int, minutes: Int)) -> String {
+        let f = DateFormatter()
+        f.dateFormat = "MM/dd"
+        return "\(f.string(from: cell.day)) ・ \(cell.minutes)分"
     }
 }

@@ -268,6 +268,23 @@ class HabitTracker: ObservableObject {
         return streak
     }
 
+    // 🧬 進化#100: 直近28日の集中ヒートマップ (level 0=なし 1=<25% 2=<50% 3=<100% 4=目標達成)
+    func focusHeatmapLevels() -> [(day: Date, level: Int, minutes: Int)] {
+        let cal = Calendar.current
+        let goal = HabitTracker.dailyGoalSeconds
+        var rows: [(day: Date, level: Int, minutes: Int)] = []
+        rows.reserveCapacity(28)
+        for offset in (0..<28).reversed() {
+            let day = cal.date(byAdding: .day, value: -offset, to: cal.startOfDay(for: Date()))!
+            let seconds = dailyFocusMap[dayKey(for: day)] ?? 0
+            let minutes = Int(seconds / 60)
+            let ratio = goal > 0 ? seconds / goal : 0
+            let level = minutes == 0 ? 0 : (ratio < 0.25 ? 1 : ratio < 0.5 ? 2 : ratio < 1.0 ? 3 : 4)
+            rows.append((day, level, minutes))
+        }
+        return rows
+    }
+
     /// 🧬 進化#92: 本日の不在(ロック)分 (#91方針との対比で「使った時間」には数えない)
     var todayLockMinutes: Int {
         return Int((dayLockMap[dayKey(for: Date())] ?? 0) / 60)
