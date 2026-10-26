@@ -120,6 +120,14 @@ struct ReportView: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
+                    // 🧬 進化#101: 直近7日の最高集中日 (良い日を祝う・誇張なし)
+                    if let best = habitTracker.best7Day {
+                        Label(
+                            String(format: L10n.t("report.bestDay"), best.day.formatted(date: .numeric, time: .omitted), best.minutes),
+                            systemImage: "trophy")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 .padding()
                 .background(Color(NSColor.controlBackgroundColor))

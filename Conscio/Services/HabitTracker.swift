@@ -343,6 +343,20 @@ class HabitTracker: ObservableObject {
         }
     }
 
+    // 🧬 進化#101: 直近7日の最高集中日 (良い日を認識する目的・誇張なし)
+    var best7Day: (day: Date, minutes: Int)? {
+        let cal = Calendar.current
+        var best: (day: Date, minutes: Int)? = nil
+        for offset in (0..<7).reversed() {
+            let day = cal.date(byAdding: .day, value: -offset, to: cal.startOfDay(for: Date()))!
+            let minutes = Int((dailyFocusMap[dayKey(for: day)] ?? 0) / 60)
+            if minutes > 0, best == nil || minutes > best!.minutes {
+                best = (day: day, minutes: minutes)
+            }
+        }
+        return best
+    }
+
     // 🧬 進化#95: 直近7日の不在(ロック・無操作)合計秒 (週次カードに開示 — #91/92/93の系列)
     var last7DaysLockSeconds: TimeInterval {
         let fmt = DateFormatter()

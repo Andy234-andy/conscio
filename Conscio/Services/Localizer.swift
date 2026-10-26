@@ -95,6 +95,7 @@ enum L10n {
         "report.manualToday": ("ノートの集中: %d分 (自主申告)", "Paper focus: %d min (self-reported)"),
         "report.goalStreak": ("🎯 連続目標達成: %d日", "🎯 Goal streak: %d days"),
         "report.heatmap": ("直近28日の集中ヒートマップ", "Focus heatmap (last 28 days)"),
+        "report.bestDay": ("今週の最高: %@ %d分", "Best this week: %@ %d min"),
         "report.chart30Avg": ("30日平均 %d分/日", "30-day avg: %d min/day"),
         "report.switches":   ("文脈切り替え回数", "Context switches"),
         "report.steady":     ("非常に安定しています", "Very steady"),
