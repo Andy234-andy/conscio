@@ -12,10 +12,11 @@ fi
 TDIR=$(mktemp -d)
 trap 'rm -rf "$TDIR"' EXIT
 
-IDS=(9f1b6af7a9edc5b70968 041923a512b1c7b3328b dbd23baa4b3976dfdfae 22a016208cab808bba1a 1bd5641ad076e8e93cd0 c63a2f08513de055491d c7483c092aaac26f9a61 22dbc3df427c8b8282c2)
+IDS=(9f1b6af7a9edc5b70968 041923a512b1c7b3328b dbd23baa4b3976dfdfae 22a016208cab808bba1a 1bd5641ad076e8e93cd0 c63a2f08513de055491d c7483c092aaac26f9a61 22dbc3df427c8b8282c2 713ce5028ba9641281b4)
 # ※ 旧6本目 f641539d82818d7693e0 (記事#6) は2026-10-20深夜に消失[ユーザー確認待ち] — 復活したら入れ替え戻し
 # ※ 7本目 c7483c092aaac26f9a61 = お詫びと復旧 (2026-10-22・外部PHP関連問題対応・AI表明済み)
 # ※ 8本目 22dbc3df427c8b8282c2 = 復旧の報告 (2026-10-26・リポ再公開+Pages再構築)
+# ※ 9本目 713ce5028ba9641281b4 = 総集編 (2026-10-26・10日98進化11リリースを振り返る)
 i=0
 for id in "$IDS[@]"; do
   i=$((i+1))
@@ -26,7 +27,7 @@ CONSCIO_QT_DIR="$TDIR" python3 - <<'PYEOF'
 import json, os
 
 base = os.environ["CONSCIO_QT_DIR"]
-IDS_N = 8
+IDS_N = 9
 
 print("| # | タイトル | 投稿 (JST) | PV | ❤ | 📚 | 💬 | タグ |")
 print("|---|----------|-----------|---:|---:|---:|---:|------|")

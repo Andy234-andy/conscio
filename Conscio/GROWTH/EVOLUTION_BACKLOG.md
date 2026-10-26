@@ -95,6 +95,7 @@
 95. ✅ **週カードに直近7日の不在合計** (⭐実装済み/反映待ち — last7DaysLockSeconds+report.weekLock行 — ディスク100%のためbuild停止中)
 96. ✅ **ノートタイム手動打刻** (⭐実装済み/反映待ち — 紙の作業などオフライン集中をユーザーが開始/停止 [popoverのManualFocusRow] — manualFocusMap日次+UserDefaults打刻開始復元+snapshot互換dayManual+レポートに「ノートの集中: X分 (自主申告)」 — 画面計測と混ぜない明示設計·ユーザー承認済み提案)
 97. ✅ **v1.4.5リリース公告完成** (8進化バッチをGitHub Releases公開・docs同期+お詫びと復旧節/Qiita Art#7 — 2026-10-22)
+99. ✅ **総集編投稿** (10日98進化11リリースを振り返る・記事リスト+事故と復旧の透明記録 — 2026-10-26)
 98. ✅ **連続目標達成日数** (10/26実装+reflect+v1.4.6リリース — goalStreakDays: 今日未達でも昨日までの連続を数える365日上限)
 94. ✅ **集中アプリの設定化** (⭐アプリ実装: **重大発見の修正** — hard-codeのfocusApps[Xcode/Safari/Pages/TextEdit/Code]がこのMacの実態[Chrome/OpenCode]と合わず focus=0・dayFocus={}が恒久続いていた[=レポ/リング/チャートが全部0のまま表示] — 設定画面で一覧+追加/削除 UIを追加[UserDefaults保存・通知抑止側と自動同期]・hard-codeは廃止(初回seedのみ)·このMacの初期設定にGoogle Chromeを投入済[defaults]·修復にcodesign工作[同期領域外署名フロー確立])
 93. ✅ **無操作(5分)の集計停止** (⭐アプリ実装: #91の一般化 — CGEventSourceで最後の入力からの経過秒だけを取得[内容は一切見ない]·300秒以上=不在とみなしロックと同じsuspended経路へ·放置アプリの時間膨張を防止·不在中はAX/URL取得も停止[省電力]· Sight note: 動画再生など入力なしの使用は不在扱い[デリバラブルな入力のみ量るという正直なポリシー])

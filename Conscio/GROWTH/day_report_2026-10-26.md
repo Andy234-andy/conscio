@@ -12,3 +12,5 @@
 - [21:1x] README復旧節を"復旧完了"版へ更新 ([details版]再公開日明示) + **Qiita Art#8「復旧の報告」**投稿 (https://qiita.com/Andy342/items/22dbc3df427c8b8282c2)
 - [21:1x] **v1.4.6 build 11 reflect** (pid 28386・旧bundle→ゴミ箱) + **gh release create v1.4.6** (zip 1,892,152B・verify全GREEN)
 - metrics: 本日行 (23-25は黒字)
+
+- [22:2x] 🧬 **進化#99**: 総集編投稿 (Art#9・ユーザー指示「一回総集編だそうぜ」*同日3本目だがユーザー直接指示のため特例実行* — https://qiita.com/Andy342/items/713ce5028ba9641281b4 / 表9本化)
