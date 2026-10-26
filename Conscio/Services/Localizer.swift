@@ -93,6 +93,7 @@ enum L10n {
         "ui.manualStart": ("紙の作業を開始", "Start paper work"),
         "ui.manualStop": ("停止 (%d分)", "Stop (%d min)"),
         "report.manualToday": ("ノートの集中: %d分 (自主申告)", "Paper focus: %d min (self-reported)"),
+        "report.goalStreak": ("🎯 連続目標達成: %d日", "🎯 Goal streak: %d days"),
         "report.chart30Avg": ("30日平均 %d分/日", "30-day avg: %d min/day"),
         "report.switches":   ("文脈切り替え回数", "Context switches"),
         "report.steady":     ("非常に安定しています", "Very steady"),

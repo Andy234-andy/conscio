@@ -61,6 +61,14 @@ struct ReportView: View {
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
+                    // 🧬 進化#98: 連続目標達成日数 (誇張のない実績としてのモチベーション)
+                    if habitTracker.goalStreakDays > 0 {
+                        Label(
+                            String(format: L10n.t("report.goalStreak"), habitTracker.goalStreakDays),
+                            systemImage: "flame")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 .padding()
                 .background(Color(NSColor.controlBackgroundColor))

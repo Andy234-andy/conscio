@@ -251,6 +251,23 @@ class HabitTracker: ObservableObject {
         return total
     }
 
+    // 🧬 進化#98: 連続目標達成日数 (今日が未達でも昨日までの連続を数える・365日上限の安全停止)
+    var goalStreakDays: Int {
+        let goal = HabitTracker.dailyGoalSeconds
+        var streak = 0
+        var day = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        if (dailyFocusMap[dayKey(for: Date())] ?? 0) >= goal {
+            streak += 1
+        }
+        var guardCount = 0
+        while (dailyFocusMap[dayKey(for: day)] ?? 0) >= goal && guardCount < 365 {
+            streak += 1
+            day = Calendar.current.date(byAdding: .day, value: -1, to: day)!
+            guardCount += 1
+        }
+        return streak
+    }
+
     /// 🧬 進化#92: 本日の不在(ロック)分 (#91方針との対比で「使った時間」には数えない)
     var todayLockMinutes: Int {
         return Int((dayLockMap[dayKey(for: Date())] ?? 0) / 60)
