@@ -17,6 +17,8 @@ class HabitTracker: ObservableObject {
     @Published var appUsageList: [AppUsageStats] = []
     // 🧬 進化#5: 日ごとの集中時間 (キー: yyyy-MM-dd)
     @Published var dailyFocusMap: [String: TimeInterval] = [:]
+    // 🧬 進化#102: 時間帯別の集中秒 (キー=dayKey@H・画面計測のみ[手動申告は別ラベル]) — スナップショットにはOptionalで互換保存
+    @Published var hourlyFocusMap: [String: TimeInterval] = [:]
     // 🧬 進化#9: 直近アプリ履歴 (直近=MAX_BUFFER nexus件・新着順)
     @Published var recentAppBuffer: [String] = []
     // 🧬 進化#92: 日ごとの不在(ロック)時間 (キー: yyyy-MM-dd) — #91で集計から外した時間を正直に可視化
@@ -100,7 +102,10 @@ class HabitTracker: ObservableObject {
         // 🧬 進化#96: オフライン集中(自主申告)の日次マップ (旧ファイル互換のため Optional)
         var dayManual: [String: TimeInterval]?
 
-        init(focus: TimeInterval, switches: Int, usage: [UsageEntry], dayFocus: [String: TimeInterval]?, recentApps: [String]?, dayLock: [String: TimeInterval]?, dayManual: [String: TimeInterval]?) {
+        // 🧬 進化#102: 時間帯別の集中マップ (旧ファイル互換のため Optional)
+        var dayHour: [String: TimeInterval]?
+
+        init(focus: TimeInterval, switches: Int, usage: [UsageEntry], dayFocus: [String: TimeInterval]?, recentApps: [String]?, dayLock: [String: TimeInterval]?, dayManual: [String: TimeInterval]?, dayHour: [String: TimeInterval]? = nil) {
             self.focus = focus
             self.switches = switches
             self.usage = usage
@@ -108,10 +113,11 @@ class HabitTracker: ObservableObject {
             self.recentApps = recentApps
             self.dayLock = dayLock
             self.dayManual = dayManual
+            self.dayHour = dayHour
         }
 
         enum CodingKeys: String, CodingKey {
-            case focus, switches, usage, dayFocus, recentApps, dayLock, dayManual
+            case focus, switches, usage, dayFocus, recentApps, dayLock, dayManual, dayHour
         }
 
         // 進化#5: 旧フォーマット(dayFocusなし)でもデコードできる
@@ -124,6 +130,7 @@ class HabitTracker: ObservableObject {
             recentApps = try c.decodeIfPresent([String].self, forKey: .recentApps)
             dayLock = try c.decodeIfPresent([String: TimeInterval].self, forKey: .dayLock)
             dayManual = try c.decodeIfPresent([String: TimeInterval].self, forKey: .dayManual)
+            dayHour = try c.decodeIfPresent([String: TimeInterval].self, forKey: .dayHour)
         }
     }
 
@@ -357,6 +364,28 @@ class HabitTracker: ObservableObject {
         return best
     }
 
+    /// 進化#102: 時間帯キー (dayKey@H — 既存のdayKey書式を流用して分解可能に保つ)
+    private func hourKey(for date: Date) -> String {
+        let h = Calendar.current.component(.hour, from: date)
+        return dayKey(for: date) + "@" + String(h)
+    }
+
+    // 🧬 進化#102: 時間帯別の合算 (直近14日・hourlyFocusMapの「dayKey@H」を分解・画面計測のみ[手動申告は別ラベルのまま])
+    func timeOfDayMinutes() -> [Int: Int] {
+        let cal = Calendar.current
+        let start = cal.date(byAdding: .day, value: -13, to: cal.startOfDay(for: Date()))!
+        let startDay = dayKey(for: start)
+        var minutes: [Int: Int] = [:]
+        for (key, seconds) in hourlyFocusMap {
+            guard let at = key.firstIndex(of: "@") else { continue }
+            let dayPart = String(key[key.startIndex..<at])
+            let hourPart = String(key[key.index(after: at)...])
+            guard dayPart.count == 10, dayPart >= startDay, let h = Int(hourPart), (0..<24).contains(h) else { continue }
+            minutes[h, default: 0] += Int(seconds / 60)
+        }
+        return minutes
+    }
+
     // 🧬 進化#95: 直近7日の不在(ロック・無操作)合計秒 (週次カードに開示 — #91/92/93の系列)
     var last7DaysLockSeconds: TimeInterval {
         let fmt = DateFormatter()
@@ -445,6 +474,7 @@ class HabitTracker: ObservableObject {
         recentAppBuffer = snap.recentApps ?? []
         dayLockMap = snap.dayLock ?? [:] // 🧬 進化#92: 不在時間の復元
         manualFocusMap = snap.dayManual ?? [:] // 🧬 進化#96: 自主申告の復元
+        hourlyFocusMap = snap.dayHour ?? [:] // 🧬 進化#102: 時間帯別の復元
     }
 
     private func saveStats() {
@@ -457,7 +487,8 @@ class HabitTracker: ObservableObject {
                                       dayFocus: dailyFocusMap,
                                       recentApps: recentAppBuffer,
                                       dayLock: dayLockMap,
-                                      dayManual: manualFocusMap)
+                                      dayManual: manualFocusMap,
+                                      dayHour: hourlyFocusMap)
         if let data = try? JSONEncoder().encode(snap) {
             try? data.write(to: storeURL)
         }
@@ -523,6 +554,7 @@ class HabitTracker: ObservableObject {
                 totalFocusTimeSeconds += elapsed
                 // 進化#5: 日次集計にも同じ秒数を加算
                 dailyFocusMap[dayKey(for: now), default: 0] += elapsed
+                hourlyFocusMap[hourKey(for: now), default: 0] += elapsed // 🧬 進化#102: 時間帯別にも同じ秒を記録
             }
 
             // Update app usage stats

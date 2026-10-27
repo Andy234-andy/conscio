@@ -96,6 +96,8 @@ enum L10n {
         "report.goalStreak": ("🎯 連続目標達成: %d日", "🎯 Goal streak: %d days"),
         "report.heatmap": ("直近28日の集中ヒートマップ", "Focus heatmap (last 28 days)"),
         "report.bestDay": ("今週の最高: %@ %d分", "Best this week: %@ %d min"),
+        "report.hourOfDay": ("時間帯別の集中 (直近14日)", "Focus by time of day (last 14 days)"),
+        "report.hourOfDayEmpty": ("まだ記録がありません (蓄積中 — この機能以後の画面計測から集計)", "No data yet (accumulating from screen focus time since this feature)"),
         "report.chart30Avg": ("30日平均 %d分/日", "30-day avg: %d min/day"),
         "report.switches":   ("文脈切り替え回数", "Context switches"),
         "report.steady":     ("非常に安定しています", "Very steady"),

@@ -71,6 +71,8 @@ struct ReportView: View {
                     }
                     // 🧬 進化#100: 直近28日の集中ヒートマップ (実データの粒度表示 — 盛らない)
                     Heatmap28View(tracker: habitTracker)
+                    // 🧬 進化#102: 時間帯別の集中 (24本のバーチャート — 蓄積中は正直に「まだありません」)
+                    HourOfDayView(tracker: habitTracker)
                 }
                 .padding()
                 .background(Color(NSColor.controlBackgroundColor))
@@ -379,5 +381,35 @@ struct Heatmap28View: View {
         let f = DateFormatter()
         f.dateFormat = "MM/dd"
         return "\(f.string(from: cell.day)) ・ \(cell.minutes)分"
+    }
+}
+
+// 🧬 進化#102: 時間帯別の集中バーチャート (0-23時・直近14日合計・画面計測のみ=自主申告は別ラベル)
+struct HourOfDayView: View {
+    @ObservedObject var tracker: HabitTracker
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(L10n.t("report.hourOfDay"))
+                .font(.caption)
+                .foregroundColor(.secondary)
+            let minutes = tracker.timeOfDayMinutes()
+            let maxMin = minutes.values.max() ?? 0
+            HStack(alignment: .bottom, spacing: 2) {
+                ForEach(0..<24, id: \.self) { h in
+                    let m = minutes[h] ?? 0
+                    RoundedRectangle(cornerRadius: 1.5)
+                        .fill(m > 0 ? Color.accentColor.opacity(0.75) : Color.primary.opacity(0.08))
+                        .frame(width: 9, height: m > 0 ? CGFloat(max(2, m * 44 / maxMin)) : 2)
+                        .help(m > 0 ? String(format: "%02d:00 \u{30fb} %d分 (直近14日合計)", h, m) : String(format: "%02d:00 \u{30fb} 記録なし", h))
+                }
+            }
+            if maxMin == 0 {
+                Text(L10n.t("report.hourOfDayEmpty"))
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
+        }
+        .padding(.top, 2)
     }
 }
