@@ -386,6 +386,16 @@ class HabitTracker: ObservableObject {
         return minutes
     }
 
+    // 🧬 進化#103: 記録期間の開示 (dailyFocusMapに实データが残る範囲のみ — 「いつから数えているか」を自分で確認できる・誇張なし)
+    var dataSpan: (first: String?, last: String?, days: Int, totalMinutes: Int) {
+        let keys = dailyFocusMap.keys.filter { (dailyFocusMap[$0] ?? 0) > 0 }
+        let first = keys.min()
+        let last = keys.max()
+        let days = keys.count
+        let total = keys.reduce(0) { $0 + Int((dailyFocusMap[$1] ?? 0) / 60) }
+        return (first, last, days, total)
+    }
+
     // 🧬 進化#95: 直近7日の不在(ロック・無操作)合計秒 (週次カードに開示 — #91/92/93の系列)
     var last7DaysLockSeconds: TimeInterval {
         let fmt = DateFormatter()

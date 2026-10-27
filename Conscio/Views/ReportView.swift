@@ -73,6 +73,13 @@ struct ReportView: View {
                     Heatmap28View(tracker: habitTracker)
                     // 🧬 進化#102: 時間帯別の集中 (24本のバーチャート — 蓄積中は正直に「まだありません」)
                     HourOfDayView(tracker: habitTracker)
+                    // 🧬 進化#103: 記録期間の開示 (実データ範囲のみ・ローカル保存であることも明記)
+                    if let first = habitTracker.dataSpan.first {
+                        let span = habitTracker.dataSpan
+                        Text(String(format: L10n.t("report.dataSpan"), first, span.last ?? first, span.days, span.totalMinutes))
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 .padding()
                 .background(Color(NSColor.controlBackgroundColor))
