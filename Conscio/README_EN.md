@@ -5,7 +5,7 @@
 Conscio is a **context-aware digital navigator** that lives in your Mac's menu bar.
 It understands the app and document on your screen in real time, quietly surfaces exactly what you need, and protects the moments you are deeply focused.
 
-> 🚀 **Latest: [v1.4.6](https://github.com/Andy234-andy/conscio/releases/latest)** — evolutions continuous (#98 as of Oct 26) · 🌐 Site: https://andy234-andy.github.io/conscio/ · 📖 [Wiki / Docs](https://github.com/Andy234-andy/conscio/blob/main/Conscio/Wiki/Home.md)
+> 🚀 **Latest: [v1.4.7](https://github.com/Andy234-andy/conscio/releases/latest)** — evolutions continuous (#101 as of Oct 27) · 🌐 Site: https://andy234-andy.github.io/conscio/ · 📖 [Wiki / Docs](https://github.com/Andy234-andy/conscio/blob/main/Conscio/Wiki/Home.md)
 
 ## ✨ Core Features
 

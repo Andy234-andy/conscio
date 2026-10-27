@@ -95,6 +95,7 @@
 95. ✅ **週カードに直近7日の不在合計** (⭐実装済み/反映待ち — last7DaysLockSeconds+report.weekLock行 — ディスク100%のためbuild停止中)
 96. ✅ **ノートタイム手動打刻** (⭐実装済み/反映待ち — 紙の作業などオフライン集中をユーザーが開始/停止 [popoverのManualFocusRow] — manualFocusMap日次+UserDefaults打刻開始復元+snapshot互換dayManual+レポートに「ノートの集中: X分 (自主申告)」 — 画面計測と混ぜない明示設計·ユーザー承認済み提案)
 97. ✅ **v1.4.5リリース公告完成** (8進化バッチをGitHub Releases公開・docs同期+お詫びと復旧節/Qiita Art#7 — 2026-10-22)
+102. ⬜ **時間帯別パフォーマンス** (時間帯別の集中スコアをバーチャート化 — いつ集中が来るかを自分の目で見る・誠実な集計の延長)
 101. ✅ **今週の最高集中日** (10/27実装+reflect build 13 — best7Day+report.bestDay trophy行)
 100. ✅ **直近28日の集中ヒートマップ** (10/27実装+反映 build 12 — focusHeatmapLevels+Heatmap28View 4×7グリッド)
 99. ✅ **総集編投稿** (10日98進化11リリースを振り返る・記事リスト+事故と復旧の透明記録 — 2026-10-26)
