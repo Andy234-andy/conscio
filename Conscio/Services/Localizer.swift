@@ -99,6 +99,8 @@ enum L10n {
         "report.hourOfDay": ("時間帯別の集中 (直近14日)", "Focus by time of day (last 14 days)"),
         "report.hourOfDayEmpty": ("まだ記録がありません (蓄積中 — この機能以後の画面計測から集計)", "No data yet (accumulating from screen focus time since this feature)"),
         "report.dataSpan": ("記録期間: %@〜%@ · %d日 · 合計%d分 (このMacのローカル保存のみ)", "Span: %@–%@ · %d days · %d min total (stored locally only)"),
+        "report.calendarWeek": ("週間カレンダー", "Weekly calendar"),
+        "report.bestHour": ("得意な時間帯: %02d時台 (%d分 / 直近14日)", "Best hour: %02d:00 (%d min / last 14 days)"),
         "report.chart30Avg": ("30日平均 %d分/日", "30-day avg: %d min/day"),
         "report.switches":   ("文脈切り替え回数", "Context switches"),
         "report.steady":     ("非常に安定しています", "Very steady"),

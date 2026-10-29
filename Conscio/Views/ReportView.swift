@@ -80,6 +80,14 @@ struct ReportView: View {
                             .font(.caption2)
                             .foregroundColor(.secondary)
                     }
+                    // 🧬 進化#104: 得意な時間帯 (#102の集計から最大のみ — 実データが出始めたら表示)
+                    if let best = habitTracker.bestHour {
+                        Label(
+                            String(format: L10n.t("report.bestHour"), best.hour, best.minutes),
+                            systemImage: "sun.max")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 .padding()
                 .background(Color(NSColor.controlBackgroundColor))

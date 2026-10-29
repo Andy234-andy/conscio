@@ -19,4 +19,6 @@
 - 🛠 **landing検証例のSHA表記ミス発見→修正** (zip名v1.4.6にv1.4.4のハッシュ — 検証が必ず失敗する潜在バグ) → v1.4.7実値へ
 [10:5x] 🧬 **進化#102**: 時間帯別の集中バーチャート — hourlyFocusMap (キー=dayKey@H・recordContextChange内で日次と同じ秒を二重記録・スナップショットはdayHour Optional=**旧JSONを壊さない**設計[dayFocus等と同一パターン]) + timeOfDayMinutes (直近14日合算・dayPart前方一致) + HourOfDayView (0-23時24本・データなし日は«まだ記録がありません»を明示) + report.hourOfDay ja/en — **build緑103.32s → pid 36367 / v1.4.7 build 15 反映** (旧bundle→ゴミ箱)
 [11:4x] 🧬 **進化#103**: 記録期間の開示 — dataSpan (0分超のdayKeyのみ min/max/日数/合計分) + report.dataSpan «記録期間: … (このMacのローカル保存のみ)» — 「どの期間の実数を見ているか」をアプリ自身が開示する正直設計 — **build緑97.21s → pid 38320 / build 16 反映** (旧bundle→ゴミ箱)
+[13:1x] ⏱ wake配送遅延〜1h40m検知 (heartbeat 11:3x→13:19) — システム側は正常 (pid 38320 build 16・負荷4.9・不審Agentなし) — 朝の84分滞留と同型[サーバー到着問題]・ティック処理継続
+[15:5x] 🧬 **進化#105**: 週間カレンダービュー — カレンダーグリッド (6weeks×7days、出勤/休日マップ・セル色深度で集中度表示) + report.calendarWeek ja/en — **build緑可読120s → pid 39762 / build 17 反映** (旧bundle→ゴミ箱)
 

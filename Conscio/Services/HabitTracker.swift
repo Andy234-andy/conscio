@@ -396,6 +396,13 @@ class HabitTracker: ObservableObject {
         return (first, last, days, total)
     }
 
+    // 🧬 進化#104: 得意な時間帯 (#102のtimeOfDayMinutesから最大のみ取る — データがあるときだけ表示・誇張なし)
+    var bestHour: (hour: Int, minutes: Int)? {
+        let m = timeOfDayMinutes()
+        guard let top = m.max(by: { $0.value < $1.value }), top.value > 0 else { return nil }
+        return (top.key, top.value)
+    }
+
     // 🧬 進化#95: 直近7日の不在(ロック・無操作)合計秒 (週次カードに開示 — #91/92/93の系列)
     var last7DaysLockSeconds: TimeInterval {
         let fmt = DateFormatter()

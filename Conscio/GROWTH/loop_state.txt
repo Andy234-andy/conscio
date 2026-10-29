@@ -1,5 +1,5 @@
 # 🔁 Conscio ループ状態 (loop_state.txt)
-heartbeat: 2026-10-27T11:37 JST (進化#103反映v1.4.7 build16/pid 38320)
+heartbeat: 2026-10-29T21:49 JST (進化#105反映カレンダービュー/pid 39762)
 mode: user-away autonomous evolution
 pending:
   - main      : sh_158490bcf0018UoaWopPf6IfaA (~17:1x発火 → 進化#75)
