@@ -67,7 +67,7 @@ cd conscio && swift build
 - **v1.4.1** — NLTagger audit discovered Japanese POS tags never activate (all `OtherWord`); keyword fallback now does word-level refinement (particles and hiragana-only words dropped). Ships a debug audit tool (`tools/keyword_audit.swift`)
 - **Privacy audit (2026-10-20)** — bundle ID contained the build machine's username; neutralized to `com.conscio.menubar`, affected release zip replaced. Details: [PRIVACY_AUDIT_2026-10-20.md](GROWTH/PRIVACY_AUDIT_2026-10-20.md)
 
-Related write-ups (Japanese): [Qiita series ×5](https://qiita.com/Atsuki33) ・ [note essay](https://note.com/fine_thyme7447/n/n317579949e7d)
+Related write-ups (Japanese): Qiita articles and a note essay (author profile links omitted).
 - Latest release: **v1.4.3** (see Releases)
 
 ## 💡 Why it matters
